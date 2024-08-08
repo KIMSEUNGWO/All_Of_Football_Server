@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/admin_main.css">
+    <link rel="stylesheet" href="/css/admin_match.css">
+    <link rel="stylesheet" href="/css/calendar_range.css">
+    <script src="/js/calendar_range.js"></script>
+    <script src="/js/admin_match.js"></script>
+    <script src="/js/fetch.js"></script>
+    <title>경기관리 :: 프로젝트</title>
+</head>
+<body>
+    <body>
+        <header th:replace="~{/common/header :: header}"></header>
+        <div class="container">
+            <aside class="side box" th:replace="~{/common/admin_menu :: adminMenu}"></aside>
+            <div class="mainBox box">
+                <h2>경기관리</h2>
+                <div class="date_picker_wrapper">
+                    <div class="date_picker_buttons">
+                        <button type="button" id="date_picker_6months" aria-selected="false">6개월</button>
+                        <button type="button" id="date_picker_1months" aria-selected="false">1개월</button>
+                        <button type="button" id="date_picker_1weeks" aria-selected="false">1주</button>
+                    </div>
+                    <div class="date_picker_calendar">
+                        <summary id="date_range">
+                            <div class="date_wrap">
+                                <input type="text" name="startDate" inputmode="numeric" placeholder="YYYY/MM/DD" aria-pressed="false" readonly>
+                            </div>
+                            <span>-</span>
+                            <div class="date_wrap">
+                                <input type="text" name="endDate" inputmode="numeric" placeholder="YYYY/MM/DD" aria-pressed="false" readonly>
+                            </div>
+                        </summary>
+                        <div id="date_range_calendar" class="">
+                            <div id="calendar_header">
+                                <button type="button" id="preButton">
+                                    <svg transform='rotate(180)' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                                        <path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg>
+                                </button>
+                                <div class="months">
+                                    <div id="leftMonth"></div>
+                                    <div id="rightMonth"></div>
+                                </div>
+                                <button type="button" id="nextButton">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                                        <path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg>
+                                </button>
+                            </div>
+                            <div id="calendar_body">
+                                <div id="leftBody">
+                                    <div class="week">
+                                        <div class="cell"><div>일</div></div>
+                                        <div class="cell"><div>월</div></div>
+                                        <div class="cell"><div>화</div></div>
+                                        <div class="cell"><div>수</div></div>
+                                        <div class="cell"><div>목</div></div>
+                                        <div class="cell"><div>금</div></div>
+                                        <div class="cell"><div>토</div></div>
+                                    </div>
+                                </div>
+                                <div id="rightBody">
+                                    <div class="week">
+                                        <div class="cell"><div>일</div></div>
+                                        <div class="cell"><div>월</div></div>
+                                        <div class="cell"><div>화</div></div>
+                                        <div class="cell"><div>수</div></div>
+                                        <div class="cell"><div>목</div></div>
+                                        <div class="cell"><div>금</div></div>
+                                        <div class="cell"><div>토</div></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="calendar_bottom">
+                                <button type="button" id="confirmButton">완료</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="option">
+                    <button class="region btnBox">
+                        <span>지역</span>
+                        <svg viewBox="0 0 9 6" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M4.5 6L8.39711 0.75H0.602886L4.5 6Z" fill="currentColor"></path></svg>
+                    </button>
+                    <ul class="subOption regionOption disabled">
+                        <li th:each="loc : ${locations}">
+                            <input type="checkbox" name="region" th:id="${loc.regionId}" th:value="${loc}" th:checked="${loc.regionId == 'regionAll'}">
+                            <label th:for="${loc.regionId}" th:text="${loc}"></label>
+                        </li>
+                    </ul>
+                    <input type="text" name="searchWord" id="searchWord" placeholder="구장 이름을 입력해주세요.">
+                    <button type="button" class="btn" id="searchBtn">검색</button>
+                </div>
+                <div class="group">
+                    <span class="total">총 0건</span>
+                </div>
+                <ul class="searchResult" id="searchTitle">
+                    <a disabled>
+                        <li>경기일</li>
+                        <li>매치시간</li>
+                        <li>지역</li>
+                        <li>구장명</li>
+                        <li>등록인원</li>
+                        <li>상태</li>
+                    </a>
+                </ul>
+                <ul class="searchResult" id="searchResult">
+                    <li class="none">검색 결과가 없습니다.</li>
+                </ul>
+            </div>
+        </div>
+    </body>
+</body>
+</html>

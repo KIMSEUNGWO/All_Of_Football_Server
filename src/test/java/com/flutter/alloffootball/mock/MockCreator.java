@@ -1,14 +1,14 @@
 package com.flutter.alloffootball.mock;
 
-import com.flutter.alloffootball.domain.coupon.Coupon;
-import com.flutter.alloffootball.domain.coupon.UserCoupon;
-import com.flutter.alloffootball.domain.field.Field;
-import com.flutter.alloffootball.domain.match.Match;
-import com.flutter.alloffootball.domain.user.User;
-import com.flutter.alloffootball.domain.user.UserInfo;
-import com.flutter.alloffootball.enums.MatchStatus;
-import com.flutter.alloffootball.enums.Role;
-import com.flutter.alloffootball.enums.SexType;
+import com.flutter.alloffootball.common.domain.coupon.Coupon;
+import com.flutter.alloffootball.common.domain.coupon.UserCoupon;
+import com.flutter.alloffootball.common.domain.field.Field;
+import com.flutter.alloffootball.common.domain.match.Match;
+import com.flutter.alloffootball.common.domain.user.User;
+import com.flutter.alloffootball.common.domain.user.UserInfo;
+import com.flutter.alloffootball.common.enums.MatchStatus;
+import com.flutter.alloffootball.common.enums.Role;
+import com.flutter.alloffootball.common.enums.SexType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

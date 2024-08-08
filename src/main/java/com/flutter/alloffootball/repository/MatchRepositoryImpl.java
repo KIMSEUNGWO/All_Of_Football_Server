@@ -1,10 +1,10 @@
 package com.flutter.alloffootball.repository;
 
-import com.flutter.alloffootball.domain.match.Match;
+import com.flutter.alloffootball.common.domain.match.Match;
 import com.flutter.alloffootball.dto.match.RequestSearchMatch;
-import com.flutter.alloffootball.exception.MatchError;
-import com.flutter.alloffootball.exception.MatchException;
-import com.flutter.alloffootball.jparepository.JpaMatchRepository;
+import com.flutter.alloffootball.common.exception.MatchError;
+import com.flutter.alloffootball.common.exception.MatchException;
+import com.flutter.alloffootball.common.jparepository.JpaMatchRepository;
 import com.flutter.alloffootball.querydsl.QueryDslMatchRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;

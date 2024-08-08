@@ -1,8 +1,8 @@
 package com.flutter.alloffootball.wrapper;
 
-import com.flutter.alloffootball.domain.match.Match;
-import com.flutter.alloffootball.domain.orders.Order;
-import com.flutter.alloffootball.domain.user.User;
+import com.flutter.alloffootball.common.domain.match.Match;
+import com.flutter.alloffootball.common.domain.orders.Order;
+import com.flutter.alloffootball.common.domain.user.User;
 import com.flutter.alloffootball.dto.coupon.ResponseCouponUse;
 import com.flutter.alloffootball.dto.order.ResponseOrderResult;
 import lombok.RequiredArgsConstructor;

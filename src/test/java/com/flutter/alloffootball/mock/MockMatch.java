@@ -1,10 +1,10 @@
 package com.flutter.alloffootball.mock;
 
-import com.flutter.alloffootball.domain.field.Field;
-import com.flutter.alloffootball.domain.match.Match;
-import com.flutter.alloffootball.enums.MatchStatus;
-import com.flutter.alloffootball.enums.SexType;
-import com.flutter.alloffootball.jparepository.JpaMatchRepository;
+import com.flutter.alloffootball.common.domain.field.Field;
+import com.flutter.alloffootball.common.domain.match.Match;
+import com.flutter.alloffootball.common.enums.MatchStatus;
+import com.flutter.alloffootball.common.enums.SexType;
+import com.flutter.alloffootball.common.jparepository.JpaMatchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

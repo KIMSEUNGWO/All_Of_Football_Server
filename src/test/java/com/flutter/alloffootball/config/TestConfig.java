@@ -1,7 +1,6 @@
 package com.flutter.alloffootball.config;
 
-import com.flutter.alloffootball.jparepository.*;
-import com.flutter.alloffootball.mock.MockMatch;
+import com.flutter.alloffootball.common.jparepository.*;
 import com.flutter.alloffootball.querydsl.QueryDslMatchRepository;
 import com.flutter.alloffootball.querydsl.QueryDslMatchRepositoryImpl;
 import com.flutter.alloffootball.repository.*;

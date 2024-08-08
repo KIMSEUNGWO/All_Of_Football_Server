@@ -1,9 +1,9 @@
 package com.flutter.alloffootball.repository;
 
-import com.flutter.alloffootball.domain.field.Field;
-import com.flutter.alloffootball.exception.FieldError;
-import com.flutter.alloffootball.exception.FieldException;
-import com.flutter.alloffootball.jparepository.JpaFieldRepository;
+import com.flutter.alloffootball.common.domain.field.Field;
+import com.flutter.alloffootball.common.exception.FieldError;
+import com.flutter.alloffootball.common.exception.FieldException;
+import com.flutter.alloffootball.common.jparepository.JpaFieldRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

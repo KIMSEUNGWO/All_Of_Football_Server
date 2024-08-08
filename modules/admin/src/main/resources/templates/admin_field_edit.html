@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/admin_main.css">
+    <link rel="stylesheet" href="/css/admin_ground_common.css">
+    <script src="/js/admin_ground_edit.js"></script>
+    <script src="/js/admin_ground_image_preview.js"></script>
+    <title>구장정보 :: 프로젝트</title>
+</head>
+<body>
+    <body>
+        <header th:replace="~{/common/header :: header}"></header>
+        <div class="container">
+            <aside class="side box" th:replace="~{/common/admin_menu :: adminMenu}"></aside>
+            <div class="mainBox box">
+                <h2>구장정보</h2>
+                <form th:action="@{/admin/ground/} + ${fieldId} + @{/edit}" method="post" th:object="${editFieldForm}" enctype="multipart/form-data">
+                    <h3>구장이미지</h3>
+                    <div class="preview">
+                        <button type="button" class='imgBox' id="addImage">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width='2rem'>
+                                <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
+                            <span id="maxImage"></span>
+                        </button>
+                        <div class="imgBox" th:each="image : *{savedImages}">
+                            <img th:src="|/images/fieldImage/${image.fieldImageStoreName}|" th:alt="${image.fieldImageName}"/>
+                            <div class="xBox" th:id="${image.fieldImageStoreName}">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" style="rotate: 45deg">
+                                <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="text" th:field="*{deleteImages}">
+                    <input type="file" th:field="*{images}" accept="image/*" multiple th:errorclass="field-error">
+                    <div class="errorBox">
+                        <div class="errorMsg" id="errorImages"></div>
+                        <div class="errorMsg field-error" th:errors="*{images}">[[${errorMsg}]]</div>
+                    </div>
+                    <table>
+                        <tr>
+                            <th>구장이름</th>
+                            <td>
+                                <input type="text" th:field="*{fieldName}" class="inputForm" th:errorclass="field-error">
+                                <div class="errorMsg" id="errorFileName"></div>
+                                <div class="errorMsg field-error" th:errors="*{fieldName}">[[${errorMsg}]]</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>구장위치</th>
+                            <td>
+                                <button type="button" class="regionBox">
+                                    <span id="regionName" th:text="*{region}">지역</span>
+                                    <svg viewBox="0 0 9 6" xmlns="http://www.w3.org/2000/svg"><path d="M4.5 6L8.39711 0.75H0.602886L4.5 6Z" fill="currentColor"></path></svg>
+                                    <ul class="subOption regionOption disabled">
+                                        <li th:each="loc : ${locations}" th:unless="${loc.regionId == 'regionAll'}">
+                                            <input type="radio" th:field="*{region}" th:id="${loc.regionId}" th:value="${loc}" th:errorclass="field-error">
+                                            <label th:for="${loc.regionId}" th:text="${loc}"></label>
+                                        </li>
+                                    </ul>
+                                </button>
+                                <div class="errorMsg" id="errorRegion"></div>
+                                <div class="errorMsg field-error" th:errors="*{region}">[[${errorMsg}]]</div>
+
+                                <input type="text" th:field="*{fieldAddress}" class="inputForm" th:errorclass="field-error">
+                                <button type="button" class="addressBtn btn">주소검색</button>
+                                <div class="errorMsg" id="errorFieldAddress"></div>
+                                <div class="errorMsg field-error" th:errors="*{fieldAddress}">[[${errorMsg}]]</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>구장크기</th>
+                            <td class="sizeBox">
+                                <input type="text" th:field="*{xSize}" placeholder="가로m" class="inputForm size" inputmode="numeric">
+                                <span>X</span>
+                                <input type="text" th:field="*{ySize}" placeholder="세로m" class="inputForm size" inputmode="numeric">
+                                <div class="errorMsg" id="errorSize"></div>
+                                <div class="errorMsg field-error" th:errors="*{images}">[[${errorMsg}]]</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>구장옵션</th>
+                            <td>
+                                <div class="optionBox">
+                                    <div class="options">
+                                        <h4>주차장</h4>
+                                        <ul class="radioBox">
+                                            <li><input type="radio" th:field="*{parking}" id="free" value="무료" th:errorclass="field-error"><label for="free">무료</label></li>
+                                            <li><input type="radio" th:field="*{parking}" id="notFree" value="유료" th:errorclass="field-error"><label for="notFree">유료</label></li>
+                                            <li><input type="radio" th:field="*{parking}" id="not" value="불가" th:errorclass="field-error"><label for="not">불가</label></li>
+                                        </ul>
+                                        <div class="errorBox">
+                                            <div class="errorMsg" id="errorParking"></div>
+                                            <div class="errorMsg field-error" th:errors="*{parking}">[[${errorMsg}]]</div>
+                                        </div>
+                                    </div>
+                                    <div class="options">
+                                        <h4>화장실</h4>
+                                        <ul class="radioBox">
+                                            <li><input type="radio" th:field="*{toilet}" id="oToilet" value="있음" th:errorclass="field-error"><label for="oToilet">있음</label></li>
+                                            <li><input type="radio" th:field="*{toilet}" id="xToilet" value="없음" th:errorclass="field-error"><label for="xToilet">없음</label></li>
+                                        </ul>
+                                        <div class="errorBox">
+                                            <div class="errorMsg" id="errorToilet"></div>
+                                            <div class="errorMsg field-error" th:errors="*{toilet}">[[${errorMsg}]]</div>
+                                        </div>
+                                    </div>
+                                    <div class="options">
+                                        <h4>샤워장</h4>
+                                        <ul class="radioBox">
+                                            <li><input type="radio" th:field="*{shower}" id="oShower" value="있음" th:errorclass="field-error"><label for="oShower">있음</label></li>
+                                            <li><input type="radio" th:field="*{shower}" id="xShower" value="없음" th:errorclass="field-error"><label for="xShower">없음</label></li>
+                                        </ul>
+                                        <div class="errorBox">
+                                            <div class="errorMsg" id="errorShower"></div>
+                                            <div class="errorMsg field-error" th:errors="*{shower}">[[${errorMsg}]]</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>구장 특이사항</th>
+                            <td>
+                                <textarea th:field="*{fieldDetails}" cols="30" rows="10" class="inputForm" th:errorclass="field-error"></textarea>
+                                <div class="errorMsg" id="errorDetails"></div>
+                                <div class="errorMsg field-error" th:errors="*{fieldDetails}">[[${errorMsg}]]</div>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="submitBox">
+                        <input type="submit" class="submitBtn btn" value="등록">
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+    </body>
+</body>
+</html>

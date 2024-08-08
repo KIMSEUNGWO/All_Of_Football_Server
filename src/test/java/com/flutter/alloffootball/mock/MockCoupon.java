@@ -1,7 +1,7 @@
 package com.flutter.alloffootball.mock;
 
-import com.flutter.alloffootball.domain.coupon.Coupon;
-import com.flutter.alloffootball.jparepository.JpaCouponRepository;
+import com.flutter.alloffootball.common.domain.coupon.Coupon;
+import com.flutter.alloffootball.common.jparepository.JpaCouponRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

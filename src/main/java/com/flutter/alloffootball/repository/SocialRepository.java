@@ -1,7 +1,7 @@
 package com.flutter.alloffootball.repository;
 
-import com.flutter.alloffootball.domain.user.User;
-import com.flutter.alloffootball.enums.Provider;
+import com.flutter.alloffootball.common.domain.user.User;
+import com.flutter.alloffootball.common.enums.Provider;
 
 import java.util.Optional;
 

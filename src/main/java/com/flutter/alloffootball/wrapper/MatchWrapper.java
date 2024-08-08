@@ -1,7 +1,7 @@
 package com.flutter.alloffootball.wrapper;
 
-import com.flutter.alloffootball.domain.match.Match;
-import com.flutter.alloffootball.domain.user.User;
+import com.flutter.alloffootball.common.domain.match.Match;
+import com.flutter.alloffootball.common.domain.user.User;
 import com.flutter.alloffootball.dto.match.MatchCondition;
 import com.flutter.alloffootball.dto.match.ResponseMatchData;
 import com.flutter.alloffootball.dto.match.ResponseMatchDetails;

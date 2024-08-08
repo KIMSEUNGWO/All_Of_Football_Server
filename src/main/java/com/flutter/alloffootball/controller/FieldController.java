@@ -1,6 +1,6 @@
 package com.flutter.alloffootball.controller;
 
-import com.flutter.alloffootball.dto.Response;
+import com.flutter.alloffootball.common.dto.Response;
 import com.flutter.alloffootball.dto.field.ResponseFieldData;
 import com.flutter.alloffootball.dto.match.ResponseMatchData;
 import com.flutter.alloffootball.service.FieldService;

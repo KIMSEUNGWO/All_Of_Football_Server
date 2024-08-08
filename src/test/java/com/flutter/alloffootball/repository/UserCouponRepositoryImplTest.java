@@ -1,20 +1,17 @@
 package com.flutter.alloffootball.repository;
 
 
+import com.flutter.alloffootball.common.exception.*;
 import com.flutter.alloffootball.config.MockConfig;
 import com.flutter.alloffootball.config.TestConfig;
-import com.flutter.alloffootball.domain.coupon.UserCoupon;
-import com.flutter.alloffootball.domain.user.User;
-import com.flutter.alloffootball.domain.user.UserInfo;
+import com.flutter.alloffootball.common.domain.coupon.UserCoupon;
+import com.flutter.alloffootball.common.domain.user.User;
+import com.flutter.alloffootball.common.domain.user.UserInfo;
 import com.flutter.alloffootball.dto.coupon.ResponseCouponUse;
-import com.flutter.alloffootball.enums.Role;
-import com.flutter.alloffootball.enums.SexType;
-import com.flutter.alloffootball.exception.*;
-import com.flutter.alloffootball.jparepository.JpaCashRepository;
-import com.flutter.alloffootball.jparepository.JpaUserCouponRepository;
+import com.flutter.alloffootball.common.enums.Role;
+import com.flutter.alloffootball.common.enums.SexType;
+import com.flutter.alloffootball.common.jparepository.JpaUserCouponRepository;
 import com.flutter.alloffootball.mock.MockCreator;
-import com.flutter.alloffootball.service.OrderService;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

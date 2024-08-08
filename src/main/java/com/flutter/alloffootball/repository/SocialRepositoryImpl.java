@@ -1,8 +1,8 @@
 package com.flutter.alloffootball.repository;
 
-import com.flutter.alloffootball.domain.user.User;
-import com.flutter.alloffootball.enums.Provider;
-import com.flutter.alloffootball.jparepository.JpaUserRepository;
+import com.flutter.alloffootball.common.domain.user.User;
+import com.flutter.alloffootball.common.enums.Provider;
+import com.flutter.alloffootball.common.jparepository.JpaUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

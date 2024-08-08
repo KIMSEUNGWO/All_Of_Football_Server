@@ -1,12 +1,12 @@
 package com.flutter.alloffootball.controller;
 
-import com.flutter.alloffootball.config.security.CustomUserDetails;
-import com.flutter.alloffootball.dto.Response;
+import com.flutter.alloffootball.common.config.security.CustomUserDetails;
+import com.flutter.alloffootball.common.dto.Response;
 import com.flutter.alloffootball.dto.match.RequestSearchMatch;
 import com.flutter.alloffootball.dto.match.ResponseMatchData;
 import com.flutter.alloffootball.dto.match.ResponseMatchDetails;
 import com.flutter.alloffootball.dto.match.ResponseMatchOrder;
-import com.flutter.alloffootball.exception.BindingException;
+import com.flutter.alloffootball.common.exception.BindingException;
 import com.flutter.alloffootball.service.MatchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;

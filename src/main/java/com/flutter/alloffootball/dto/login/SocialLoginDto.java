@@ -1,6 +1,6 @@
 package com.flutter.alloffootball.dto.login;
 
-import com.flutter.alloffootball.enums.Provider;
+import com.flutter.alloffootball.common.enums.Provider;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.ToString;

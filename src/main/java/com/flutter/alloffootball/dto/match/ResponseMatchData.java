@@ -1,6 +1,6 @@
 package com.flutter.alloffootball.dto.match;
 
-import com.flutter.alloffootball.enums.MatchStatus;
+import com.flutter.alloffootball.common.enums.MatchStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

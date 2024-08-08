@@ -1,6 +1,6 @@
 package com.flutter.alloffootball.querydsl;
 
-import com.flutter.alloffootball.domain.match.Match;
+import com.flutter.alloffootball.common.domain.match.Match;
 import com.flutter.alloffootball.dto.match.RequestSearchMatch;
 import org.springframework.data.domain.Pageable;
 

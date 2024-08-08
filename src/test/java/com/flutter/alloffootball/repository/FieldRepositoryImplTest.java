@@ -3,12 +3,8 @@ package com.flutter.alloffootball.repository;
 
 import com.flutter.alloffootball.config.MockConfig;
 import com.flutter.alloffootball.config.TestConfig;
-import com.flutter.alloffootball.domain.field.Address;
-import com.flutter.alloffootball.domain.field.Field;
-import com.flutter.alloffootball.domain.field.FieldData;
-import com.flutter.alloffootball.enums.region.Region;
-import com.flutter.alloffootball.exception.FieldError;
-import com.flutter.alloffootball.exception.FieldException;
+import com.flutter.alloffootball.common.exception.FieldError;
+import com.flutter.alloffootball.common.exception.FieldException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

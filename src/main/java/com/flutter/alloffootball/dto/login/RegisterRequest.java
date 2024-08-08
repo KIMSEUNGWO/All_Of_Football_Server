@@ -1,7 +1,7 @@
 package com.flutter.alloffootball.dto.login;
 
-import com.flutter.alloffootball.enums.Provider;
-import com.flutter.alloffootball.enums.SexType;
+import com.flutter.alloffootball.common.enums.Provider;
+import com.flutter.alloffootball.common.enums.SexType;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;

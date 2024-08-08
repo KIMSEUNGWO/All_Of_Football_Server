@@ -1,15 +1,13 @@
 package com.flutter.alloffootball.mock;
 
-import com.flutter.alloffootball.domain.user.Social;
-import com.flutter.alloffootball.domain.user.User;
-import com.flutter.alloffootball.domain.user.UserInfo;
-import com.flutter.alloffootball.enums.Provider;
-import com.flutter.alloffootball.enums.Role;
-import com.flutter.alloffootball.jparepository.JpaUserRepository;
+import com.flutter.alloffootball.common.domain.user.Social;
+import com.flutter.alloffootball.common.domain.user.User;
+import com.flutter.alloffootball.common.domain.user.UserInfo;
+import com.flutter.alloffootball.common.enums.Provider;
+import com.flutter.alloffootball.common.enums.Role;
+import com.flutter.alloffootball.common.jparepository.JpaUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.time.LocalDate;
 
 @Component
 public class MockUser {

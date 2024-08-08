@@ -1,10 +1,10 @@
 package com.flutter.alloffootball.mock;
 
-import com.flutter.alloffootball.domain.field.Address;
-import com.flutter.alloffootball.domain.field.Field;
-import com.flutter.alloffootball.domain.field.FieldData;
-import com.flutter.alloffootball.enums.region.Region;
-import com.flutter.alloffootball.jparepository.JpaFieldRepository;
+import com.flutter.alloffootball.common.domain.field.Address;
+import com.flutter.alloffootball.common.domain.field.Field;
+import com.flutter.alloffootball.common.domain.field.FieldData;
+import com.flutter.alloffootball.common.enums.region.Region;
+import com.flutter.alloffootball.common.jparepository.JpaFieldRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

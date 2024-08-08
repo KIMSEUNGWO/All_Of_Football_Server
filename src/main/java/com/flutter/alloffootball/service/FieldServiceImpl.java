@@ -1,6 +1,6 @@
 package com.flutter.alloffootball.service;
 
-import com.flutter.alloffootball.domain.field.Field;
+import com.flutter.alloffootball.common.domain.field.Field;
 import com.flutter.alloffootball.dto.field.ResponseFieldData;
 import com.flutter.alloffootball.repository.FieldRepository;
 import com.flutter.alloffootball.wrapper.FieldWrapper;

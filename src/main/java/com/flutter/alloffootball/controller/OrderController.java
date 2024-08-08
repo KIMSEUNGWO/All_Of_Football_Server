@@ -1,7 +1,7 @@
 package com.flutter.alloffootball.controller;
 
-import com.flutter.alloffootball.config.security.CustomUserDetails;
-import com.flutter.alloffootball.dto.Response;
+import com.flutter.alloffootball.common.config.security.CustomUserDetails;
+import com.flutter.alloffootball.common.dto.Response;
 import com.flutter.alloffootball.dto.order.RequestOrder;
 import com.flutter.alloffootball.dto.order.ResponseOrderResult;
 import com.flutter.alloffootball.service.OrderService;

@@ -1,10 +1,9 @@
 package com.flutter.alloffootball.api;
 
 import com.flutter.alloffootball.api.line.LineAPI;
-import com.flutter.alloffootball.dto.login.SocialLoginDto;
-import com.flutter.alloffootball.enums.Provider;
-import com.flutter.alloffootball.exception.SocialError;
-import com.flutter.alloffootball.exception.SocialException;
+import com.flutter.alloffootball.common.enums.Provider;
+import com.flutter.alloffootball.common.exception.SocialError;
+import com.flutter.alloffootball.common.exception.SocialException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

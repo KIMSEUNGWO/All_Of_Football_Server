@@ -1,11 +1,11 @@
 package com.flutter.alloffootball.repository;
 
-import com.flutter.alloffootball.domain.user.User;
-import com.flutter.alloffootball.exception.TokenError;
-import com.flutter.alloffootball.exception.TokenException;
-import com.flutter.alloffootball.exception.UserError;
-import com.flutter.alloffootball.exception.UserException;
-import com.flutter.alloffootball.jparepository.JpaUserRepository;
+import com.flutter.alloffootball.common.domain.user.User;
+import com.flutter.alloffootball.common.exception.TokenError;
+import com.flutter.alloffootball.common.exception.TokenException;
+import com.flutter.alloffootball.common.exception.UserError;
+import com.flutter.alloffootball.common.exception.UserException;
+import com.flutter.alloffootball.common.jparepository.JpaUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

@@ -2,10 +2,10 @@ package com.flutter.alloffootball.api.line;
 
 import com.flutter.alloffootball.api.ResponseTo;
 import com.flutter.alloffootball.api.SocialProfile;
-import com.flutter.alloffootball.exception.SocialError;
-import com.flutter.alloffootball.exception.SocialException;
-import com.flutter.alloffootball.exception.TokenError;
-import com.flutter.alloffootball.exception.TokenException;
+import com.flutter.alloffootball.common.exception.SocialError;
+import com.flutter.alloffootball.common.exception.SocialException;
+import com.flutter.alloffootball.common.exception.TokenError;
+import com.flutter.alloffootball.common.exception.TokenException;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;

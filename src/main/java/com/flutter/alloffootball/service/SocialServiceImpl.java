@@ -1,9 +1,9 @@
 package com.flutter.alloffootball.service;
 
-import com.flutter.alloffootball.domain.user.User;
+import com.flutter.alloffootball.common.domain.user.User;
 import com.flutter.alloffootball.dto.login.SocialLoginDto;
-import com.flutter.alloffootball.exception.TokenError;
-import com.flutter.alloffootball.exception.TokenException;
+import com.flutter.alloffootball.common.exception.TokenError;
+import com.flutter.alloffootball.common.exception.TokenException;
 import com.flutter.alloffootball.repository.SocialRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

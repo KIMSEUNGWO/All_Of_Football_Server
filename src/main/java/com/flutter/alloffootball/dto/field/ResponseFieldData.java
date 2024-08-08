@@ -1,7 +1,7 @@
 package com.flutter.alloffootball.dto.field;
 
-import com.flutter.alloffootball.domain.field.Address;
-import com.flutter.alloffootball.domain.field.FieldData;
+import com.flutter.alloffootball.common.domain.field.Address;
+import com.flutter.alloffootball.common.domain.field.FieldData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

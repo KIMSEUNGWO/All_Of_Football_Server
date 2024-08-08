@@ -1,9 +1,9 @@
 package com.flutter.alloffootball.querydsl;
 
-import com.flutter.alloffootball.domain.match.Match;
+import com.flutter.alloffootball.common.domain.match.Match;
 import com.flutter.alloffootball.dto.match.RequestSearchMatch;
-import com.flutter.alloffootball.enums.SexType;
-import com.flutter.alloffootball.enums.region.Region;
+import com.flutter.alloffootball.common.enums.SexType;
+import com.flutter.alloffootball.common.enums.region.Region;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
-import static com.flutter.alloffootball.domain.match.QMatch.*;
+import static com.flutter.alloffootball.common.domain.match.QMatch.*;
 
 @Repository
 @RequiredArgsConstructor

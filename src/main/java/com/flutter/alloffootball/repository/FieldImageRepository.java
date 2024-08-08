@@ -1,6 +1,6 @@
 package com.flutter.alloffootball.repository;
 
-import com.flutter.alloffootball.domain.field.FieldImage;
+import com.flutter.alloffootball.common.domain.field.FieldImage;
 
 import java.util.List;
 

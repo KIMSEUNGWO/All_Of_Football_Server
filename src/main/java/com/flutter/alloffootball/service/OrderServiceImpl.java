@@ -1,13 +1,13 @@
 package com.flutter.alloffootball.service;
 
-import com.flutter.alloffootball.domain.coupon.UserCoupon;
-import com.flutter.alloffootball.domain.match.Match;
-import com.flutter.alloffootball.domain.orders.Order;
-import com.flutter.alloffootball.domain.user.User;
+import com.flutter.alloffootball.common.domain.coupon.UserCoupon;
+import com.flutter.alloffootball.common.domain.match.Match;
+import com.flutter.alloffootball.common.domain.orders.Order;
+import com.flutter.alloffootball.common.domain.user.User;
 import com.flutter.alloffootball.dto.coupon.ResponseCouponUse;
 import com.flutter.alloffootball.dto.order.RequestOrder;
 import com.flutter.alloffootball.dto.order.ResponseOrderResult;
-import com.flutter.alloffootball.enums.OrderStatus;
+import com.flutter.alloffootball.common.enums.OrderStatus;
 import com.flutter.alloffootball.repository.*;
 import com.flutter.alloffootball.wrapper.OrderWrapper;
 import lombok.RequiredArgsConstructor;

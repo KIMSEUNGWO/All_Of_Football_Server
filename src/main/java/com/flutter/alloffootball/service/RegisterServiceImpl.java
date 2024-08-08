@@ -1,12 +1,12 @@
 package com.flutter.alloffootball.service;
 
 import com.flutter.alloffootball.api.SocialProfile;
-import com.flutter.alloffootball.domain.user.Profile;
-import com.flutter.alloffootball.domain.user.Social;
-import com.flutter.alloffootball.domain.user.User;
-import com.flutter.alloffootball.domain.user.UserInfo;
+import com.flutter.alloffootball.common.domain.user.Profile;
+import com.flutter.alloffootball.common.domain.user.Social;
+import com.flutter.alloffootball.common.domain.user.User;
+import com.flutter.alloffootball.common.domain.user.UserInfo;
 import com.flutter.alloffootball.dto.login.RegisterRequest;
-import com.flutter.alloffootball.enums.Role;
+import com.flutter.alloffootball.common.enums.Role;
 import com.flutter.alloffootball.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

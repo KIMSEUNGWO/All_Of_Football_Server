@@ -1,13 +1,13 @@
 package com.flutter.alloffootball.repository;
 
-import com.flutter.alloffootball.config.security.CustomUserDetails;
-import com.flutter.alloffootball.domain.match.Match;
-import com.flutter.alloffootball.domain.orders.Order;
-import com.flutter.alloffootball.domain.user.User;
-import com.flutter.alloffootball.enums.MatchStatus;
-import com.flutter.alloffootball.exception.OrderError;
-import com.flutter.alloffootball.exception.OrderException;
-import com.flutter.alloffootball.jparepository.JpaOrderRepository;
+import com.flutter.alloffootball.common.config.security.CustomUserDetails;
+import com.flutter.alloffootball.common.domain.match.Match;
+import com.flutter.alloffootball.common.domain.orders.Order;
+import com.flutter.alloffootball.common.domain.user.User;
+import com.flutter.alloffootball.common.enums.MatchStatus;
+import com.flutter.alloffootball.common.exception.OrderError;
+import com.flutter.alloffootball.common.exception.OrderException;
+import com.flutter.alloffootball.common.jparepository.JpaOrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

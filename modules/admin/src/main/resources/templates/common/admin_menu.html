@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <aside class="side box" th:fragment="adminMenu">
+        <div class="profile">
+            <span class="name" th:text="${name}"></span><small th:text="${authority}"></small>
+        </div>
+        <hr class="sideHr">
+        <ul class="adMenu">
+            <li><a href="/admin" class="adMenuList">전체통계</a></li>
+            <li><a href="/admin/field" class="adMenuList">구장관리</a></li>
+            <li><a href="/admin/match" class="adMenuList">경기관리</a></li>
+            <li><a href="/admin/users" class="adMenuList">회원관리</a></li>
+            <li><a href="/admin/inquire" class="adMenuList">문의사항</a></li>
+            <li><a href="/admin/settings" class="adMenuList">개인정보변경</a></li>
+        </ul>
+    </aside>
+</body>
+</html>

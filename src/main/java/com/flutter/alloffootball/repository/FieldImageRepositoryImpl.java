@@ -1,7 +1,7 @@
 package com.flutter.alloffootball.repository;
 
-import com.flutter.alloffootball.domain.field.FieldImage;
-import com.flutter.alloffootball.jparepository.JpaFieldImageRepository;
+import com.flutter.alloffootball.common.domain.field.FieldImage;
+import com.flutter.alloffootball.common.jparepository.JpaFieldImageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

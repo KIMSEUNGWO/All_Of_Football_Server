@@ -1,7 +1,7 @@
 package com.flutter.alloffootball.service;
 
-import com.flutter.alloffootball.config.security.CustomUserDetails;
-import com.flutter.alloffootball.domain.match.Match;
+import com.flutter.alloffootball.common.config.security.CustomUserDetails;
+import com.flutter.alloffootball.common.domain.match.Match;
 import com.flutter.alloffootball.dto.match.RequestSearchMatch;
 import com.flutter.alloffootball.dto.match.ResponseMatchData;
 import com.flutter.alloffootball.dto.match.ResponseMatchDetails;

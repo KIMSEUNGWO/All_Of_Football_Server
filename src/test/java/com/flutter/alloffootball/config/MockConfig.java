@@ -1,6 +1,6 @@
 package com.flutter.alloffootball.config;
 
-import com.flutter.alloffootball.jparepository.*;
+import com.flutter.alloffootball.common.jparepository.*;
 import com.flutter.alloffootball.mock.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;

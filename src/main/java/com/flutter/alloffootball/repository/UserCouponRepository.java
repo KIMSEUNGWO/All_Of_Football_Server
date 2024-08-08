@@ -1,7 +1,6 @@
 package com.flutter.alloffootball.repository;
 
-import com.flutter.alloffootball.domain.coupon.UserCoupon;
-import com.flutter.alloffootball.domain.match.Match;
+import com.flutter.alloffootball.common.domain.coupon.UserCoupon;
 import com.flutter.alloffootball.dto.coupon.ResponseCouponUse;
 
 import java.time.LocalDateTime;

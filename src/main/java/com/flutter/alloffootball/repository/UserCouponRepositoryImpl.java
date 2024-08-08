@@ -1,9 +1,9 @@
 package com.flutter.alloffootball.repository;
 
-import com.flutter.alloffootball.domain.coupon.UserCoupon;
+import com.flutter.alloffootball.common.domain.coupon.UserCoupon;
+import com.flutter.alloffootball.common.exception.*;
 import com.flutter.alloffootball.dto.coupon.ResponseCouponUse;
-import com.flutter.alloffootball.exception.*;
-import com.flutter.alloffootball.jparepository.JpaUserCouponRepository;
+import com.flutter.alloffootball.common.jparepository.JpaUserCouponRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,10 +1,10 @@
 package com.flutter.alloffootball.repository;
 
-import com.flutter.alloffootball.domain.Cash;
-import com.flutter.alloffootball.domain.orders.Order;
-import com.flutter.alloffootball.domain.user.User;
-import com.flutter.alloffootball.enums.CashType;
-import com.flutter.alloffootball.jparepository.JpaCashRepository;
+import com.flutter.alloffootball.common.domain.Cash;
+import com.flutter.alloffootball.common.domain.orders.Order;
+import com.flutter.alloffootball.common.domain.user.User;
+import com.flutter.alloffootball.common.enums.CashType;
+import com.flutter.alloffootball.common.jparepository.JpaCashRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
