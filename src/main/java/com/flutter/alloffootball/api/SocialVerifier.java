@@ -1,0 +1,29 @@
+package com.flutter.alloffootball.api;
+
+import com.flutter.alloffootball.api.line.LineAPI;
+import com.flutter.alloffootball.dto.login.SocialLoginDto;
+import com.flutter.alloffootball.enums.Provider;
+import com.flutter.alloffootball.exception.SocialError;
+import com.flutter.alloffootball.exception.SocialException;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+
+@Component
+@RequiredArgsConstructor
+public class SocialVerifier {
+
+    private final LineAPI lineAPI;
+
+    public SocialProfile getProfile(String socialId, Provider provider, String accessToken) {
+        if (socialId == null || provider == null || accessToken == null) {
+            throw new SocialException(SocialError.INVALID_REQUEST);
+        }
+
+        if (provider == Provider.LINE) {
+            lineAPI.accessTokenVerify(accessToken);
+            return lineAPI.getSocialProfile(accessToken);
+        }
+
+        throw new SocialException(SocialError.INVALID_REQUEST);
+    }
+}
