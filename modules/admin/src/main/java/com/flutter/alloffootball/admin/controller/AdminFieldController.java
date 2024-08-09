@@ -1,6 +1,7 @@
 package com.flutter.alloffootball.admin.controller;
 
 import com.flutter.alloffootball.admin.dto.RequestSaveFieldForm;
+import com.flutter.alloffootball.admin.dto.ResponseViewField;
 import com.flutter.alloffootball.admin.service.AdminService;
 import com.flutter.alloffootball.common.config.security.AdminUserDetails;
 import com.flutter.alloffootball.common.enums.region.Region;
@@ -10,10 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -40,11 +38,17 @@ public class AdminFieldController {
     @PostMapping("/add")
     public String postFieldAdd(@Validated @ModelAttribute("saveFieldForm") RequestSaveFieldForm saveFieldForm,
                                BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "admin_field_add";
-        }
+        if (bindingResult.hasErrors()) return "admin_field_add";
+
         adminService.saveField(saveFieldForm);
         return "redirect:/admin/field";
+    }
+
+    @GetMapping("/{fieldId}")
+    public String fieldView(@PathVariable("fieldId") long fieldId, Model model) {
+        ResponseViewField viewField = adminService.findByIdViewField(fieldId);
+        model.addAttribute("field", viewField);
+        return "admin_field_view";
     }
 
 }
