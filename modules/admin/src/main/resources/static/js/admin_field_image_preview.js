@@ -6,13 +6,13 @@ window.addEventListener('load', () => {
     maxImage.innerHTML = '사진추가 (최대 ' + maxImages + '장)';
 
     let inputFile = document.querySelector('input[type="file"]');
-    inputFile.addEventListener('change', (e) => {
 
+    let imagePreview = () => {
         let files = inputFile.files;
         if (!isImage(files)) {
             inputFile.value = '';
             return;
-        } 
+        }
         // 이미지 담을 배열 생성
         let imageFiles = getFileArray(files);
 
@@ -21,7 +21,13 @@ window.addEventListener('load', () => {
             inputFile.files = newFileList(imageFiles);
         }
         printPreview(imageFiles);
+    }
 
+    imagePreview();
+
+
+    inputFile.addEventListener('change', (e) => {
+        imagePreview();
     })
 
     document.addEventListener('click', e => {

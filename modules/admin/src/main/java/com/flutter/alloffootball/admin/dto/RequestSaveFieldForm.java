@@ -6,11 +6,14 @@ import com.flutter.alloffootball.common.enums.field.Toilet;
 import com.flutter.alloffootball.common.enums.region.Region;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -18,7 +21,7 @@ import java.util.List;
 @ToString
 public class RequestSaveFieldForm {
 
-    private List<MultipartFile> images;
+    private List<MultipartFile> images = new ArrayList<>();
 
     @NotNull
     private String title;

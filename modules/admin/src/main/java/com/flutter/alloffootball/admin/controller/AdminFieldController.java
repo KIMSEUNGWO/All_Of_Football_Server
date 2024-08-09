@@ -38,12 +38,12 @@ public class AdminFieldController {
         return "admin_field_add";
     }
     @PostMapping("/add")
-    public String postFieldAdd(@ModelAttribute @Validated RequestSaveFieldForm saveFieldForm,
+    public String postFieldAdd(@Validated @ModelAttribute("saveFieldForm") RequestSaveFieldForm saveFieldForm,
                                BindingResult bindingResult) {
-        for (int i = 0; i < 26; i++) {
-
-            adminService.saveField(saveFieldForm);
+        if (bindingResult.hasErrors()) {
+            return "admin_field_add";
         }
+        adminService.saveField(saveFieldForm);
         return "redirect:/admin/field";
     }
 
