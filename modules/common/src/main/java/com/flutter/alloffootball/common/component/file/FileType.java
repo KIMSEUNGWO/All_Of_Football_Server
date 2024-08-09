@@ -8,9 +8,7 @@ import lombok.Getter;
 public enum FileType {
 
     PROFILE(    "profile",  "/original/profile/",   "/thumbnail/profile/"),
-    CLUB_IMAGE( "club",     "/original/club/",      "/thumbnail/club/"),
-    BOARD_IMAGE("board",    "/original/board/",     "/thumbnail/board/"),
-    MEETING_IMAGE("meeting",    "/original/meeting/",     "/thumbnail/meeting/");
+    FIELD_IMAGE( "field",     "/original/field/",      "/thumbnail/field/");
 
     private final String dir;
     private final String originalPath;

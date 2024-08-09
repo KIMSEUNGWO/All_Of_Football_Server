@@ -46,13 +46,14 @@ public class FileService {
         List<FieldImage> saveImages = new ArrayList<>();
         for (MultipartFile file : files) {
             if (file == null || file.getContentType() == null) continue;
+            if (file.isEmpty()) continue;
 
             String originalName = file.getOriginalFilename();
             String storeName = createName(originalName);
             String thumbnailName = createName(originalName);
 
             try {
-                fileRepository.upload(file, FileType.BOARD_IMAGE, storeName, thumbnailName);
+                fileRepository.upload(file, FileType.FIELD_IMAGE, storeName, thumbnailName);
             } catch (IOException e) {
                 e.printStackTrace();
                 throw new FileUploadException(FileCode.FAILED_TO_UPLOAD_FILE);
@@ -70,7 +71,7 @@ public class FileService {
         List<FieldImage> removeBoardImages = fieldImageRepository.findAllById(removeImages);
 
         for (FieldImage removeBoardImage : removeBoardImages) {
-            fileRepository.delete(removeBoardImage.getStoreName(), removeBoardImage.getThumbnailName(), FileType.BOARD_IMAGE);
+            fileRepository.delete(removeBoardImage.getStoreName(), removeBoardImage.getThumbnailName(), FileType.FIELD_IMAGE);
         }
         fieldImageRepository.deleteAllById(removeImages);
 
@@ -84,7 +85,7 @@ public class FileService {
     }
 
     public void deleteImage(BaseEntityImage image) {
-        fileRepository.delete(image.getStoreName(), image.getThumbnailName(), FileType.BOARD_IMAGE);
+        fileRepository.delete(image.getStoreName(), image.getThumbnailName(), FileType.FIELD_IMAGE);
     }
 
     private String createName(String originalFileName) {

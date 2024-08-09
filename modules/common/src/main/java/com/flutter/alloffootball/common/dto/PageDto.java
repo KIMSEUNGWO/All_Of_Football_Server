@@ -1,5 +1,6 @@
 package com.flutter.alloffootball.common.dto;
 
+import com.flutter.alloffootball.common.enums.region.Region;
 import lombok.Getter;
 import org.springframework.data.domain.Page;
 
@@ -13,12 +14,16 @@ public class PageDto<T> {
     private final int pageSize;
     private final long totalElements;
     private final int totalPages;
+    private final String word;
+    private final Region region;
 
-    public PageDto(Page<T> page) {
+    public PageDto(Page<T> page, String word, Region region) {
         this.content = page.getContent();
         this.pageNumber = page.getNumber();
         this.pageSize = page.getSize();
         this.totalElements = page.getTotalElements();
-        this.totalPages = page.getTotalPages() == 0 ? 1 : page.getTotalPages();
+        this.totalPages = page.getTotalPages();
+        this.word = word;
+        this.region = region;
     }
 }

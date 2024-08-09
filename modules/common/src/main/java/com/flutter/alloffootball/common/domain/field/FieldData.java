@@ -1,6 +1,11 @@
 package com.flutter.alloffootball.common.domain.field;
 
+import com.flutter.alloffootball.common.enums.field.Parking;
+import com.flutter.alloffootball.common.enums.field.Shower;
+import com.flutter.alloffootball.common.enums.field.Toilet;
 import jakarta.persistence.Embeddable;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,9 +18,14 @@ import lombok.NoArgsConstructor;
 @Builder
 public class FieldData {
 
-    private char parking;
-    private char shower;
-    private char toilet;
+    @Enumerated(EnumType.STRING)
+    private Parking parking;
+
+    @Enumerated(EnumType.STRING)
+    private Shower shower;
+
+    @Enumerated(EnumType.STRING)
+    private Toilet toilet;
 
     private int sizeX;
     private int sizeY;

@@ -1,6 +1,7 @@
 package com.flutter.alloffootball.common.enums.region;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -45,6 +46,11 @@ public enum Region {
             if (region.name().equals(data)) return region;
         }
         return null;
+    }
+
+    @JsonValue
+    public String toJson() {
+        return this.name();
     }
 
 }

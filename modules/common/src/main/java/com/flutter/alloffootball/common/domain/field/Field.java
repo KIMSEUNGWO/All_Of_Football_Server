@@ -24,6 +24,8 @@ public class Field {
     private Long id;
 
     private String title;
+
+    @Lob
     private String description;
 
     @Embedded

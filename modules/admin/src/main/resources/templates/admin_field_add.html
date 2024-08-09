@@ -20,7 +20,7 @@
             <aside class="side box" th:replace="~{/common/admin_menu :: adminMenu}"></aside>
             <div class="mainBox box">
                 <h2>구장등록</h2>
-                <form th:action action="/admin/ground/add" method="post" th:object="${saveFieldForm}" enctype="multipart/form-data">
+                <form th:action action="/admin/field/add" method="post" th:object="${saveFieldForm}" enctype="multipart/form-data">
                     <h3>구장이미지</h3>
                     <div class="preview">
                         <button type="button" class='imgBox' id="addImage">
@@ -38,9 +38,9 @@
                         <tr>
                             <th>구장이름</th>
                             <td>
-                                <input type="text" th:field="*{fieldName}" class="inputForm" th:errorclass="field-error">
+                                <input type="text" th:field="*{title}" class="inputForm" th:errorclass="field-error">
                                 <div class="errorMsg" id="errorFileName"></div>
-                                <div class="errorMsg field-error" th:errors="*{fieldName}">[[${errorMsg}]]</div>
+                                <div class="errorMsg field-error" th:errors="*{title}">[[${errorMsg}]]</div>
                             </td>
                         </tr>
                         <tr>
@@ -50,27 +50,27 @@
                                     <span id="regionName">지역</span>
                                     <svg viewBox="0 0 9 6" xmlns="http://www.w3.org/2000/svg"><path d="M4.5 6L8.39711 0.75H0.602886L4.5 6Z" fill="currentColor"></path></svg>
                                     <ul class="subOption regionOption disabled">
-                                        <li th:each="loc : ${locations}" th:unless="${loc.regionId == 'regionAll'}">
-                                            <input type="radio" th:field="*{region}" th:id="${loc.regionId}" th:value="${loc}" th:errorclass="field-error">
-                                            <label th:for="${loc.regionId}" th:text="${loc}"></label>
+                                        <li th:each="loc : ${region}">
+                                            <input type="radio" name="region" th:id="${loc.name()}" th:value="${loc}">
+                                            <label th:for="${loc.name()}" th:text="${loc}"></label>
                                         </li>
                                     </ul>
                                 </button>
                                 <div class="errorMsg" id="errorRegion"></div>
                                 <div class="errorMsg field-error" th:errors="*{region}">[[${errorMsg}]]</div>
 
-                                <input type="text" th:field="*{fieldAddress}" class="inputForm" th:errorclass="field-error" readonly placeholder="도로명 주소">
+                                <input type="text" th:field="*{address}" class="inputForm" th:errorclass="field-error" readonly placeholder="도로명 주소">
                                 <button type="button" class="addressBtn btn" onclick="searchAddress()">주소검색</button>
                                 <div class="errorMsg" id="errorFieldAddress"></div>
-                                <div class="errorMsg field-error" th:errors="*{fieldAddress}">[[${errorMsg}]]</div>
+                                <div class="errorMsg field-error" th:errors="*{address}">[[${errorMsg}]]</div>
                             </td>
                         </tr>
                         <tr>
                             <th>구장크기</th>
                             <td class="sizeBox">
-                                <input type="text" th:field="*{xSize}" placeholder="가로m" class="inputForm size" inputmode="numeric">
+                                <input type="text" th:field="*{sizeX}" placeholder="가로m" class="inputForm size" inputmode="numeric">
                                 <span>X</span>
-                                <input type="text" th:field="*{ySize}" placeholder="세로m" class="inputForm size" inputmode="numeric">
+                                <input type="text" th:field="*{sizeY}" placeholder="세로m" class="inputForm size" inputmode="numeric">
                                 <div class="errorMsg" id="errorSize"></div>
                                 <div class="errorMsg field-error" th:errors="*{images}">[[${errorMsg}]]</div>
                             </td>
@@ -82,9 +82,9 @@
                                     <div class="options">
                                         <h4>주차장</h4>
                                         <ul class="radioBox">
-                                            <li><input type="radio" th:field="*{parking}" id="free" value="무료" th:errorclass="field-error"><label for="free">무료</label></li>
-                                            <li><input type="radio" th:field="*{parking}" id="notFree" value="유료" th:errorclass="field-error"><label for="notFree">유료</label></li>
-                                            <li><input type="radio" th:field="*{parking}" id="not" value="불가" th:errorclass="field-error"><label for="not">불가</label></li>
+                                            <li><input type="radio" th:field="*{parking}" id="FREE" value="FREE" th:errorclass="field-error"><label for="FREE">무료</label></li>
+                                            <li><input type="radio" th:field="*{parking}" id="PAID" value="PAID" th:errorclass="field-error"><label for="PAID">유료</label></li>
+                                            <li><input type="radio" th:field="*{parking}" id="NOT_AVAILABLE" value="NOT_AVAILABLE" th:errorclass="field-error"><label for="NOT_AVAILABLE">불가</label></li>
                                         </ul>
                                         <div class="errorBox">
                                             <div class="errorMsg" id="errorParking"></div>
@@ -94,8 +94,8 @@
                                     <div class="options">
                                         <h4>화장실</h4>
                                         <ul class="radioBox">
-                                            <li><input type="radio" th:field="*{toilet}" id="oToilet" value="있음" th:errorclass="field-error"><label for="oToilet">있음</label></li>
-                                            <li><input type="radio" th:field="*{toilet}" id="xToilet" value="없음" th:errorclass="field-error"><label for="xToilet">없음</label></li>
+                                            <li><input type="radio" th:field="*{toilet}" id="oToilet" value="Y" th:errorclass="field-error"><label for="oToilet">있음</label></li>
+                                            <li><input type="radio" th:field="*{toilet}" id="xToilet" value="N" th:errorclass="field-error"><label for="xToilet">없음</label></li>
                                         </ul>
                                         <div class="errorBox">
                                             <div class="errorMsg" id="errorToilet"></div>
@@ -105,8 +105,8 @@
                                     <div class="options">
                                         <h4>샤워장</h4>
                                         <ul class="radioBox">
-                                            <li><input type="radio" th:field="*{shower}" id="oShower" value="있음" th:errorclass="field-error"><label for="oShower">있음</label></li>
-                                            <li><input type="radio" th:field="*{shower}" id="xShower" value="없음" th:errorclass="field-error"><label for="xShower">없음</label></li>
+                                            <li><input type="radio" th:field="*{shower}" id="oShower" value="Y" th:errorclass="field-error"><label for="oShower">있음</label></li>
+                                            <li><input type="radio" th:field="*{shower}" id="xShower" value="N" th:errorclass="field-error"><label for="xShower">없음</label></li>
                                         </ul>
                                         <div class="errorBox">
                                             <div class="errorMsg" id="errorShower"></div>
@@ -119,9 +119,16 @@
                         <tr>
                             <th>구장 특이사항</th>
                             <td>
-                                <textarea th:field="*{fieldDetails}" cols="30" rows="10" class="inputForm" th:errorclass="field-error"></textarea>
+                                <textarea th:field="*{description}" cols="30" rows="10" class="inputForm" th:errorclass="field-error"></textarea>
                                 <div class="errorMsg" id="errorDetails"></div>
-                                <div class="errorMsg field-error" th:errors="*{fieldDetails}">[[${errorMsg}]]</div>
+                                <div class="errorMsg field-error" th:errors="*{description}">[[${errorMsg}]]</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>구장 시간당 가격</th>
+                            <td>
+                                <input type="text" th:field="*{hourPrice}" placeholder="엔화기준" class="inputForm" inputmode="numeric" style="text-align: right" value="1000">
+                                <div class="errorMsg field-error" th:errors="*{hourPrice}">[[${errorMsg}]]</div>
                             </td>
                         </tr>
                     </table>

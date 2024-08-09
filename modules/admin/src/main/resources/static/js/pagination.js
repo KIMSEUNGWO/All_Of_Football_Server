@@ -11,7 +11,7 @@ export class Pagination {
         const urlParams = new URLSearchParams(window.location.search);
         this.word = urlParams.get('word');
         this.region = urlParams.get('region');
-        this.page = urlParams.get('page') ?? '1';
+        this.page = urlParams.get('page') ?? 1;
 
 
         this.pageList = document.querySelector('.page_list');
@@ -23,23 +23,36 @@ export class Pagination {
         this.initBtnEventListener();
     }
 
+    searchBtn() {
+        this.word = this.getWord();
+        this.region = this.getRegion();
+        this.page = 1;
+        this.search();
+    }
     search() {
         this.searchResultWrap.value = '';
         const request = this.getUrl + this.getParam();
-        console.log(request);
         fetchGet(request, this.searchResult.bind(this));
     }
 
+
     searchResult(result) {
-        console.log(result);
         const request = this.url + this.getParam();
+        console.log(request);
         history.pushState({data : result}, '',  request);
+        this.onPopState(result);
+    }
+
+    onPopState(result) {
+        this.word = result.data.word;
+        this.region = result.data.region;
+        console.log(result);
+        this.setCondition();
 
         const total = document.querySelector('.total');
 
         if (result.result !== 'OK') return;
         const pageable = result.data;
-        console.log('총 개수 = ' + pageable.totalElements + '개');
 
         this.pagination(pageable);
 
@@ -69,24 +82,26 @@ export class Pagination {
     setBtn(pageable) {
         this.totalPages = pageable.totalPages;
 
-        this.firstBtn.disabled = (pageable.pageNumber <= 1);
-        this.preBtn.disabled = (pageable.pageNumber <= 1);
-        this.nextBtn.disabled = (pageable.pageNumber >= this.totalPages);
-        this.lastBtn.disabled = (pageable.pageNumber >= this.totalPages);
+        this.firstBtn.disabled = (pageable.pageNumber < 1);
+        this.preBtn.disabled = (pageable.pageNumber < 1);
+        this.nextBtn.disabled = (pageable.pageNumber >= this.totalPages - 1);
+        this.lastBtn.disabled = (pageable.pageNumber >= this.totalPages - 1);
     }
     setPage(pageable) {
         const count = 5;
         const currentPageNum = pageable.pageNumber;
-        const startNum = Math.floor((currentPageNum - 1) / count) * count + 1;
+        let pageCount = Math.floor(currentPageNum / 5);
+        const startNum = Math.max(0, pageCount * count) + 1;
         this.createPageBtn(startNum, currentPageNum, count, pageable.totalPages);
     }
 
     createPageBtn(startNum, currentPageNum, count, lastPageNum) {
         this.pageList.innerHTML = '';
-        for (let i=startNum;i<startNum+count && i <= lastPageNum;i++) {
+        for (let i=startNum;i < startNum+count && i <= lastPageNum;i++) {
+
             let li = document.createElement('li');
             li.classList.add('page');
-            if (i === currentPageNum) li.classList.add('selected');
+            if (i === currentPageNum + 1) li.classList.add('selected');
 
             let btn = document.createElement('button');
             btn.type = 'button';
@@ -129,6 +144,16 @@ export class Pagination {
             })
         )
     }
+    setCondition() {
+        let regionRadio = document.querySelector(`input[name="region"][value="${this.region ?? ''}"]`);
+        regionRadio.checked = true;
+        let label = document.querySelector(`label[for="${regionRadio.id}"]`);
+        let text = document.querySelector('.option > .region.btnBox > span');
+        text.innerHTML = label.textContent;
+
+        let searchWord = document.querySelector('input[name="searchWord"]');
+        searchWord.value = this.word ?? '';
+    }
 
     setOption() {
         this.region = this.getRegion();
@@ -136,7 +161,7 @@ export class Pagination {
     }
 
     getRegion() {
-        return document.querySelector('input[name="region"]')?.value;
+        return document.querySelector('input[name="region"]:checked')?.value;
     }
 
     getWord() {
@@ -144,22 +169,52 @@ export class Pagination {
     }
 
     initBtnEventListener() {
-        this.firstBtn.addEventListener('click', () => {
-            this.page = 1;
-            search();
+        window.addEventListener('load', () => {
+            this.firstBtn.addEventListener('click', () => {
+                this.page = 1;
+                this.search();
+            })
+            this.preBtn.addEventListener('click', () => {
+                this.page = Math.max(0, this.page - 1);
+                this.search();
+            })
+            this.nextBtn.addEventListener('click', () => {
+                this.page = Math.min(this.totalPages, this.page + 1);
+                this.search();
+            })
+            this.lastBtn.addEventListener('click', () => {
+                this.page = this.totalPages;
+                this.search();
+            })
+
+            const searchWord = document.querySelector('input[name="searchWord"]');
+            searchWord.addEventListener('keyup', (e)=>{
+                if (searchWord.isEqualNode(e.target) && e.key === 'Enter') {
+                    this.searchBtn();
+                }
+            })
+            const searchBtn = document.querySelector('#searchBtn');
+            searchBtn.addEventListener('click', ()=>{
+                this.searchBtn();
+            })
+            const region = document.querySelector('.region');
+            const regionOption = document.querySelector('.regionOption');
+
+            region.addEventListener('click', () => regionOption.classList.toggle('disabled'));
+
+            const inputRegion = document.querySelectorAll('input[name="region"]');
+            inputRegion.forEach((el) => {
+                el.addEventListener('change', (e) => {
+                    regionOption.classList.add('disabled');
+
+                    let check = document.querySelector('input[name="region"]:checked').id;
+                    let label = document.querySelector('label[for="' + check +'"]')
+                    let text = document.querySelector('.option > .region.btnBox > span');
+                    text.innerHTML = label.textContent;
+                })
+            })
         })
-        this.preBtn.addEventListener('click', () => {
-            this.page = Math.max(0, this.page - 1);
-            search();
-        })
-        this.nextBtn.addEventListener('click', () => {
-            this.page = Math.min(this.totalPages, this.page + 1);
-            search();
-        })
-        this.lastBtn.addEventListener('click', () => {
-            this.page = this.totalPages;
-            search();
-        })
+
 
     }
 }

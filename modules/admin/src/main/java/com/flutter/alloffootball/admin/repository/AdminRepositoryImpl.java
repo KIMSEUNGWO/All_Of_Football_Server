@@ -38,30 +38,40 @@ public class AdminRepositoryImpl implements AdminRepository {
 
     @Override
     public Page<ResponseSearchField> findAllBySearch(Region region, String word, Pageable pageable) {
-        StringExpression keywordExpression = getKeywordExpression(word);
+        System.out.println("region = " + region);
+        System.out.println("word = " + word);
 
         StringExpression compareWord = getLowerAndReplace(field.title);
         BooleanExpression compareRegion = conditionRegion(region);
 
+        BooleanExpression keywordExpression = getKeywordExpression(word, compareWord);
+
+
+        System.out.println("pageable.getOffset() = " + pageable.getOffset());
+        System.out.println("pageable.getPageSize() = " + pageable.getPageSize());
         List<Field> fieldList = query.select(field)
             .from(field)
-            .where(compareWord.like(keywordExpression), compareRegion)
+            .where(keywordExpression, compareRegion)
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
             .fetch();
 
+
         Long totalCount = query.select(field.count())
             .from(field)
-            .where(compareWord.like(keywordExpression), compareRegion)
+            .where(keywordExpression, compareRegion)
             .fetchFirst();
         if (totalCount == null) totalCount = 0L;
 
         List<ResponseSearchField> list = fieldList.stream().map(adminFieldWrapper::searchFieldWrap).toList();
+        System.out.println("list = " + list);
         return new PageImpl<>(list, pageable, totalCount);
     }
 
-    private StringExpression getKeywordExpression(String word) {
-        return Expressions.asString("%" + word.toLowerCase().replace(" ", "") + "%");
+    private BooleanExpression getKeywordExpression(String word, StringExpression compareWord) {
+        if (word == null || word.isEmpty()) return null;
+        StringExpression wordExpression = Expressions.asString("%" + word.toLowerCase().replace(" ", "") + "%");
+        return compareWord.like(wordExpression);
     }
 
     private StringExpression getLowerAndReplace(StringExpression tuple) {
