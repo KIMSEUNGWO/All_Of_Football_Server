@@ -7,12 +7,10 @@ function fetchPost(url, json, callback) {
     .then(map => callback(map));
 }
 
-function fetchGet(url, callback) {
+export function fetchGet(url, callback) {
     fetch(url)
     .then(res => res.json())
-    .then(map => callback(map))
-    .catch(error => {
-        alert(error.message);
-    });
+    .then(map => callback(map));
 }
+
 

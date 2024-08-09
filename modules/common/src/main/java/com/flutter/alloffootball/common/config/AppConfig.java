@@ -1,4 +1,4 @@
-package com.flutter.alloffootball.config;
+package com.flutter.alloffootball.common.config;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;

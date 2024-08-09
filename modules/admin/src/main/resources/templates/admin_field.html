@@ -3,18 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/css/common.css">
-    <link rel="stylesheet" href="/static/css/header.css">
-    <link rel="stylesheet" href="/static/css/admin_main.css">
-    <link rel="stylesheet" href="/static/css/admin_ground.css">
-    <script src="/static/js/admin_search_ground.js"></script>
-    <script src="/static/js/fetch.js"></script>
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/admin_main.css">
+    <link rel="stylesheet" href="/css/admin_ground.css">
+    <link rel="stylesheet" href="/css/pagination.css">
+    <script type="module" src="/js/admin_search_field.js"></script>
+    <script type="module" src="/js/pagination.js"></script>
+    <script type="module" src="/js/fetch.js"></script>
     <title>구장관리 :: 관리자</title>
 </head>
 <body>
     <body>
-        <!-- <header th:replace="~{/common/header :: header}"></header> -->
-        <header th:fragment="header">
+        <header th:replace="~{/common/header :: header}"></header>
+        <!-- <header th:fragment="header">
             <div class="flexL">
                 <a href="/" class="logo">
                     <img src="/images/logo.svg" alt="로고이미지">
@@ -31,10 +33,10 @@
                 const formTag = document.querySelector('form.flexR');
                 logout.addEventListener('click', () => formTag.submit());
             </script>
-        </header>
+        </header> -->
         <div class="container">
-            <!-- <aside class="side box" th:replace="~{/common/admin_menu :: adminMenu}"></aside> -->
-            <aside class="side box" th:fragment="adminMenu">
+            <aside class="side box" th:replace="~{/common/admin_menu :: adminMenu}"></aside>
+            <!-- <aside class="side box" th:fragment="adminMenu">
                 <div class="profile">
                     <span class="name">김승우</span><small>최고관리자</small>
                 </div>
@@ -47,7 +49,7 @@
                     <li><a href="/admin/inquire" class="adMenuList">문의사항</a></li>
                     <li><a href="/admin/settings" class="adMenuList">개인정보변경</a></li>
                 </ul>
-            </aside>
+            </aside> -->
             <div class="mainBox box">
                 <h2>구장관리</h2>
                 <div class="option">
@@ -57,7 +59,7 @@
                     </button>
                     <ul class="subOption regionOption disabled">
                         <li>
-                            <input type="radio" name="region" id="all" th:value="all">
+                            <input type="radio" name="region" id="all" value="all">
                             <label for="all">전국</label>
                         </li>
                         <li th:each="loc : ${region}">
@@ -70,7 +72,7 @@
                 </div>
                 <div class="group">
                     <span class="total">총 0건</span>
-                    <a href="/admin/ground/add" class="btn" id="groundAdd">등록</a>
+                    <a href="/admin/field/add" class="btn" id="groundAdd">등록</a>
                 </div>
                 <ul class="searchResult" id="searchTitle">
                     <a disabled>
@@ -84,6 +86,21 @@
                 <ul class="searchResult" id="searchResult">
                     <li class="none">검색 결과가 없습니다.</li>
                 </ul>
+                <div class="pagination">
+                    <button type="button" class="button_first" disabled="true" id="first-page">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160zm352-160l-160 160c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L301.3 256 438.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0z"/></svg>
+                    </button>
+                    <button type="button" class="button_previous" disabled="true" id="prev-page">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
+                    </button>
+                    <ol class="page_list"></ol>
+                    <button type="button" class="button_next" id="next-page">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg>
+                    </button>
+                    <button type="button" class="button_last" id="last-page">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M470.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 256 265.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160zm-352 160l160-160c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L210.7 256 73.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0z"/></svg>
+                    </button>
+                </div>
             </div>
         </div>
     </body>

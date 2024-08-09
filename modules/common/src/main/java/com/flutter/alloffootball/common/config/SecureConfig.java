@@ -37,7 +37,7 @@ public class SecureConfig {
             request
                 .requestMatchers("/user/**", "/order/**").authenticated()
                 .requestMatchers("/admin/login").permitAll()
-                .requestMatchers("/admin/**").hasRole(Role.ADMIN.name())
+//                .requestMatchers("/admin/**").hasRole(Role.ADMIN.name())
                 .anyRequest().permitAll()
         );
 
