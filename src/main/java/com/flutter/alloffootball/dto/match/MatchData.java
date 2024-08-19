@@ -9,7 +9,7 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor
 @Getter
-public class MatchCondition {
+public class MatchData {
 
     private final SexType sex;
     private final Region region;

@@ -1,39 +1,30 @@
 package com.flutter.alloffootball.common.domain;
 
+import com.flutter.alloffootball.common.domain.field.Field;
 import com.flutter.alloffootball.common.domain.user.User;
-import com.flutter.alloffootball.common.enums.CashType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "FAVORITE")
 @Builder
-@Getter
-@Table(name = "CASH")
-public class Cash extends BaseEntityTime {
+public class Favorite {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "CASH_ID")
+    @Column(name = "FAVORITE_ID")
     private Long id;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
     private User user;
 
-    @Enumerated(EnumType.STRING)
-    private CashType cashType;
-
-    private String description;
-
-    // 캐시 변화량
-    private int cashUse;
-
-    // 잔액
-    private int cashNow;
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "FIELD_ID")
+    private Field field;
 }

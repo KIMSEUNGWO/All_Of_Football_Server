@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
@@ -26,13 +25,12 @@ public class QueryDslMatchRepositoryImpl implements QueryDslMatchRepository {
     @Override
     public List<Match> search(RequestSearchMatch searchMatch, Pageable pageable) {
 
-        LocalDate searchDate = searchMatch.getDate();
-        LocalDateTime startDate = LocalDateTime.of(searchDate, LocalTime.MIN);
-        LocalDateTime endDate = LocalDateTime.of(searchDate, LocalTime.MAX);
+        LocalDateTime searchDate = searchMatch.getDate();
+        LocalDateTime endDate = LocalDateTime.of(searchDate.toLocalDate(), LocalTime.MAX);
         return query.select(match)
             .from(match)
             .where(
-                match.matchDate.between(startDate, endDate),
+                match.matchDate.between(searchDate, endDate),
                 conditionSex(searchMatch.getSex()),
                 conditionRegion(searchMatch.getRegion()))
             .orderBy(match.matchDate.desc())

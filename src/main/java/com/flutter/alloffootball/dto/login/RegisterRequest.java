@@ -22,8 +22,6 @@ public class RegisterRequest {
     @NotNull
     private String accessToken;
     @NotNull
-    private String nickname;
-    @NotNull
     private SexType sex;
     @NotNull
     private LocalDate birth;

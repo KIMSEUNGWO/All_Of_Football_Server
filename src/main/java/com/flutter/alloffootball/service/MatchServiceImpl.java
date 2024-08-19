@@ -2,10 +2,8 @@ package com.flutter.alloffootball.service;
 
 import com.flutter.alloffootball.common.config.security.CustomUserDetails;
 import com.flutter.alloffootball.common.domain.match.Match;
-import com.flutter.alloffootball.dto.match.RequestSearchMatch;
-import com.flutter.alloffootball.dto.match.ResponseMatchData;
-import com.flutter.alloffootball.dto.match.ResponseMatchDetails;
-import com.flutter.alloffootball.dto.match.ResponseMatchOrder;
+import com.flutter.alloffootball.dto.match.*;
+import com.flutter.alloffootball.dto.order.ResponseOrderSimp;
 import com.flutter.alloffootball.repository.MatchRepository;
 import com.flutter.alloffootball.repository.OrderRepository;
 import com.flutter.alloffootball.wrapper.MatchWrapper;
@@ -27,17 +25,17 @@ public class MatchServiceImpl implements MatchService {
     private final MatchWrapper matchWrapper;
 
     @Override
-    public List<ResponseMatchData> findAllByMatchData(RequestSearchMatch searchMatch, Pageable pageable) {
+    public List<ResponseMatchView> findAllByMatchData(RequestSearchMatch searchMatch, Pageable pageable) {
         return matchRepository.findAllByMatchData(searchMatch, pageable).stream()
-            .map(matchWrapper::matchDataWrap)
+            .map(matchWrapper::matchViewWrap)
             .toList();
 
     }
 
     @Override
-    public List<ResponseMatchData> findAllByFieldIdToMatchData(long fieldId, Pageable pageable) {
+    public List<ResponseMatchSimp> findAllByFieldIdToMatchData(long fieldId, Pageable pageable) {
         return matchRepository.findAllByFieldIdToMatchData(fieldId, pageable).stream()
-            .map(matchWrapper::matchDataWrap)
+            .map(matchWrapper::matchSimpWrap)
             .toList();
     }
 
@@ -52,6 +50,12 @@ public class MatchServiceImpl implements MatchService {
     public ResponseMatchOrder getMatchOrder(long matchId, CustomUserDetails userDetails) {
         Match match = findById(matchId);
         return matchWrapper.matchOrderWrap(match, userDetails.getUser());
+    }
+
+    @Override
+    public ResponseOrderSimp getOrderSimp(long matchId, CustomUserDetails userDetails) {
+        Match match = findById(matchId);
+        return matchWrapper.orderSimpWrap(match, userDetails.getUser());
     }
 
     private Match findById(Long matchId) {

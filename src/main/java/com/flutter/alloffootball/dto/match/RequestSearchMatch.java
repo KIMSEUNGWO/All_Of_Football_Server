@@ -5,17 +5,19 @@ import com.flutter.alloffootball.common.enums.SexType;
 import com.flutter.alloffootball.common.enums.region.Region;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@ToString
 public class RequestSearchMatch {
 
     private Region region;
 
-    @DateRange(maxDays = 14)
-    private LocalDate date;
+    @DateRange(maxDays = 30)
+    private LocalDateTime date;
 
     private SexType sex;
 

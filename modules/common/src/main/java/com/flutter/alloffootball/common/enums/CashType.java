@@ -2,8 +2,9 @@ package com.flutter.alloffootball.common.enums;
 
 public enum CashType {
 
-    CHARGE,
     USE,
+    CHARGE,
+    CANCEL,
     REFUND;
 
     public int accept(int receipt) {

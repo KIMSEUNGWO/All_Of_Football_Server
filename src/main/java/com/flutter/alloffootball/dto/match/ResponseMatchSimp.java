@@ -7,16 +7,13 @@ import lombok.Getter;
 
 import java.time.LocalDateTime;
 
+@Builder
 @Getter
 @AllArgsConstructor
-@Builder
-public class ResponseMatchData {
+public class ResponseMatchSimp {
 
-    private final MatchStatus status;
+    private final Long matchId;
+    private final MatchStatus matchStatus;
     private final LocalDateTime matchDate;
-
-    private final String title;
-    private final int matchTime;
-    private final MatchCondition matchCondition;
-
+    private final MatchData matchData;
 }

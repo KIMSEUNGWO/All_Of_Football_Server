@@ -8,8 +8,15 @@ import com.flutter.alloffootball.common.enums.MatchStatus;
 import com.flutter.alloffootball.common.exception.OrderError;
 import com.flutter.alloffootball.common.exception.OrderException;
 import com.flutter.alloffootball.common.jparepository.JpaOrderRepository;
+import com.flutter.alloffootball.querydsl.QueryDslOrderRepository;
+import com.flutter.alloffootball.querydsl.QueryDslOrderRepositoryImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
@@ -17,6 +24,7 @@ public class OrderRepositoryImpl implements OrderRepository {
 
     private final MatchRepository matchRepository;
     private final JpaOrderRepository jpaOrderRepository;
+    private final QueryDslOrderRepository queryDslOrderRepository;
 
     @Override
     public boolean existsByMatch_IdAndUser_Id(long matchId, CustomUserDetails userDetails) {
@@ -46,5 +54,15 @@ public class OrderRepositoryImpl implements OrderRepository {
     @Override
     public void save(Order saveOrder) {
         jpaOrderRepository.save(saveOrder);
+    }
+
+    @Override
+    public List<Order> findAllByUserIdAndDate(Long userId, LocalDateTime startDate, LocalDateTime endDate) {
+        return jpaOrderRepository.findAllByUser_IdAndMatch_MatchDateBetween(userId, startDate, endDate);
+    }
+
+    @Override
+    public List<Integer> getCalendar(Long userId, LocalDateTime startDate, LocalDateTime endDate) {
+        return queryDslOrderRepository.findDistinctDaysWithDataInMonth(userId, startDate, endDate);
     }
 }

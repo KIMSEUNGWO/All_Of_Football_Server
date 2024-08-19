@@ -8,11 +8,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class FieldWrapper {
 
-    public ResponseFieldData fieldDataWrap(Field field) {
+    public ResponseFieldData fieldDataWrap(Field field, boolean favorite) {
         return ResponseFieldData.builder()
-            .images(field.getFieldImages().stream().map(BaseEntityImage::getStoreName).toList())
+            .fieldId(field.getId())
+            .title(field.getTitle())
             .address(field.getAddress())
             .fieldData(field.getFieldData())
+            .description(field.getDescription())
+            .favorite(favorite)
+            .images(field.getFieldImages().stream().map(BaseEntityImage::getStoreName).toList())
             .build();
     }
 }

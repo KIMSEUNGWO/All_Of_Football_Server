@@ -13,7 +13,11 @@ import java.util.List;
 @Builder
 public class ResponseFieldData {
 
-    private final List<String> images;
+    private final Long fieldId;
+    private final String title;
     private final Address address;
     private final FieldData fieldData;
+    private final String description;
+    private final boolean favorite;
+    private final List<String> images;
 }

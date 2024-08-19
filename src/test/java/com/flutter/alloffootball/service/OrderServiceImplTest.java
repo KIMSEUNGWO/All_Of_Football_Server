@@ -76,8 +76,8 @@ class OrderServiceImplTest {
         assertThat(order)
             .extracting(
                 ResponseOrderResult::getTotalPrice,
-                ResponseOrderResult::getCouponUse,
-                ResponseOrderResult::getOrderPrice,
+                ResponseOrderResult::getCoupon,
+                ResponseOrderResult::getFinalPrice,
                 ResponseOrderResult::getRemainCash)
             .containsExactly(
                 totalPrice,
@@ -143,15 +143,15 @@ class OrderServiceImplTest {
 
         // 쿠폰 사용 처리
         assertThat(userCoupon.getCouponUse()).isEqualTo('Y');
-        assertThat(order.getCouponUse()).isNotNull();
+        assertThat(order.getCoupon()).isNotNull();
         int discount = (int) (-1 * (totalPrice * ((double) userCoupon.getCoupon().getDiscountPer() / 100)));
-        assertThat(order.getCouponUse().getDiscount()).isEqualTo(discount);
+        assertThat(order.getCoupon().getDiscount()).isEqualTo(discount);
 
         // 영수증 검증
         assertThat(order)
             .extracting(
                 ResponseOrderResult::getTotalPrice,
-                ResponseOrderResult::getOrderPrice,
+                ResponseOrderResult::getFinalPrice,
                 ResponseOrderResult::getRemainCash)
             .containsExactly(
                 totalPrice,

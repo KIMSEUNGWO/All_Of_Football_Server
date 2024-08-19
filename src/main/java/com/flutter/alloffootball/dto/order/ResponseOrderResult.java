@@ -17,10 +17,10 @@ public class ResponseOrderResult {
     private final int totalPrice;
 
     @Nullable
-    private ResponseCouponUse couponUse;
+    private ResponseCouponUse coupon;
 
     // 최종 결재 금맥
-    private final int orderPrice;
+    private final int finalPrice;
 
     // 남은 잔액
     private final int remainCash;

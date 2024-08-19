@@ -8,6 +8,8 @@ import com.flutter.alloffootball.common.jparepository.JpaCashRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @RequiredArgsConstructor
 public class CashRepositoryImpl implements CashRepository {
@@ -27,6 +29,11 @@ public class CashRepositoryImpl implements CashRepository {
             .build();
 
         jpaCashRepository.save(saveCash);
+    }
+
+    @Override
+    public List<Cash> findAllByReceipt(Long userId) {
+        return jpaCashRepository.findAllByUser_Id(userId);
     }
 
 }

@@ -18,7 +18,7 @@ public class FlutterAuthorizationFilter extends OncePerRequestFilter {
 
     @Value("${sport.api-key}")
     private String API_KEY;
-    private final String HEADER_NAME = "Football-Authorization";
+    private final String HEADER_NAME = "App-Authorization";
 
     private final List<String> excludePath = List.of(
         "/favicon.ico",

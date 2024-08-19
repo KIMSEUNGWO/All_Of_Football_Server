@@ -2,6 +2,7 @@ package com.flutter.alloffootball.common.domain.user;
 
 import com.flutter.alloffootball.common.domain.BaseEntityTime;
 import com.flutter.alloffootball.common.domain.Cash;
+import com.flutter.alloffootball.common.domain.Favorite;
 import com.flutter.alloffootball.common.domain.coupon.UserCoupon;
 import com.flutter.alloffootball.common.domain.orders.Order;
 import com.flutter.alloffootball.common.enums.CashType;
@@ -12,6 +13,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,6 +54,10 @@ public class User extends BaseEntityTime {
 
     @Builder.Default
     @OneToMany(mappedBy = "user", orphanRemoval = true)
+    private List<Favorite> favoriteList = new ArrayList<>();
+
+    @Builder.Default
+    @OneToMany(mappedBy = "user")
     private List<Order> orderList = new ArrayList<>();
 
     @Builder.Default
@@ -64,5 +70,13 @@ public class User extends BaseEntityTime {
 
     public void receipt(CashType cashType, int receipt) {
         this.cash = Math.max(0, this.cash + cashType.accept(receipt));
+    }
+
+    public List<UserCoupon> possibleCouponList() {
+        LocalDateTime now = LocalDateTime.now();
+        return userCouponList
+            .stream()
+            .filter(userCoupon -> userCoupon.getCouponUse() == 'N' && userCoupon.getExpireDate().isAfter(now))
+            .toList();
     }
 }

@@ -1,20 +1,26 @@
 package com.flutter.alloffootball.service;
 
+import com.flutter.alloffootball.common.component.DateRangeUtil;
 import com.flutter.alloffootball.common.domain.coupon.UserCoupon;
 import com.flutter.alloffootball.common.domain.match.Match;
 import com.flutter.alloffootball.common.domain.orders.Order;
 import com.flutter.alloffootball.common.domain.user.User;
 import com.flutter.alloffootball.dto.coupon.ResponseCouponUse;
+import com.flutter.alloffootball.dto.match.ResponseMatchView;
 import com.flutter.alloffootball.dto.order.RequestOrder;
 import com.flutter.alloffootball.dto.order.ResponseOrderResult;
 import com.flutter.alloffootball.common.enums.OrderStatus;
 import com.flutter.alloffootball.repository.*;
+import com.flutter.alloffootball.wrapper.MatchWrapper;
 import com.flutter.alloffootball.wrapper.OrderWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +34,7 @@ public class OrderServiceImpl implements OrderService {
     private final UserCouponRepository userCouponRepository;
 
     private final OrderWrapper orderWrapper;
+    private final MatchWrapper matchWrapper;
 
     @Override
     public synchronized ResponseOrderResult order(RequestOrder requestOrder, long userId, LocalDateTime now) {
@@ -58,5 +65,23 @@ public class OrderServiceImpl implements OrderService {
         cashRepository.use(user, saveOrder);
 
         return orderWrapper.orderResultWrap(match, saveOrder, user, couponUse);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<ResponseMatchView> getHistory(LocalDateTime date, User user) {
+        LocalDateTime startDate = LocalDateTime.of(date.toLocalDate(), LocalTime.MIN);
+        LocalDateTime endDate = LocalDateTime.of(date.toLocalDate(), LocalTime.MAX);
+        return orderRepository.findAllByUserIdAndDate(user.getId(), startDate, endDate)
+            .stream()
+            .map(order -> matchWrapper.matchViewWrap(order.getMatch()))
+            .toList();
+    }
+
+    @Override
+    public List<Integer> getCalendar(LocalDateTime date, User user) {
+        LocalDateTime startDate = DateRangeUtil.getStartOfMonth(date);
+        LocalDateTime endDate = DateRangeUtil.getEndOfMonth(date);
+        return orderRepository.getCalendar(user.getId(), startDate, endDate);
     }
 }

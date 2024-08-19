@@ -1,6 +1,9 @@
 package com.flutter.alloffootball.service;
 
 import com.flutter.alloffootball.api.SocialProfile;
+import com.flutter.alloffootball.common.component.JwtUtil;
+import com.flutter.alloffootball.common.component.ResponseToken;
+import com.flutter.alloffootball.common.component.SecurityUtil;
 import com.flutter.alloffootball.common.domain.user.Profile;
 import com.flutter.alloffootball.common.domain.user.Social;
 import com.flutter.alloffootball.common.domain.user.User;
@@ -12,15 +15,20 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
 public class RegisterServiceImpl implements RegisterService {
 
     private final UserRepository userRepository;
+    private final SecurityUtil securityUtil;
+    private final JwtUtil jwtUtil;
+
 
     @Override
-    public User register(RegisterRequest register, SocialProfile profile) {
+    public ResponseToken register(RegisterRequest register, SocialProfile profile) {
         Social social = Social.builder()
             .socialId(profile.getUserId())
             .provider(register.getProvider())
@@ -32,13 +40,16 @@ public class RegisterServiceImpl implements RegisterService {
             .build();
 
         User user = User.builder()
-            .nickname(register.getNickname())
+            .nickname(profile.getDisplayName() + "#" + register.getSocialId().substring(0, 5))
             .profile(new Profile())
             .userInfo(userInfo)
             .social(social)
             .role(Role.USER)
             .build();
 
-        return userRepository.save(user);
+        userRepository.save(user);
+
+        securityUtil.saveUserInSecurityContext(register.getSocialId(), register.getProvider());
+        return jwtUtil.initToken(user);
     }
 }

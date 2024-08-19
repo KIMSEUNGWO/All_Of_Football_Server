@@ -3,12 +3,15 @@ package com.flutter.alloffootball.config;
 import com.flutter.alloffootball.common.jparepository.*;
 import com.flutter.alloffootball.querydsl.QueryDslMatchRepository;
 import com.flutter.alloffootball.querydsl.QueryDslMatchRepositoryImpl;
+import com.flutter.alloffootball.querydsl.QueryDslOrderRepository;
+import com.flutter.alloffootball.querydsl.QueryDslOrderRepositoryImpl;
 import com.flutter.alloffootball.repository.*;
 import com.flutter.alloffootball.service.FieldService;
 import com.flutter.alloffootball.service.FieldServiceImpl;
 import com.flutter.alloffootball.service.OrderService;
 import com.flutter.alloffootball.service.OrderServiceImpl;
 import com.flutter.alloffootball.wrapper.FieldWrapper;
+import com.flutter.alloffootball.wrapper.MatchWrapper;
 import com.flutter.alloffootball.wrapper.OrderWrapper;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
@@ -32,6 +35,8 @@ public class TestConfig {
     @Autowired
     private JpaUserCouponRepository jpaUserCouponRepository;
     @Autowired
+    private JpaFavoriteRepository jpaFavoriteRepository;
+    @Autowired
     private EntityManager em;
 
     @Bean
@@ -40,7 +45,7 @@ public class TestConfig {
     }
     @Bean
     OrderService orderService() {
-        return new OrderServiceImpl(userRepository(), matchRepository(), orderRepository(), cashRepository(), userCouponRepository(), orderWrapper());
+        return new OrderServiceImpl(userRepository(), matchRepository(), orderRepository(), cashRepository(), userCouponRepository(), orderWrapper(), matchWrapper());
     }
 
     @Bean
@@ -53,12 +58,16 @@ public class TestConfig {
     }
     @Bean
     FieldService fieldService() {
-        return new FieldServiceImpl(fieldRepository(), fieldWrapper());
+        return new FieldServiceImpl(fieldRepository(), jpaFavoriteRepository, fieldWrapper());
     }
 
     @Bean
     FieldWrapper fieldWrapper() {
         return new FieldWrapper();
+    }
+    @Bean
+    MatchWrapper matchWrapper() {
+        return new MatchWrapper(fieldWrapper());
     }
 
     @Bean
@@ -77,8 +86,13 @@ public class TestConfig {
     }
 
     @Bean
+    QueryDslOrderRepository queryDslOrderRepository() {
+        return new QueryDslOrderRepositoryImpl(query());
+    }
+
+    @Bean
     OrderRepository orderRepository() {
-        return new OrderRepositoryImpl(matchRepository(), jpaOrderRepository);
+        return new OrderRepositoryImpl(matchRepository(), jpaOrderRepository, queryDslOrderRepository());
     }
 
     @Bean

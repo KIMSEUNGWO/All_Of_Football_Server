@@ -1,5 +1,6 @@
 package com.flutter.alloffootball.common.domain.field;
 
+import com.flutter.alloffootball.common.domain.Favorite;
 import com.flutter.alloffootball.common.domain.match.Match;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -41,4 +42,8 @@ public class Field {
     @Builder.Default
     @OneToMany(mappedBy = "field", orphanRemoval = true)
     private List<Match> matchList = new ArrayList<>();
+
+    @Builder.Default
+    @OneToMany(mappedBy = "field", orphanRemoval = true)
+    private List<Favorite> favoriteList = new ArrayList<>();
 }
