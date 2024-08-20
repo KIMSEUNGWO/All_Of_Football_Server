@@ -39,6 +39,7 @@ public class User extends BaseEntityTime {
     @Embedded
     private UserInfo userInfo;
 
+    @Getter
     private String nickname;
 
     @Getter
@@ -52,6 +53,7 @@ public class User extends BaseEntityTime {
     @JoinColumn(name = "PROFILE_ID")
     private Profile profile;
 
+    @Getter
     @Builder.Default
     @OneToMany(mappedBy = "user", orphanRemoval = true)
     private List<Favorite> favoriteList = new ArrayList<>();

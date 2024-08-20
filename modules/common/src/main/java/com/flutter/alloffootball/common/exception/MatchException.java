@@ -1,11 +1,14 @@
 package com.flutter.alloffootball.common.exception;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
-@AllArgsConstructor
-public class MatchException extends RuntimeException {
+public class MatchException extends CustomRuntimeException {
 
     private final MatchError error;
+
+    public MatchException(MatchError error) {
+        super(error);
+        this.error = error;
+    }
 }

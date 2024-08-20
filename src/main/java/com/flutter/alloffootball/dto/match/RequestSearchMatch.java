@@ -6,6 +6,7 @@ import com.flutter.alloffootball.common.enums.region.Region;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.lang.Nullable;
 
 import java.time.LocalDateTime;
 
@@ -15,10 +16,7 @@ import java.time.LocalDateTime;
 public class RequestSearchMatch {
 
     private Region region;
-
-    @DateRange(maxDays = 30)
     private LocalDateTime date;
-
     private SexType sex;
 
 }

@@ -1,23 +1,17 @@
 package com.flutter.alloffootball.controller;
 
+import com.flutter.alloffootball.common.component.UserDetailsUtil;
 import com.flutter.alloffootball.common.config.security.CustomUserDetails;
 import com.flutter.alloffootball.common.dto.Response;
-import com.flutter.alloffootball.dto.match.RequestSearchMatch;
-import com.flutter.alloffootball.dto.match.ResponseMatchView;
 import com.flutter.alloffootball.dto.match.ResponseMatchDetails;
 import com.flutter.alloffootball.dto.match.ResponseMatchOrder;
-import com.flutter.alloffootball.common.exception.BindingException;
 import com.flutter.alloffootball.dto.order.ResponseOrderSimp;
 import com.flutter.alloffootball.service.MatchService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,28 +19,14 @@ import java.util.List;
 public class MatchController {
 
     private final MatchService matchService;
-
-    /** 완료
-     * 조건에 맞는 경기 목록 조회 ( 권한 필요없음 )
-     */
-    @GetMapping
-    public ResponseEntity<Response> getMatchList(@ModelAttribute @Validated RequestSearchMatch searchMatch,
-                                                 BindingResult bindingResult,
-                                                 Pageable pageable) {
-        System.out.println("searchMatch = " + searchMatch);
-        if (bindingResult.hasErrors()) {
-            throw new BindingException(bindingResult);
-        }
-        List<ResponseMatchView> matchList = matchService.findAllByMatchData(searchMatch, pageable);
-        return Response.ok(matchList);
-    }
+    private final UserDetailsUtil userDetailsUtil;
 
     /** 완료
      * 경기 상세정보 조회 ( 권한 필요없음 )
      */
     @GetMapping("/{matchId}")
-    public ResponseEntity<Response> getMatchDetails(@PathVariable long matchId,
-                                                    @AuthenticationPrincipal CustomUserDetails userDetails) {
+    public ResponseEntity<Response> getMatchDetails(@PathVariable("matchId") long matchId, HttpServletRequest request) {
+        CustomUserDetails userDetails = userDetailsUtil.getUserDetails(request);
         ResponseMatchDetails matchDetails = matchService.getMatchDetails(matchId, userDetails);
         return Response.ok(matchDetails);
     }

@@ -1,12 +1,14 @@
 package com.flutter.alloffootball.common.exception;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
-@AllArgsConstructor
-public class SocialException extends RuntimeException {
+public class SocialException extends CustomRuntimeException {
 
     private final SocialError error;
 
+    public SocialException(SocialError error) {
+        super(error);
+        this.error = error;
+    }
 }

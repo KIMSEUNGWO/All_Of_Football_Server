@@ -5,9 +5,7 @@ import com.flutter.alloffootball.common.domain.match.Match;
 import com.flutter.alloffootball.common.domain.orders.Order;
 import com.flutter.alloffootball.common.domain.user.User;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.List;
 
 public interface OrderRepository {
@@ -19,5 +17,5 @@ public interface OrderRepository {
 
     List<Order> findAllByUserIdAndDate(Long userId, LocalDateTime startDate, LocalDateTime endDate);
 
-    List<Integer> getCalendar(Long userId, LocalDateTime startDate, LocalDateTime endDate);
+    List<Order> getHistory(Long userId, LocalDateTime startDate, LocalDateTime endDate);
 }

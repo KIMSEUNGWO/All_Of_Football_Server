@@ -65,7 +65,6 @@ public class JwtUtil {
     }
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
-        System.out.println("token = " + token);
         try {
             Claims claims = Jwts.parser()
                 .verifyWith(secretKey)

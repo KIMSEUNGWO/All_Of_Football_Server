@@ -19,12 +19,12 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "MATCH")
+@Table(name = "MATCHES")
 public class Match {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "MATCH_ID")
+    @Column(name = "MATCHES_ID")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

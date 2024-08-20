@@ -24,7 +24,7 @@ public class Order {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "MATCH_ID")
+    @JoinColumn(name = "MATCHES_ID")
     private Match match;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -3,7 +3,10 @@ package com.flutter.alloffootball.controller;
 import com.flutter.alloffootball.common.config.security.CustomUserDetails;
 import com.flutter.alloffootball.common.dto.Response;
 import com.flutter.alloffootball.dto.match.ResponseMatchView;
+import com.flutter.alloffootball.dto.user.RequestCalendar;
+import com.flutter.alloffootball.dto.user.ResponseUserProfile;
 import com.flutter.alloffootball.service.OrderService;
+import com.flutter.alloffootball.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -14,30 +17,25 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/user")
 public class UserController {
 
-
+    private final UserService userService;
     private final OrderService orderService;
 
-    // TODO 여기서부터하면됨
     @GetMapping("/profile")
     public ResponseEntity<Response> profile(@AuthenticationPrincipal CustomUserDetails userDetails) {
-
-        return Response.ok();
+        ResponseUserProfile userProfile = userService.getUserProfile(userDetails.getUser().getId());
+        return Response.ok(userProfile);
     }
 
-    @GetMapping("/calendar")
-    public ResponseEntity<Response> calendar(@ModelAttribute LocalDateTime date, @AuthenticationPrincipal CustomUserDetails userDetails) {
-        List<Integer> existsDays = orderService.getCalendar(date, userDetails.getUser());
-        return Response.ok(existsDays);
-    }
     @GetMapping("/history")
-    public ResponseEntity<Response> history(@ModelAttribute LocalDateTime date, @AuthenticationPrincipal CustomUserDetails userDetails) {
-        List<ResponseMatchView> histories = orderService.getHistory(date, userDetails.getUser());
+    public ResponseEntity<Response> calendar(@ModelAttribute RequestCalendar calendar, @AuthenticationPrincipal CustomUserDetails userDetails) {
+        Map<Integer, List<ResponseMatchView>> histories = orderService.getHistory(calendar.getDate(), userDetails.getUser());
         return Response.ok(histories);
     }
 }

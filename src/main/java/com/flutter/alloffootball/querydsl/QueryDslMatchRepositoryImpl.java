@@ -26,7 +26,7 @@ public class QueryDslMatchRepositoryImpl implements QueryDslMatchRepository {
     public List<Match> search(RequestSearchMatch searchMatch, Pageable pageable) {
 
         LocalDateTime searchDate = searchMatch.getDate();
-        LocalDateTime endDate = LocalDateTime.of(searchDate.toLocalDate(), LocalTime.MAX);
+        LocalDateTime endDate = LocalDateTime.of(searchDate.toLocalDate(), LocalTime.MAX.minusSeconds(1));
         return query.select(match)
             .from(match)
             .where(

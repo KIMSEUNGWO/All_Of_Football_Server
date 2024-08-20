@@ -17,10 +17,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -69,19 +69,13 @@ public class OrderServiceImpl implements OrderService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<ResponseMatchView> getHistory(LocalDateTime date, User user) {
-        LocalDateTime startDate = LocalDateTime.of(date.toLocalDate(), LocalTime.MIN);
-        LocalDateTime endDate = LocalDateTime.of(date.toLocalDate(), LocalTime.MAX);
-        return orderRepository.findAllByUserIdAndDate(user.getId(), startDate, endDate)
-            .stream()
-            .map(order -> matchWrapper.matchViewWrap(order.getMatch()))
-            .toList();
-    }
-
-    @Override
-    public List<Integer> getCalendar(LocalDateTime date, User user) {
+    public Map<Integer, List<ResponseMatchView>> getHistory(LocalDateTime date, User user) {
         LocalDateTime startDate = DateRangeUtil.getStartOfMonth(date);
         LocalDateTime endDate = DateRangeUtil.getEndOfMonth(date);
-        return orderRepository.getCalendar(user.getId(), startDate, endDate);
+        return orderRepository.getHistory(user.getId(), startDate, endDate)
+            .stream()
+            .map(order -> matchWrapper.matchViewWrap(order.getMatch()))
+            .collect(Collectors.groupingBy(matchView -> matchView.getMatchDate().getDayOfMonth()));
     }
+
 }

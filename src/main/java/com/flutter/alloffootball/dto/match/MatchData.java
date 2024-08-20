@@ -13,6 +13,6 @@ public class MatchData {
 
     private final SexType sex;
     private final Region region;
-    private final int limitPerson;
+    private final int person;
     private final int matchCount;
 }

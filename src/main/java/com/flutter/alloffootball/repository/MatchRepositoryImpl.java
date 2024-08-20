@@ -37,4 +37,9 @@ public class MatchRepositoryImpl implements MatchRepository {
         return jpaMatchRepository.findById(matchId)
             .orElseThrow(() -> new MatchException(MatchError.MATCH_NOT_EXISTS));
     }
+
+    @Override
+    public void save(Match saveMatch) {
+        jpaMatchRepository.save(saveMatch);
+    }
 }

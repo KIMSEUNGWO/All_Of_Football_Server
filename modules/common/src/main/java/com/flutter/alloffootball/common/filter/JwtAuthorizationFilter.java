@@ -4,8 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flutter.alloffootball.common.component.JwtUtil;
 import com.flutter.alloffootball.common.component.SecurityUtil;
 import com.flutter.alloffootball.common.dto.Response;
+import com.flutter.alloffootball.common.exception.ErrorCode;
 import com.flutter.alloffootball.common.exception.TokenError;
 import com.flutter.alloffootball.common.exception.TokenException;
+import com.flutter.alloffootball.common.exception.UserError;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,6 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -36,7 +39,10 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         "/font",
         "/social/token",
         "/images/",
-        "/admin"
+        "/admin",
+        "/search",
+        "/match",
+        "/field"
     );
 
     @Override
@@ -51,12 +57,16 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             e.printStackTrace();
             System.out.println("TokenException 발생!! :" + e.getError());
             setErrorResponse(response, e.getError());
+        } catch (UsernameNotFoundException e) {
+            e.printStackTrace();
+            System.out.println("UsernameNotFoundException 발생!! :" + e.getMessage());
+            setErrorResponse(response, UserError.USER_NOT_EXISTS);
         }
 
 
     }
 
-    private void setErrorResponse(HttpServletResponse response, TokenError responseCode) {
+    private void setErrorResponse(HttpServletResponse response, ErrorCode responseCode) {
         response.setStatus(HttpStatus.BAD_REQUEST.value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         Response result = new Response(responseCode);

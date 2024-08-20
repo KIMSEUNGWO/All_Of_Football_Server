@@ -22,6 +22,7 @@ public class CashRepositoryImpl implements CashRepository {
         int price = order.getPrice();
         user.receipt(CashType.USE, price);
         Cash saveCash = Cash.builder()
+            .description("경기 참여")
             .user(user)
             .cashType(CashType.USE)
             .cashUse(-1 * price)
@@ -33,7 +34,7 @@ public class CashRepositoryImpl implements CashRepository {
 
     @Override
     public List<Cash> findAllByReceipt(Long userId) {
-        return jpaCashRepository.findAllByUser_Id(userId);
+        return jpaCashRepository.findAllByUser_IdOrderByCreateDateDesc(userId);
     }
 
 }

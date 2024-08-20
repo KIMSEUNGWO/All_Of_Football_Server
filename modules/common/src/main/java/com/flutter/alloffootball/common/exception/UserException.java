@@ -1,11 +1,14 @@
 package com.flutter.alloffootball.common.exception;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
-@AllArgsConstructor
-public class UserException extends RuntimeException {
+public class UserException extends CustomRuntimeException {
 
     private final UserError error;
+
+    public UserException(UserError error) {
+        super(error);
+        this.error = error;
+    }
 }

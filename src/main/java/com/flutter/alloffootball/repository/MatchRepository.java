@@ -11,4 +11,6 @@ public interface MatchRepository {
     List<Match> findAllByFieldIdToMatchData(long fieldId, Pageable pageable);
 
     Match findById(Long matchId);
+
+    void save(Match saveMatch);
 }

@@ -9,13 +9,10 @@ import com.flutter.alloffootball.common.exception.OrderError;
 import com.flutter.alloffootball.common.exception.OrderException;
 import com.flutter.alloffootball.common.jparepository.JpaOrderRepository;
 import com.flutter.alloffootball.querydsl.QueryDslOrderRepository;
-import com.flutter.alloffootball.querydsl.QueryDslOrderRepositoryImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 
 @Repository
@@ -62,7 +59,7 @@ public class OrderRepositoryImpl implements OrderRepository {
     }
 
     @Override
-    public List<Integer> getCalendar(Long userId, LocalDateTime startDate, LocalDateTime endDate) {
+    public List<Order> getHistory(Long userId, LocalDateTime startDate, LocalDateTime endDate) {
         return queryDslOrderRepository.findDistinctDaysWithDataInMonth(userId, startDate, endDate);
     }
 }

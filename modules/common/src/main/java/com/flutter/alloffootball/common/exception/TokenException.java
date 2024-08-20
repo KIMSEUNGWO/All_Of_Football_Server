@@ -1,12 +1,14 @@
 package com.flutter.alloffootball.common.exception;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
-@AllArgsConstructor
-public class TokenException extends RuntimeException {
+public class TokenException extends CustomRuntimeException {
 
     private final TokenError error;
 
+    public TokenException(TokenError error) {
+        super(error);
+        this.error = error;
+    }
 }

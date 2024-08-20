@@ -1,12 +1,14 @@
 package com.flutter.alloffootball.common.exception;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
-@AllArgsConstructor
-public class FieldException extends RuntimeException {
+public class FieldException extends CustomRuntimeException {
 
     private final FieldError error;
 
+    public FieldException(FieldError error) {
+        super(error);
+        this.error = error;
+    }
 }
