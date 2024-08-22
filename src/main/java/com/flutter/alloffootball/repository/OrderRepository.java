@@ -15,7 +15,7 @@ public interface OrderRepository {
 
     void save(Order saveOrder);
 
-    List<Order> findAllByUserIdAndDate(Long userId, LocalDateTime startDate, LocalDateTime endDate);
-
     List<Order> getHistory(Long userId, LocalDateTime startDate, LocalDateTime endDate);
+
+    List<Order> findAllByUserIdAndMatchDateAfterOrderByMatchDateDesc(Long userId, LocalDateTime now);
 }

@@ -32,4 +32,9 @@ public class UserRepositoryImpl implements UserRepository {
         return jpaUserRepository.findById(userId)
             .orElseThrow(() -> new UserException(UserError.USER_NOT_EXISTS));
     }
+
+    @Override
+    public boolean existsByNickname(String nickname) {
+        return jpaUserRepository.existsByNickname(nickname);
+    }
 }

@@ -9,9 +9,10 @@ import com.flutter.alloffootball.service.FieldService;
 import com.flutter.alloffootball.service.MatchService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,7 +45,10 @@ public class FieldController {
      */
     @GetMapping("/{fieldId}/schedule")
     public ResponseEntity<Response> fieldSchedule(@PathVariable("fieldId") long fieldId, Pageable pageable) {
-        List<ResponseMatchSimp> matchDataList = matchService.findAllByFieldIdToMatchData(fieldId, pageable);
+        PageRequest sortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.Direction.ASC, "matchDate");
+        System.out.println("sortedPageable = " + sortedPageable);
+        List<ResponseMatchSimp> matchDataList = matchService.findAllByFieldIdToMatchData(fieldId, sortedPageable);
+        System.out.println("matchDataList.size() = " + matchDataList.size());
         return Response.ok(matchDataList);
     }
 }

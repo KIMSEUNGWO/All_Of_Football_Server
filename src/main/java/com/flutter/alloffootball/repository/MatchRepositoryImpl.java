@@ -7,6 +7,7 @@ import com.flutter.alloffootball.common.exception.MatchException;
 import com.flutter.alloffootball.common.jparepository.JpaMatchRepository;
 import com.flutter.alloffootball.querydsl.QueryDslMatchRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
@@ -26,7 +27,7 @@ public class MatchRepositoryImpl implements MatchRepository {
     }
 
     @Override
-    public List<Match> findAllByFieldIdToMatchData(long fieldId, Pageable pageable) {
+    public Page<Match> findAllByFieldIdToMatchData(long fieldId, Pageable pageable) {
         return jpaMatchRepository.findAllByField_IdAndMatchDateAfter(fieldId, pageable, LocalDateTime.now());
     }
 

@@ -18,6 +18,5 @@ public class ResponseFieldData {
     private final Address address;
     private final FieldData fieldData;
     private final String description;
-    private final boolean favorite;
     private final List<String> images;
 }

@@ -53,13 +53,14 @@ public class OrderRepositoryImpl implements OrderRepository {
         jpaOrderRepository.save(saveOrder);
     }
 
-    @Override
-    public List<Order> findAllByUserIdAndDate(Long userId, LocalDateTime startDate, LocalDateTime endDate) {
-        return jpaOrderRepository.findAllByUser_IdAndMatch_MatchDateBetween(userId, startDate, endDate);
-    }
 
     @Override
     public List<Order> getHistory(Long userId, LocalDateTime startDate, LocalDateTime endDate) {
         return queryDslOrderRepository.findDistinctDaysWithDataInMonth(userId, startDate, endDate);
+    }
+
+    @Override
+    public List<Order> findAllByUserIdAndMatchDateAfterOrderByMatchDateDesc(Long userId, LocalDateTime now) {
+        return jpaOrderRepository.findAllByUser_IdAndMatch_MatchDateAfterOrderByMatch_MatchDate(userId, now);
     }
 }

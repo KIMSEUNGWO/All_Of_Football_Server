@@ -13,4 +13,6 @@ public interface OrderService {
     ResponseOrderResult order(RequestOrder requestOrder, long userId, LocalDateTime now);
 
     Map<Integer, List<ResponseMatchView>> getHistory(LocalDateTime date, User user);
+
+    List<ResponseMatchView> findAllByUserIdAndMatchDateAfter(Long userId, LocalDateTime now);
 }

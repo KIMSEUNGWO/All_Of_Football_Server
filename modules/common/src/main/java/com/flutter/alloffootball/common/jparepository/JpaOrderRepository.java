@@ -9,5 +9,5 @@ import java.util.List;
 public interface JpaOrderRepository extends JpaRepository<Order, Long> {
 
     boolean existsByMatch_IdAndUser_Id(long matchId, long userId);
-    List<Order> findAllByUser_IdAndMatch_MatchDateBetween(long userId, LocalDateTime startDate, LocalDateTime endDate);
+    List<Order> findAllByUser_IdAndMatch_MatchDateAfterOrderByMatch_MatchDate(Long userId, LocalDateTime now);
 }

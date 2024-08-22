@@ -19,4 +19,9 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(userId);
         return userWrapper.userProfileWrap(user);
     }
+
+    @Override
+    public boolean distinctNickname(String nickname) {
+        return userRepository.existsByNickname(nickname);
+    }
 }

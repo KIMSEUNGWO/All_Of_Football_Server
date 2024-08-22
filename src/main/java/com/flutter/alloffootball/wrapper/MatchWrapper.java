@@ -40,7 +40,7 @@ public class MatchWrapper {
             .person(match.getPersonCount())
             .matchCount(match.getMatchCount())
             .matchHour(match.getMatchTime())
-            .field(fieldWrapper.fieldDataWrap(match.getField(), false))
+            .field(fieldWrapper.fieldDataWrap(match.getField()))
             .alreadyJoin(alreadyJoin)
             .build();
     }

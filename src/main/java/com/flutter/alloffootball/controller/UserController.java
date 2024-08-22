@@ -2,18 +2,17 @@ package com.flutter.alloffootball.controller;
 
 import com.flutter.alloffootball.common.config.security.CustomUserDetails;
 import com.flutter.alloffootball.common.dto.Response;
+import com.flutter.alloffootball.dto.coupon.ResponseCoupon;
+import com.flutter.alloffootball.dto.field.ResponseFavorite;
 import com.flutter.alloffootball.dto.match.ResponseMatchView;
 import com.flutter.alloffootball.dto.user.RequestCalendar;
+import com.flutter.alloffootball.dto.user.RequestFavoriteToggle;
 import com.flutter.alloffootball.dto.user.ResponseUserProfile;
-import com.flutter.alloffootball.service.OrderService;
-import com.flutter.alloffootball.service.UserService;
+import com.flutter.alloffootball.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,8 +23,11 @@ import java.util.Map;
 @RequestMapping("/user")
 public class UserController {
 
+    private final CouponService couponService;
     private final UserService userService;
+    private final FieldService fieldService;
     private final OrderService orderService;
+    private final FavoriteService favoriteService;
 
     @GetMapping("/profile")
     public ResponseEntity<Response> profile(@AuthenticationPrincipal CustomUserDetails userDetails) {
@@ -33,9 +35,47 @@ public class UserController {
         return Response.ok(userProfile);
     }
 
+    @GetMapping("/edit")
+    public ResponseEntity<Response> getEdit(@AuthenticationPrincipal CustomUserDetails userDetails) {
+
+        return Response.ok();
+    }
+
+
+    @GetMapping("/coupon")
+    public ResponseEntity<Response> coupons(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        List<ResponseCoupon> coupons = couponService.findAllByCouponsOnlyNotUse(userDetails.getUser().getId());
+        return Response.ok(coupons);
+    }
+
     @GetMapping("/history")
     public ResponseEntity<Response> calendar(@ModelAttribute RequestCalendar calendar, @AuthenticationPrincipal CustomUserDetails userDetails) {
         Map<Integer, List<ResponseMatchView>> histories = orderService.getHistory(calendar.getDate(), userDetails.getUser());
         return Response.ok(histories);
+    }
+
+    @GetMapping("/matches")
+    public ResponseEntity<Response> matches(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        List<ResponseMatchView> matchSoon = orderService.findAllByUserIdAndMatchDateAfter(userDetails.getUser().getId(), LocalDateTime.now());
+        return Response.ok(matchSoon);
+    }
+
+    @GetMapping("/favorite")
+    public ResponseEntity<Response> favorite(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        List<ResponseFavorite> favorites = fieldService.findAllByFavorite(userDetails.getUser().getId());
+        return Response.ok(favorites);
+    }
+    @PostMapping("/favorite")
+    public ResponseEntity<Response> favoriteToggle(@RequestBody RequestFavoriteToggle favoriteToggle, @AuthenticationPrincipal CustomUserDetails userDetails) {
+        favoriteService.favoriteToggle(userDetails.getUser().getId(), favoriteToggle);
+        return Response.ok();
+    }
+
+    @GetMapping("/distinct/nickname")
+    public ResponseEntity<Response> distinctNickname(@RequestParam("nickname") String nickname) {
+        System.out.println("nickname = " + nickname);
+        boolean distinct = userService.distinctNickname(nickname);
+        System.out.println("distinct = " + distinct);
+        return Response.ok(distinct);
     }
 }

@@ -14,7 +14,6 @@ public class UserWrapper {
             .nickname(user.getNickname())
             .sex(user.getUserInfo().getSex())
             .birth(user.getUserInfo().getBirth())
-            .favoriteCount(user.getFavoriteList().size())
             .couponCount(user.possibleCouponList().size())
             .cash(user.getCash())
             .build();

@@ -78,4 +78,12 @@ public class OrderServiceImpl implements OrderService {
             .collect(Collectors.groupingBy(matchView -> matchView.getMatchDate().getDayOfMonth()));
     }
 
+    @Override
+    public List<ResponseMatchView> findAllByUserIdAndMatchDateAfter(Long userId, LocalDateTime now) {
+        return orderRepository.findAllByUserIdAndMatchDateAfterOrderByMatchDateDesc(userId, now)
+            .stream()
+            .map(order -> matchWrapper.matchViewWrap(order.getMatch()))
+            .toList();
+    }
+
 }

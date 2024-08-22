@@ -9,4 +9,6 @@ public interface UserRepository {
     User save(User user);
 
     User findById(long userId);
+
+    boolean existsByNickname(String nickname);
 }

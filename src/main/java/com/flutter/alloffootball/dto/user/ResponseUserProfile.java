@@ -18,7 +18,6 @@ public class ResponseUserProfile {
     private final SexType sex;
     private final LocalDate birth;
 
-    private final int favoriteCount;
     private final int couponCount;
 
     private final int cash;

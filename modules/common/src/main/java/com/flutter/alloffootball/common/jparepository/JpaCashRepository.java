@@ -8,4 +8,6 @@ import java.util.List;
 public interface JpaCashRepository extends JpaRepository<Cash, Long> {
 
     List<Cash> findAllByUser_IdOrderByCreateDateDesc(Long userId);
+
+    List<Cash> findAllByUser_Id(Long userId);
 }

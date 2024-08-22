@@ -11,4 +11,6 @@ public interface JpaUserRepository extends JpaRepository<User, Long> {
     Optional<User> findBySocial_RefreshToken(String refreshToken);
 
     Optional<User> findBySocial_SocialIdAndSocial_Provider(String socialId, Provider provider);
+
+    boolean existsByNickname(String nickname);
 }
