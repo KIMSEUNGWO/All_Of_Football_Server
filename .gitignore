@@ -36,6 +36,8 @@ out/
 
 application.properties
 
+**/static/images/
+
 ### VS Code ###
 .vscode/
 
