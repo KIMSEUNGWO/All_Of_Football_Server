@@ -5,6 +5,7 @@ import com.flutter.alloffootball.common.domain.coupon.UserCoupon;
 import com.flutter.alloffootball.common.domain.match.Match;
 import com.flutter.alloffootball.common.domain.orders.Order;
 import com.flutter.alloffootball.common.domain.user.User;
+import com.flutter.alloffootball.common.enums.CashType;
 import com.flutter.alloffootball.dto.coupon.ResponseCouponUse;
 import com.flutter.alloffootball.dto.match.ResponseMatchView;
 import com.flutter.alloffootball.dto.order.RequestOrder;
@@ -27,10 +28,11 @@ import java.util.stream.Collectors;
 @Transactional
 public class OrderServiceImpl implements OrderService {
 
+    private final PaymentRepository paymentRepository;
+
     private final UserRepository userRepository;
     private final MatchRepository matchRepository;
     private final OrderRepository orderRepository;
-    private final CashRepository cashRepository;
     private final UserCouponRepository userCouponRepository;
 
     private final OrderWrapper orderWrapper;
@@ -62,7 +64,7 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.save(saveOrder);
         match.addOrder(saveOrder);
 
-        cashRepository.use(user, saveOrder);
+        paymentRepository.receipt(user, "경기 참여", CashType.USE, saveOrder.getPrice());
 
         return orderWrapper.orderResultWrap(match, saveOrder, user, couponUse);
     }

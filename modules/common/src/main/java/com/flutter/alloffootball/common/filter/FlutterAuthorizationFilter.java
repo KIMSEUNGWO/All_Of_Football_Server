@@ -26,7 +26,8 @@ public class FlutterAuthorizationFilter extends OncePerRequestFilter {
         "/css",
         "/js",
         "/font",
-        "/admin"
+        "/admin",
+        "/api"
     );
 
 

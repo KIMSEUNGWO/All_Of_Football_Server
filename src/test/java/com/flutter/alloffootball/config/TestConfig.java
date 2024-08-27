@@ -1,15 +1,11 @@
 package com.flutter.alloffootball.config;
 
+import com.flutter.alloffootball.common.domain.user.User;
+import com.flutter.alloffootball.common.enums.CashType;
 import com.flutter.alloffootball.common.jparepository.*;
-import com.flutter.alloffootball.querydsl.QueryDslMatchRepository;
-import com.flutter.alloffootball.querydsl.QueryDslMatchRepositoryImpl;
-import com.flutter.alloffootball.querydsl.QueryDslOrderRepository;
-import com.flutter.alloffootball.querydsl.QueryDslOrderRepositoryImpl;
+import com.flutter.alloffootball.querydsl.*;
 import com.flutter.alloffootball.repository.*;
-import com.flutter.alloffootball.service.FieldService;
-import com.flutter.alloffootball.service.FieldServiceImpl;
-import com.flutter.alloffootball.service.OrderService;
-import com.flutter.alloffootball.service.OrderServiceImpl;
+import com.flutter.alloffootball.service.*;
 import com.flutter.alloffootball.wrapper.FieldWrapper;
 import com.flutter.alloffootball.wrapper.MatchWrapper;
 import com.flutter.alloffootball.wrapper.OrderWrapper;
@@ -45,7 +41,12 @@ public class TestConfig {
     }
     @Bean
     OrderService orderService() {
-        return new OrderServiceImpl(userRepository(), matchRepository(), orderRepository(), cashRepository(), userCouponRepository(), orderWrapper(), matchWrapper());
+        return new OrderServiceImpl(paymentRepository(), userRepository(), matchRepository(), orderRepository(), userCouponRepository(), orderWrapper(), matchWrapper());
+    }
+
+    @Bean
+    PaymentRepository paymentRepository() {
+        return new PaymentRepositoryImpl(jpaCashRepository);
     }
 
     @Bean
@@ -58,7 +59,7 @@ public class TestConfig {
     }
     @Bean
     FieldService fieldService() {
-        return new FieldServiceImpl(fieldRepository(), jpaFavoriteRepository, fieldWrapper());
+        return new FieldServiceImpl(queryDslFieldRepository(), fieldRepository(), jpaFavoriteRepository, fieldWrapper());
     }
 
     @Bean
@@ -85,6 +86,10 @@ public class TestConfig {
         return new QueryDslMatchRepositoryImpl(query());
     }
 
+    @Bean
+    QueryDslFieldRepository queryDslFieldRepository() {
+        return new QueryDslFieldRepositoryImpl(query());
+    }
     @Bean
     QueryDslOrderRepository queryDslOrderRepository() {
         return new QueryDslOrderRepositoryImpl(query());
