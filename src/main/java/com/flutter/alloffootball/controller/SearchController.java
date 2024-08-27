@@ -37,5 +37,4 @@ public class SearchController {
         List<ResponseSearchField> fields = fieldService.search(word);
         return Response.ok(fields);
     }
-
 }
