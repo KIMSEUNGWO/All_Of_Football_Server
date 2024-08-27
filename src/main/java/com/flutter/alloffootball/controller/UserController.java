@@ -6,6 +6,7 @@ import com.flutter.alloffootball.dto.coupon.ResponseCoupon;
 import com.flutter.alloffootball.dto.field.ResponseFavorite;
 import com.flutter.alloffootball.dto.match.ResponseMatchView;
 import com.flutter.alloffootball.dto.user.RequestCalendar;
+import com.flutter.alloffootball.dto.user.RequestEditUser;
 import com.flutter.alloffootball.dto.user.RequestFavoriteToggle;
 import com.flutter.alloffootball.dto.user.ResponseUserProfile;
 import com.flutter.alloffootball.service.*;
@@ -35,9 +36,9 @@ public class UserController {
         return Response.ok(userProfile);
     }
 
-    @GetMapping("/edit")
-    public ResponseEntity<Response> getEdit(@AuthenticationPrincipal CustomUserDetails userDetails) {
-
+    @PostMapping("/edit")
+    public ResponseEntity<Response> getEdit(@AuthenticationPrincipal CustomUserDetails userDetails, @ModelAttribute RequestEditUser editUser) {
+        userService.editUser(userDetails.getUser().getId(), editUser);
         return Response.ok();
     }
 
@@ -73,9 +74,7 @@ public class UserController {
 
     @GetMapping("/distinct/nickname")
     public ResponseEntity<Response> distinctNickname(@RequestParam("nickname") String nickname) {
-        System.out.println("nickname = " + nickname);
         boolean distinct = userService.distinctNickname(nickname);
-        System.out.println("distinct = " + distinct);
         return Response.ok(distinct);
     }
 }

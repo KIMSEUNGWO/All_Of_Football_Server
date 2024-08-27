@@ -37,7 +37,7 @@ public class FileRepositoryInDB implements FileRepository {
 
     @Override
     public void delete(String storeName, String thumbnailName, FileType fileType) {
-        if (storeName == null) return;
+        if (storeName == null || storeName.isEmpty()) return;
 
         String originalPath = filePathHelper.getOriginalPath(storeName, fileType);
         String thumbnailPath = filePathHelper.getThumbnailPath(thumbnailName, fileType);

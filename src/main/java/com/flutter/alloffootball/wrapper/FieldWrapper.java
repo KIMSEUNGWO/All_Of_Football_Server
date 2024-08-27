@@ -1,5 +1,6 @@
 package com.flutter.alloffootball.wrapper;
 
+import com.flutter.alloffootball.admin.dto.ResponseSearchField;
 import com.flutter.alloffootball.common.domain.BaseEntityImage;
 import com.flutter.alloffootball.common.domain.field.Field;
 import com.flutter.alloffootball.dto.field.ResponseFavorite;
@@ -22,6 +23,15 @@ public class FieldWrapper {
 
     public ResponseFavorite fieldFavoriteWrap(Field field) {
         return ResponseFavorite.builder()
+            .fieldId(field.getId())
+            .title(field.getTitle())
+            .region(field.getAddress().getRegion())
+            .address(field.getAddress().getAddress())
+            .build();
+    }
+
+    public ResponseSearchField searchFieldWrap(Field field) {
+        return ResponseSearchField.builder()
             .fieldId(field.getId())
             .title(field.getTitle())
             .region(field.getAddress().getRegion())

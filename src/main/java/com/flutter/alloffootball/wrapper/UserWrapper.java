@@ -10,6 +10,7 @@ public class UserWrapper {
     public ResponseUserProfile userProfileWrap(User user) {
         return ResponseUserProfile.builder()
             .id(user.getId())
+            .provider(user.getSocial().getProvider())
             .image(user.getProfile().getThumbnailName())
             .nickname(user.getNickname())
             .sex(user.getUserInfo().getSex())

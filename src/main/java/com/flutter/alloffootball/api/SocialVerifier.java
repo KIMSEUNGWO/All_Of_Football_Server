@@ -1,5 +1,6 @@
 package com.flutter.alloffootball.api;
 
+import com.flutter.alloffootball.api.line.KakaoAPI;
 import com.flutter.alloffootball.api.line.LineAPI;
 import com.flutter.alloffootball.common.enums.Provider;
 import com.flutter.alloffootball.common.exception.SocialError;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Component;
 public class SocialVerifier {
 
     private final LineAPI lineAPI;
+    private final KakaoAPI kakaoAPI;
 
     public SocialProfile getProfile(String socialId, Provider provider, String accessToken) {
         if (socialId == null || provider == null || accessToken == null) {
@@ -21,6 +23,8 @@ public class SocialVerifier {
         if (provider == Provider.LINE) {
             lineAPI.accessTokenVerify(accessToken);
             return lineAPI.getSocialProfile(accessToken);
+        } else if (provider == Provider.KAKAO) {
+            return kakaoAPI.getProfile(accessToken);
         }
 
         throw new SocialException(SocialError.INVALID_REQUEST);

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public enum Provider {
 
     LINE,
+    KAKAO,
     APPLE;
 
     @JsonCreator

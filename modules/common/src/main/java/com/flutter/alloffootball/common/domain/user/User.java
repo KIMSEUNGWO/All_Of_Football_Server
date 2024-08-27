@@ -8,10 +8,7 @@ import com.flutter.alloffootball.common.domain.orders.Order;
 import com.flutter.alloffootball.common.enums.CashType;
 import com.flutter.alloffootball.common.enums.Role;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -39,6 +36,7 @@ public class User extends BaseEntityTime {
     @Embedded
     private UserInfo userInfo;
 
+    @Setter
     @Getter
     private String nickname;
 
