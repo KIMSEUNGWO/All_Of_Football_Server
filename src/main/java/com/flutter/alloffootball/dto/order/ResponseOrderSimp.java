@@ -18,7 +18,4 @@ public class ResponseOrderSimp {
 
     final Address address;
     final LocalDateTime matchDate;
-
-    final int cash;
-    final int couponCount;
 }

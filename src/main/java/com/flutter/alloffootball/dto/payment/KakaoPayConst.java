@@ -12,6 +12,6 @@ public abstract class KakaoPayConst {
     public static final String KAKAO_ORDER_ID = "partner_order_id";
 
     public static final String APPROVAL_URI = DOMAIN + "/api/charge/kakao/completed";
-    public static final String CANCEL_URI = DOMAIN + "/api/charge/kakao/cancel";
-    public static final String FAIL_URI = DOMAIN + "/api/charge/kakao/fail";
+    public static final String CANCEL_URI = DOMAIN + "/api/charge/cancel";
+    public static final String FAIL_URI = DOMAIN + "/api/charge/fail";
 }

@@ -41,18 +41,8 @@ public class MatchWrapper {
             .matchCount(match.getMatchCount())
             .matchHour(match.getMatchTime())
             .field(fieldWrapper.fieldDataWrap(match.getField()))
+            .matchStatus(match.getMatchStatus())
             .alreadyJoin(alreadyJoin)
-            .build();
-    }
-
-    public ResponseMatchOrder matchOrderWrap(Match match, User user) {
-        return ResponseMatchOrder.builder()
-            .title(match.getField().getTitle())
-            .address(match.getField().getAddress())
-            .matchDate(match.getMatchDate())
-            .matchTime(match.getMatchTime())
-            .hourPrice(match.getField().getFieldData().getHourPrice())
-            .cash(user.getCash())
             .build();
     }
 
@@ -76,8 +66,6 @@ public class MatchWrapper {
             .matchHour(match.getMatchTime())
             .address(match.getField().getAddress())
             .matchDate(match.getMatchDate())
-            .cash(user.getCash())
-            .couponCount(user.possibleCouponList().size())
             .build();
     }
 }

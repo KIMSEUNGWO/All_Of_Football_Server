@@ -47,12 +47,6 @@ public class MatchServiceImpl implements MatchService {
     }
 
     @Override
-    public ResponseMatchOrder getMatchOrder(long matchId, CustomUserDetails userDetails) {
-        Match match = findById(matchId);
-        return matchWrapper.matchOrderWrap(match, userDetails.getUser());
-    }
-
-    @Override
     public ResponseOrderSimp getOrderSimp(long matchId, CustomUserDetails userDetails) {
         Match match = findById(matchId);
         return matchWrapper.orderSimpWrap(match, userDetails.getUser());
