@@ -19,7 +19,7 @@ public class Admin {
     @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "USER_ID")
+    @Column(name = "ADMIN_ID")
     private Long id;
 
     @Enumerated(EnumType.STRING)

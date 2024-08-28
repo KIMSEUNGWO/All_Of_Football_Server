@@ -14,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @RequiredArgsConstructor
@@ -23,6 +24,7 @@ public class AdminAuthenticationProvider implements AuthenticationProvider {
     private final SecurityUtil securityUtil;
     private final BCryptPasswordEncoder encoder;
 
+    @Transactional
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         System.out.println("CustomAuthenticationProvider 시작");
@@ -33,7 +35,6 @@ public class AdminAuthenticationProvider implements AuthenticationProvider {
 
         Admin admin = adminRepository.findByAccount(account);
         if (!encoder.matches(password, admin.getPassword())) throw new UsernameNotFoundException("User not found");
-
         User user = admin.getUser();
         Social social = user.getSocial();
         securityUtil.saveUserInSecurityContext(social.getSocialId(), social.getProvider());
