@@ -18,4 +18,8 @@ public interface OrderRepository {
     List<Order> getHistory(Long userId, LocalDateTime startDate, LocalDateTime endDate);
 
     List<Order> findAllByUserIdAndMatchDateAfterOrderByMatchDateDesc(Long userId, LocalDateTime now);
+
+    Order findByUserIdAndMatchId(Long userId, Long matchId);
+
+    void delete(Order order);
 }

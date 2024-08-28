@@ -63,4 +63,16 @@ public class OrderRepositoryImpl implements OrderRepository {
     public List<Order> findAllByUserIdAndMatchDateAfterOrderByMatchDateDesc(Long userId, LocalDateTime now) {
         return jpaOrderRepository.findAllByUser_IdAndMatch_MatchDateAfterOrderByMatch_MatchDate(userId, now);
     }
+
+    @Override
+    public Order findByUserIdAndMatchId(Long userId, Long matchId) {
+        if (userId == null || matchId == null) throw new OrderException(OrderError.ORDER_NOT_EXISTS);
+        return jpaOrderRepository.findByUser_IdAndMatch_Id(userId, matchId)
+            .orElseThrow(() -> new OrderException(OrderError.ORDER_NOT_EXISTS));
+    }
+
+    @Override
+    public void delete(Order order) {
+        jpaOrderRepository.delete(order);
+    }
 }

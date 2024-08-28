@@ -20,4 +20,15 @@ public class CouponRepositoryImpl implements CouponRepository {
     public List<UserCoupon> findAllByNotUseCoupon(Long userId) {
         return jpaUserCouponRepository.findAllByUser_IdAndCouponUseAndExpireDateAfter(userId, 'N', LocalDateTime.now());
     }
+
+    @Override
+    public void refundCoupon(UserCoupon userCoupon, LocalDateTime now) {
+        if (userCoupon == null) return;
+        // 만료된 쿠폰은 삭제
+        if (now.isAfter(userCoupon.getExpireDate())) {
+            jpaUserCouponRepository.delete(userCoupon);
+        } else {
+            userCoupon.setCouponUse('N');
+        }
+    }
 }

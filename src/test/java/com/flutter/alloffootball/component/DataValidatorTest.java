@@ -1,5 +1,6 @@
-package com.flutter.alloffootball.common.component;
+package com.flutter.alloffootball.component;
 
+import com.flutter.alloffootball.common.component.DataValidator;
 import com.flutter.alloffootball.common.exception.InvalidDataException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -4,6 +4,7 @@ import com.flutter.alloffootball.common.domain.BaseEntityTime;
 import com.flutter.alloffootball.common.domain.Cash;
 import com.flutter.alloffootball.common.domain.Favorite;
 import com.flutter.alloffootball.common.domain.coupon.UserCoupon;
+import com.flutter.alloffootball.common.domain.orders.CancelOrder;
 import com.flutter.alloffootball.common.domain.orders.Order;
 import com.flutter.alloffootball.common.enums.CashType;
 import com.flutter.alloffootball.common.enums.Role;
@@ -67,6 +68,10 @@ public class User extends BaseEntityTime {
     @Builder.Default
     @OneToMany(mappedBy = "user", orphanRemoval = true)
     private List<UserCoupon> userCouponList = new ArrayList<>();
+
+    @Builder.Default
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
+    private List<CancelOrder> cancelOrderList = new ArrayList<>();
 
     public void receipt(CashType cashType, int receipt) {
         this.cash = Math.max(0, this.cash + cashType.accept(receipt));

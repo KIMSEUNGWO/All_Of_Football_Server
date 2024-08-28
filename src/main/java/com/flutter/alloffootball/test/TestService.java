@@ -77,7 +77,7 @@ public class TestService {
 
         Match saveMatch1 = Match.builder()
             .field(saveField1)
-            .matchDate(LocalDateTime.of(2024, 8, 31,14, 0))
+            .matchDate(LocalDateTime.now().plusDays(5))
             .matchTime(2)
             .matchSex(null)
             .matchCount(3)
@@ -87,7 +87,7 @@ public class TestService {
 
         Match saveMatch2 = Match.builder()
             .field(saveField1)
-            .matchDate(LocalDateTime.of(2024, 8, 25,16, 0))
+            .matchDate(LocalDateTime.now().plusDays(1))
             .matchTime(2)
             .matchSex(SexType.MALE)
             .matchCount(3)
@@ -97,7 +97,7 @@ public class TestService {
 
         Match saveMatch3 = Match.builder()
             .field(saveField2)
-            .matchDate(LocalDateTime.of(2024, 8, 24,0, 0))
+            .matchDate(LocalDateTime.now().plusDays(2))
             .matchTime(2)
             .matchSex(SexType.MALE)
             .matchCount(3)
@@ -107,7 +107,7 @@ public class TestService {
 
         Match saveMatch4 = Match.builder()
             .field(saveField2)
-            .matchDate(LocalDateTime.of(2024, 8, 27,22, 0))
+            .matchDate(LocalDateTime.now().plusDays(3))
             .matchTime(2)
             .matchSex(null)
             .matchCount(3)
@@ -117,7 +117,7 @@ public class TestService {
 
         Match saveMatch5 = Match.builder()
             .field(saveField1)
-            .matchDate(LocalDateTime.now())
+            .matchDate(LocalDateTime.now().plusDays(7))
             .matchTime(2)
             .matchSex(null)
             .matchCount(3)
@@ -131,21 +131,6 @@ public class TestService {
         matchRepository.save(saveMatch4);
         matchRepository.save(saveMatch5);
 
-        RequestOrder o1 = new RequestOrder();
-        o1.setMatchId(saveMatch1.getId());
-        orderService.order(o1, userId, LocalDateTime.now());
-
-        RequestOrder o2 = new RequestOrder();
-        o2.setMatchId(saveMatch2.getId());
-        orderService.order(o2, userId, LocalDateTime.now());
-
-        RequestOrder o3 = new RequestOrder();
-        o3.setMatchId(saveMatch3.getId());
-        orderService.order(o3, userId, LocalDateTime.now());
-
-        RequestOrder o4 = new RequestOrder();
-        o4.setMatchId(saveMatch4.getId());
-        orderService.order(o4, userId, LocalDateTime.now());
 
     }
 }
