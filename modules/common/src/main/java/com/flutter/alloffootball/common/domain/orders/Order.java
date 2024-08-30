@@ -40,4 +40,8 @@ public class Order {
 
     // 결제 금액
     private int price;
+
+    public void delete() {
+
+    }
 }

@@ -28,7 +28,7 @@ public class CouponRepositoryImpl implements CouponRepository {
         if (now.isAfter(userCoupon.getExpireDate())) {
             jpaUserCouponRepository.delete(userCoupon);
         } else {
-            userCoupon.setCouponUse('N');
+            userCoupon.notUse();
         }
     }
 }

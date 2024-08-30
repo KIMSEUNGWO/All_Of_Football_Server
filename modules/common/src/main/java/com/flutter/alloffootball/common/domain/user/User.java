@@ -81,7 +81,7 @@ public class User extends BaseEntityTime {
         LocalDateTime now = LocalDateTime.now();
         return userCouponList
             .stream()
-            .filter(userCoupon -> userCoupon.getCouponUse() == 'N' && userCoupon.getExpireDate().isAfter(now))
+            .filter(userCoupon -> !userCoupon.isUse() && userCoupon.isExpire(now))
             .toList();
     }
 }

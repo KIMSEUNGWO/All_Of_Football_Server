@@ -31,7 +31,7 @@ public class UserCouponRepositoryImpl implements UserCouponRepository {
 
         userCouponValid(userCoupon, userId, now);
 
-        userCoupon.setCouponUse('Y');
+        userCoupon.use();
 
         return ResponseCouponUse.builder()
             .title(userCoupon.getCoupon().getTitle())
@@ -43,7 +43,7 @@ public class UserCouponRepositoryImpl implements UserCouponRepository {
         // 자신의 쿠폰이 아닌 경우 ( 이 예외는 데이터 조작일 경우만 해당 됨 )
         if (userCoupon.getUser().getId() != userId) throw new InvalidException(DefaultError.INVALID_REQUEST);
         // 이미 사용한 경우
-        if (userCoupon.getCouponUse() == 'Y') throw new CouponException(CouponError.COUPON_ALREADY_USE);
+        if (userCoupon.isUse()) throw new CouponException(CouponError.COUPON_ALREADY_USE);
         // 이미 만료된 경우
 //        if (userCoupon.getExpireDate().isBefore(now)) throw new CouponException(CouponError.COUPON_EXPIRE);
         if (userCoupon.getExpireDate().isBefore(now)){

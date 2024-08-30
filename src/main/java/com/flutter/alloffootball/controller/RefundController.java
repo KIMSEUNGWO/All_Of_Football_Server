@@ -3,6 +3,7 @@ package com.flutter.alloffootball.controller;
 import com.flutter.alloffootball.common.config.security.CustomUserDetails;
 import com.flutter.alloffootball.common.dto.Response;
 import com.flutter.alloffootball.dto.order.RequestCancelOrder;
+import com.flutter.alloffootball.dto.refund.ResponseRefundResult;
 import com.flutter.alloffootball.service.RefundService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,7 @@ public class RefundController {
     @PostMapping
     public ResponseEntity<Response> cancelOrder(@RequestBody RequestCancelOrder cancelOrder,
                                                 @AuthenticationPrincipal CustomUserDetails userDetails) {
-        refundService.cancelOrder(cancelOrder, userDetails.getUser().getId());
-        return Response.ok();
+        ResponseRefundResult refundResult = refundService.cancelOrder(cancelOrder, userDetails.getUser().getId());
+        return Response.ok(refundResult);
     }
 }

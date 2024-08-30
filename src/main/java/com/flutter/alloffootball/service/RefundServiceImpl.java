@@ -1,11 +1,11 @@
 package com.flutter.alloffootball.service;
 
-import com.flutter.alloffootball.common.domain.match.Match;
 import com.flutter.alloffootball.common.domain.orders.CancelOrder;
 import com.flutter.alloffootball.common.domain.orders.Order;
 import com.flutter.alloffootball.common.enums.CashType;
 import com.flutter.alloffootball.common.enums.RefundPolicy;
 import com.flutter.alloffootball.dto.order.RequestCancelOrder;
+import com.flutter.alloffootball.dto.refund.ResponseRefundResult;
 import com.flutter.alloffootball.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,9 +25,10 @@ public class RefundServiceImpl implements RefundService {
     private final PaymentRepository paymentRepository;
 
     @Override
-    public synchronized void cancelOrder(RequestCancelOrder cancelOrder, Long userId) {
+    public synchronized ResponseRefundResult cancelOrder(RequestCancelOrder cancelOrder, Long userId) {
         Order order = orderRepository.findByUserIdAndMatchId(userId, cancelOrder.getMatchId());
         LocalDateTime now = LocalDateTime.now();
+        int payAmount = order.getPrice();
 
         // 쿠폰 적용 여부 확인 및 현재시간 기준 만료된 쿠폰은 삭제처리
         couponRepository.refundCoupon(order.getUserCoupon(), now);
@@ -36,7 +37,7 @@ public class RefundServiceImpl implements RefundService {
         RefundPolicy refundPolicy = RefundPolicy.getPolicy(now, order.getMatch().getMatchDate());
 
         // 실제 결제금액에 환불정책이 적용된 금액 계산
-        int refundAmount = refundPolicy.calculate(order.getPrice());
+        int refundAmount = refundPolicy.calculate(payAmount);
 
         // CancelOrder DB 생성 및 저장
         CancelOrder saveCancelOrder = CancelOrder.builder()
@@ -52,5 +53,10 @@ public class RefundServiceImpl implements RefundService {
         // Order 삭제
         orderRepository.delete(order);
 
+        return ResponseRefundResult
+            .builder()
+            .payAmount(payAmount)
+            .refundAmount(refundAmount)
+            .build();
     }
 }
