@@ -81,7 +81,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<ResponseMatchView> findAllByUserIdAndMatchDateAfter(Long userId, LocalDateTime now) {
-        return orderRepository.findAllByUserIdAndMatchDateAfterOrderByMatchDateDesc(userId, now)
+        return orderRepository.findAllByMatchSoon(userId, now)
             .stream()
             .map(order -> matchWrapper.matchViewWrap(order.getMatch()))
             .toList();

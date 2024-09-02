@@ -5,6 +5,7 @@ import com.flutter.alloffootball.common.domain.match.Match;
 import com.flutter.alloffootball.common.domain.orders.Order;
 import com.flutter.alloffootball.common.domain.user.User;
 import com.flutter.alloffootball.common.enums.MatchStatus;
+import com.flutter.alloffootball.common.enums.OrderStatus;
 import com.flutter.alloffootball.common.exception.OrderError;
 import com.flutter.alloffootball.common.exception.OrderException;
 import com.flutter.alloffootball.common.jparepository.JpaOrderRepository;
@@ -24,9 +25,9 @@ public class OrderRepositoryImpl implements OrderRepository {
     private final QueryDslOrderRepository queryDslOrderRepository;
 
     @Override
-    public boolean existsByMatch_IdAndUser_Id(long matchId, CustomUserDetails userDetails) {
+    public boolean isAlreadyJoin(long matchId, CustomUserDetails userDetails) {
         if (userDetails == null) return false;
-        return jpaOrderRepository.existsByMatch_IdAndUser_Id(matchId, userDetails.getUser().getId());
+        return jpaOrderRepository.existsByMatch_IdAndUser_IdAndOrderStatus(matchId, userDetails.getUser().getId(), OrderStatus.USE);
     }
 
     @Override
@@ -37,7 +38,7 @@ public class OrderRepositoryImpl implements OrderRepository {
         }
 
         // 이미 참가 중인 유저인 경우
-        boolean alreadyJoin = jpaOrderRepository.existsByMatch_IdAndUser_Id(match.getId(), user.getId());
+        boolean alreadyJoin = jpaOrderRepository.existsByMatch_IdAndUser_IdAndOrderStatus(match.getId(), user.getId(), OrderStatus.USE);
         if (alreadyJoin) throw new OrderException(OrderError.ALREADY_JOIN);
 
         // 현재 보유한 캐시보다 적은 경우
@@ -60,8 +61,8 @@ public class OrderRepositoryImpl implements OrderRepository {
     }
 
     @Override
-    public List<Order> findAllByUserIdAndMatchDateAfterOrderByMatchDateDesc(Long userId, LocalDateTime now) {
-        return jpaOrderRepository.findAllByUser_IdAndMatch_MatchDateAfterOrderByMatch_MatchDate(userId, now);
+    public List<Order> findAllByMatchSoon(Long userId, LocalDateTime now) {
+        return jpaOrderRepository.findAllByUser_IdAndOrderStatusAndMatch_MatchDateAfterOrderByMatch_MatchDate(userId, OrderStatus.USE, now);
     }
 
     @Override

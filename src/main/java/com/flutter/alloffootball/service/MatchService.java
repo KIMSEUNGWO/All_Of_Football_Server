@@ -14,6 +14,5 @@ public interface MatchService {
 
     ResponseMatchDetails getMatchDetails(long matchId, CustomUserDetails userDetails);
 
-
     ResponseOrderSimp getOrderSimp(long matchId, CustomUserDetails userDetails);
 }

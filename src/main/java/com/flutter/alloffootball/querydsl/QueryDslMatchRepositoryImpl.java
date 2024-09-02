@@ -33,7 +33,7 @@ public class QueryDslMatchRepositoryImpl implements QueryDslMatchRepository {
                 match.matchDate.between(searchDate, endDate),
                 conditionSex(searchMatch.getSex()),
                 conditionRegion(searchMatch.getRegion()))
-            .orderBy(match.matchDate.desc())
+            .orderBy(match.matchDate.asc())
             .fetch();
     }
 

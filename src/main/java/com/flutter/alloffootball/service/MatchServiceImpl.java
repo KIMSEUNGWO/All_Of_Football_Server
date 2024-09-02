@@ -42,7 +42,7 @@ public class MatchServiceImpl implements MatchService {
     @Override
     public ResponseMatchDetails getMatchDetails(long matchId, CustomUserDetails userDetails) {
         Match match = matchRepository.findById(matchId);
-        boolean alreadyMatchJoin = orderRepository.existsByMatch_IdAndUser_Id(matchId, userDetails);
+        boolean alreadyMatchJoin = orderRepository.isAlreadyJoin(matchId, userDetails);
         return matchWrapper.matchDetailsWrap(match, alreadyMatchJoin);
     }
 

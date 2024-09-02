@@ -28,6 +28,7 @@ public class SearchController {
     public ResponseEntity<Response> getMatchList(@ModelAttribute RequestSearchMatch searchMatch,
                                                  Pageable pageable) {
         System.out.println("searchMatch = " + searchMatch);
+        System.out.println("pageable = " + pageable);
         List<ResponseMatchView> matchList = matchService.findAllByMatchData(searchMatch, pageable);
         return Response.ok(matchList);
     }

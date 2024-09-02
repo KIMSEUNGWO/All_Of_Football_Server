@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface OrderRepository {
-    boolean existsByMatch_IdAndUser_Id(long matchId, CustomUserDetails userDetails);
+    boolean isAlreadyJoin(long matchId, CustomUserDetails userDetails);
 
     void valid(Match match, User user, int price);
 
@@ -17,7 +17,7 @@ public interface OrderRepository {
 
     List<Order> getHistory(Long userId, LocalDateTime startDate, LocalDateTime endDate);
 
-    List<Order> findAllByUserIdAndMatchDateAfterOrderByMatchDateDesc(Long userId, LocalDateTime now);
+    List<Order> findAllByMatchSoon(Long userId, LocalDateTime now);
 
     Order findByUserIdAndMatchId(Long userId, Long matchId);
 

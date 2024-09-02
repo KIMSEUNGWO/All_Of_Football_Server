@@ -52,8 +52,7 @@ public class RefundServiceImpl implements RefundService {
         paymentRepository.receipt(order.getUser(), refundPolicy.getMessage(), CashType.REFUND, refundAmount);
 
         // Order 삭제처리
-//        order.setOrderStatus(OrderStatus.CANCEL);
-        orderRepository.delete(order);
+        order.setCancel();
 
         return ResponseRefundResult
             .builder()
