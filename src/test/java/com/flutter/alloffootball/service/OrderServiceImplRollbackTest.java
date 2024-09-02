@@ -72,7 +72,7 @@ public class OrderServiceImplRollbackTest {
         Optional<UserCoupon> findUserCoupon = jpaUserCouponRepository.findById(1L);
         assertThat(findUserCoupon.isPresent()).isTrue();
         UserCoupon userCoupon = findUserCoupon.get();
-        assertThat(userCoupon.getCouponUse()).isEqualTo('N');
+        assertThat(userCoupon.isUse()).isFalse();
     }
 
     @Test

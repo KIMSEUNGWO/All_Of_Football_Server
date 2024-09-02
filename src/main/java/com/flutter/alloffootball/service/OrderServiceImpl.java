@@ -8,7 +8,6 @@ import com.flutter.alloffootball.common.domain.user.User;
 import com.flutter.alloffootball.common.enums.CashType;
 import com.flutter.alloffootball.dto.coupon.ResponseCouponUse;
 import com.flutter.alloffootball.dto.match.ResponseMatchView;
-import com.flutter.alloffootball.dto.order.RequestCancelOrder;
 import com.flutter.alloffootball.dto.order.RequestOrder;
 import com.flutter.alloffootball.dto.order.ResponseOrderResult;
 import com.flutter.alloffootball.common.enums.OrderStatus;
@@ -44,14 +43,13 @@ public class OrderServiceImpl implements OrderService {
         Match match = matchRepository.findById(requestOrder.getMatchId());
         User user = userRepository.findById(userId);
 
+        int price = match.getTotalPrice();
+
         // 쿠폰사용을 하지 않았다면 userCoupon == null
-        int totalPrice = match.getTotalPrice();
-
         UserCoupon userCoupon = userCouponRepository.findById(requestOrder.getCouponId());
-        ResponseCouponUse couponUse = userCouponRepository.useCoupon(userCoupon, userId, now, totalPrice);
+        ResponseCouponUse couponUse = userCouponRepository.useCoupon(userCoupon, userId, now, price);
 
-        // couponUse의 discount는 -로 되어있다.
-        int finalPrice = totalPrice + (couponUse == null ? 0 : couponUse.getDiscount());
+        int finalPrice = (couponUse == null) ? price : couponUse.getTotalPrice();
 
         orderRepository.valid(match, user, finalPrice);
         Order saveOrder = Order.builder()
@@ -63,9 +61,8 @@ public class OrderServiceImpl implements OrderService {
             .build();
 
         orderRepository.save(saveOrder);
-        match.addOrder(saveOrder);
 
-        paymentRepository.receipt(user, "경기 참여", CashType.USE, saveOrder.getPrice());
+        paymentRepository.receipt(user, "경기 참여", CashType.USE, finalPrice);
 
         return orderWrapper.orderResultWrap(match, saveOrder, user, couponUse);
     }
@@ -75,6 +72,7 @@ public class OrderServiceImpl implements OrderService {
     public Map<Integer, List<ResponseMatchView>> getHistory(LocalDateTime date, User user) {
         LocalDateTime startDate = DateRangeUtil.getStartOfMonth(date);
         LocalDateTime endDate = DateRangeUtil.getEndOfMonth(date);
+
         return orderRepository.getHistory(user.getId(), startDate, endDate)
             .stream()
             .map(order -> matchWrapper.matchViewWrap(order.getMatch()))

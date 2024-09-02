@@ -13,4 +13,5 @@ public class ResponseCouponUse {
 
     private final String title;
     private final int discount;
+    private final int totalPrice;
 }

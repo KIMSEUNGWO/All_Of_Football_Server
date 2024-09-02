@@ -1,8 +1,7 @@
 package com.flutter.alloffootball.config;
 
-import com.flutter.alloffootball.common.domain.user.User;
-import com.flutter.alloffootball.common.enums.CashType;
 import com.flutter.alloffootball.common.jparepository.*;
+import com.flutter.alloffootball.component.CouponCalculator;
 import com.flutter.alloffootball.querydsl.*;
 import com.flutter.alloffootball.repository.*;
 import com.flutter.alloffootball.service.*;
@@ -106,7 +105,12 @@ public class TestConfig {
     }
 
     @Bean
+    CouponCalculator couponCalculator() {
+        return new CouponCalculator();
+    }
+
+    @Bean
     UserCouponRepository userCouponRepository() {
-        return new UserCouponRepositoryImpl(jpaUserCouponRepository);
+        return new UserCouponRepositoryImpl(jpaUserCouponRepository, couponCalculator());
     }
 }

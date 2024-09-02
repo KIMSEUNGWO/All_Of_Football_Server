@@ -5,10 +5,7 @@ import com.flutter.alloffootball.common.domain.coupon.UserCoupon;
 import com.flutter.alloffootball.common.domain.match.Match;
 import com.flutter.alloffootball.common.enums.OrderStatus;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Builder
@@ -31,6 +28,7 @@ public class Order {
     @JoinColumn(name = "USER_ID")
     private User user;
 
+    @Setter
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 

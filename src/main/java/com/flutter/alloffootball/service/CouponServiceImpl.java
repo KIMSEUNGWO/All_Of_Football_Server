@@ -1,6 +1,5 @@
 package com.flutter.alloffootball.service;
 
-import com.flutter.alloffootball.common.domain.coupon.UserCoupon;
 import com.flutter.alloffootball.dto.coupon.ResponseCoupon;
 import com.flutter.alloffootball.repository.CouponRepository;
 import com.flutter.alloffootball.wrapper.CouponWrapper;
@@ -17,7 +16,9 @@ public class CouponServiceImpl implements CouponService {
     private final CouponWrapper couponWrapper;
     @Override
     public List<ResponseCoupon> findAllByCouponsOnlyNotUse(Long userId) {
-        List<UserCoupon> userCoupons = couponRepository.findAllByNotUseCoupon(userId);
-        return userCoupons.stream().map(couponWrapper::couponWrap).toList();
+        return couponRepository.findAllByNotUseCoupon(userId)
+            .stream()
+            .map(couponWrapper::couponWrap)
+            .toList();
     }
 }

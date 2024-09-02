@@ -41,18 +41,15 @@ public class MatchServiceImpl implements MatchService {
 
     @Override
     public ResponseMatchDetails getMatchDetails(long matchId, CustomUserDetails userDetails) {
-        Match match = findById(matchId);
+        Match match = matchRepository.findById(matchId);
         boolean alreadyMatchJoin = orderRepository.existsByMatch_IdAndUser_Id(matchId, userDetails);
         return matchWrapper.matchDetailsWrap(match, alreadyMatchJoin);
     }
 
     @Override
     public ResponseOrderSimp getOrderSimp(long matchId, CustomUserDetails userDetails) {
-        Match match = findById(matchId);
+        Match match = matchRepository.findById(matchId);
         return matchWrapper.orderSimpWrap(match, userDetails.getUser());
     }
 
-    private Match findById(Long matchId) {
-        return matchRepository.findById(matchId);
-    }
 }

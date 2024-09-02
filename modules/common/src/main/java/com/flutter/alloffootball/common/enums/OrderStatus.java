@@ -4,5 +4,4 @@ public enum OrderStatus {
 
     USE,
     CANCEL,
-    REFUND
 }

@@ -3,6 +3,7 @@ package com.flutter.alloffootball.service;
 import com.flutter.alloffootball.common.domain.orders.CancelOrder;
 import com.flutter.alloffootball.common.domain.orders.Order;
 import com.flutter.alloffootball.common.enums.CashType;
+import com.flutter.alloffootball.common.enums.OrderStatus;
 import com.flutter.alloffootball.common.enums.RefundPolicy;
 import com.flutter.alloffootball.dto.order.RequestCancelOrder;
 import com.flutter.alloffootball.dto.refund.ResponseRefundResult;
@@ -50,7 +51,8 @@ public class RefundServiceImpl implements RefundService {
         // Receipt 생성
         paymentRepository.receipt(order.getUser(), refundPolicy.getMessage(), CashType.REFUND, refundAmount);
 
-        // Order 삭제
+        // Order 삭제처리
+//        order.setOrderStatus(OrderStatus.CANCEL);
         orderRepository.delete(order);
 
         return ResponseRefundResult

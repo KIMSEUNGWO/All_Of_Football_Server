@@ -2,6 +2,7 @@ package com.flutter.alloffootball.repository;
 
 import com.flutter.alloffootball.common.domain.coupon.UserCoupon;
 import com.flutter.alloffootball.common.exception.*;
+import com.flutter.alloffootball.component.CouponCalculator;
 import com.flutter.alloffootball.dto.coupon.ResponseCouponUse;
 import com.flutter.alloffootball.common.jparepository.JpaUserCouponRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 public class UserCouponRepositoryImpl implements UserCouponRepository {
 
     private final JpaUserCouponRepository jpaUserCouponRepository;
+    private final CouponCalculator couponCalculator;
 
     @Override
     public UserCoupon findById(Long couponId) {
@@ -35,7 +37,8 @@ public class UserCouponRepositoryImpl implements UserCouponRepository {
 
         return ResponseCouponUse.builder()
             .title(userCoupon.getCoupon().getTitle())
-            .discount(-1 * (int) (totalPrice * ((double) userCoupon.getCoupon().getDiscountPer() / 100)))
+            .discount(-1 * couponCalculator.discount(totalPrice, userCoupon.getCoupon().getDiscountPer()))
+            .totalPrice(couponCalculator.total(totalPrice, userCoupon.getCoupon().getDiscountPer()))
             .build();
     }
 
@@ -45,7 +48,6 @@ public class UserCouponRepositoryImpl implements UserCouponRepository {
         // 이미 사용한 경우
         if (userCoupon.isUse()) throw new CouponException(CouponError.COUPON_ALREADY_USE);
         // 이미 만료된 경우
-//        if (userCoupon.getExpireDate().isBefore(now)) throw new CouponException(CouponError.COUPON_EXPIRE);
         if (userCoupon.getExpireDate().isBefore(now)){
             jpaUserCouponRepository.delete(userCoupon);
             throw new CouponExpireException();

@@ -142,7 +142,7 @@ class OrderServiceImplTest {
         // when
 
         // 쿠폰 사용 처리
-        assertThat(userCoupon.getCouponUse()).isEqualTo('Y');
+        assertThat(userCoupon.isUse()).isTrue();
         assertThat(order.getCoupon()).isNotNull();
         int discount = (int) (-1 * (totalPrice * ((double) userCoupon.getCoupon().getDiscountPer() / 100)));
         assertThat(order.getCoupon().getDiscount()).isEqualTo(discount);
