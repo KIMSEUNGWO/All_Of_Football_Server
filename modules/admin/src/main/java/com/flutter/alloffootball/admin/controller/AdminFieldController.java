@@ -2,6 +2,7 @@ package com.flutter.alloffootball.admin.controller;
 
 import com.flutter.alloffootball.admin.dto.RequestSaveFieldForm;
 import com.flutter.alloffootball.admin.dto.ResponseViewField;
+import com.flutter.alloffootball.admin.dto.field.ResponseEditField;
 import com.flutter.alloffootball.admin.service.AdminService;
 import com.flutter.alloffootball.common.config.security.AdminUserDetails;
 import com.flutter.alloffootball.common.enums.region.Region;
@@ -29,12 +30,29 @@ public class AdminFieldController {
         return "admin_field";
     }
 
+    /**
+     * 구장 정보 조회
+     */
+    @GetMapping("/{fieldId}")
+    public String fieldView(@PathVariable("fieldId") long fieldId, Model model) {
+        ResponseViewField viewField = adminService.findByIdViewField(fieldId);
+        model.addAttribute("field", viewField);
+        return "admin_field_view";
+    }
+
+    /**
+     * GET 구장 등록 데이터
+     */
     @GetMapping("/add")
     public String getFieldAdd(Model model) {
         model.addAttribute("region", Region.values());
         model.addAttribute("saveFieldForm", new RequestSaveFieldForm());
         return "admin_field_add";
     }
+
+    /**
+     * POST 구장 등록
+     */
     @PostMapping("/add")
     public String postFieldAdd(@Validated @ModelAttribute("saveFieldForm") RequestSaveFieldForm saveFieldForm,
                                BindingResult bindingResult) {
@@ -44,11 +62,17 @@ public class AdminFieldController {
         return "redirect:/admin/field";
     }
 
-    @GetMapping("/{fieldId}")
-    public String fieldView(@PathVariable("fieldId") long fieldId, Model model) {
-        ResponseViewField viewField = adminService.findByIdViewField(fieldId);
-        model.addAttribute("field", viewField);
-        return "admin_field_view";
+    @GetMapping("/{fieldId}/edit")
+    public String fieldEdit(@PathVariable("fieldId") Long fieldId, Model model) {
+        ResponseEditField form = adminService.getEditFieldForm(fieldId);
+
+        model.addAttribute("regions", Region.values());
+        model.addAttribute("fieldId", fieldId);
+        model.addAttribute("editField", form);
+        return "admin_field_edit";
     }
+
+
+
 
 }

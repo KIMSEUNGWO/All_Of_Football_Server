@@ -3,6 +3,7 @@ package com.flutter.alloffootball.admin.service;
 import com.flutter.alloffootball.admin.dto.RequestSaveFieldForm;
 import com.flutter.alloffootball.admin.dto.ResponseSearchField;
 import com.flutter.alloffootball.admin.dto.ResponseViewField;
+import com.flutter.alloffootball.admin.dto.field.ResponseEditField;
 import com.flutter.alloffootball.admin.repository.AdminRepository;
 import com.flutter.alloffootball.admin.wrapper.AdminFieldWrapper;
 import com.flutter.alloffootball.common.component.file.FileService;
@@ -68,8 +69,18 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public ResponseViewField findByIdViewField(long fieldId) {
-        Field field = jpaFieldRepository.findById(fieldId)
-            .orElseThrow(() -> new FieldException(FieldError.FIELD_NOT_EXISTS));
+        Field field = fieldFindById(fieldId);
         return adminFieldWrapper.viewFieldWrap(field);
+    }
+
+    @Override
+    public ResponseEditField getEditFieldForm(Long fieldId) {
+        Field field = fieldFindById(fieldId);
+        return new ResponseEditField(field);
+    }
+
+    Field fieldFindById(long fieldId) {
+        return jpaFieldRepository.findById(fieldId)
+            .orElseThrow(() -> new FieldException(FieldError.FIELD_NOT_EXISTS));
     }
 }

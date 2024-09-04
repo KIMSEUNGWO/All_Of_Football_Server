@@ -32,4 +32,7 @@ public class FieldData {
 
     private int hourPrice; // 구장 시간 당 가격
 
+    public String getFieldSize() {
+        return String.format("%dm x %dm", sizeX, sizeY);
+    }
 }

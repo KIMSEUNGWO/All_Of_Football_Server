@@ -158,6 +158,10 @@ div.imgBox svg {
     height: 2rem;
     padding: 0.3rem 0.5rem;
 }
+#description {
+    width: 100%;
+    height: 10rem;
+}
 
 .addressBtn {
     height: 2rem;

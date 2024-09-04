@@ -46,4 +46,8 @@ public class Field {
     @Builder.Default
     @OneToMany(mappedBy = "field", orphanRemoval = true)
     private List<Favorite> favoriteList = new ArrayList<>();
+
+    public String getFieldSize() {
+        return fieldData.getFieldSize();
+    }
 }
