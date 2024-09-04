@@ -22,4 +22,6 @@ public interface OrderRepository {
     Order findByUserIdAndMatchId(Long userId, Long matchId);
 
     void delete(Order order);
+
+    void refreshMatchStatus(Match match);
 }

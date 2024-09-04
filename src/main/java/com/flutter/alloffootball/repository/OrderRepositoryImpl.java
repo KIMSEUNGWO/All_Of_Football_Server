@@ -76,4 +76,10 @@ public class OrderRepositoryImpl implements OrderRepository {
     public void delete(Order order) {
         jpaOrderRepository.delete(order);
     }
+
+    @Override
+    public void refreshMatchStatus(Match match) {
+        long orderUseCount = jpaOrderRepository.countByMatchAndOrderStatus(match, OrderStatus.USE);
+        match.refreshEnabledOrder(orderUseCount);
+    }
 }

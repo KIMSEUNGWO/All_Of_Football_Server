@@ -53,6 +53,7 @@ public class RefundServiceImpl implements RefundService {
 
         // Order 삭제처리
         order.setCancel();
+        orderRepository.refreshMatchStatus(order.getMatch());
 
         return ResponseRefundResult
             .builder()

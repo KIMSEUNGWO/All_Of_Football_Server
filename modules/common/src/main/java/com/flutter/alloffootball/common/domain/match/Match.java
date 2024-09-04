@@ -58,20 +58,16 @@ public class Match {
         return matchCount * personCount;
     }
 
-    public int getCurrentPerson() {
-        return orderList.size();
-    }
-
-    public void addOrder(Order order) {
-        orderList.add(order);
-
+    public void refreshEnabledOrder(long enabledCount) {
         int maxPerson = getMaxPerson();
-        if (maxPerson <= getCurrentPerson()) {
+        if (maxPerson <= enabledCount) {
             // 최대 인원까지 찬 경우 마감으로 상태 변경
             matchStatus = MatchStatus.CLOSED;
-        } else if (Math.ceil(0.8 * maxPerson) <= getCurrentPerson()) {
+        } else if (Math.ceil(0.8 * maxPerson) <= enabledCount) {
             // 80% 가 채워질 경우 마감임박으로 상태변경
             matchStatus = MatchStatus.CLOSING_SOON;
+        } else {
+            matchStatus = MatchStatus.OPEN;
         }
     }
 }

@@ -62,6 +62,8 @@ public class OrderServiceImpl implements OrderService {
 
         orderRepository.save(saveOrder);
 
+        orderRepository.refreshMatchStatus(match);
+
         paymentRepository.receipt(user, "경기 참여", CashType.USE, finalPrice);
 
         return orderWrapper.orderResultWrap(match, saveOrder, user, couponUse);
