@@ -3,7 +3,6 @@ package com.flutter.alloffootball.service;
 import com.flutter.alloffootball.common.domain.orders.CancelOrder;
 import com.flutter.alloffootball.common.domain.orders.Order;
 import com.flutter.alloffootball.common.enums.CashType;
-import com.flutter.alloffootball.common.enums.OrderStatus;
 import com.flutter.alloffootball.common.enums.RefundPolicy;
 import com.flutter.alloffootball.dto.order.RequestCancelOrder;
 import com.flutter.alloffootball.dto.refund.ResponseRefundResult;
@@ -27,7 +26,7 @@ public class RefundServiceImpl implements RefundService {
 
     @Override
     public synchronized ResponseRefundResult cancelOrder(RequestCancelOrder cancelOrder, Long userId) {
-        Order order = orderRepository.findByUserIdAndMatchId(userId, cancelOrder.getMatchId());
+        Order order = orderRepository.findByUserIdAndMatchIdAndOrderStatusIsUSE(userId, cancelOrder.getMatchId());
         LocalDateTime now = LocalDateTime.now();
         int payAmount = order.getPrice();
 

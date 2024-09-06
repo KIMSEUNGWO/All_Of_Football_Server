@@ -32,7 +32,7 @@ public class MatchWrapper {
             .build();
     }
 
-    public ResponseMatchDetails matchDetailsWrap(Match match, boolean alreadyJoin) {
+    public ResponseMatchDetails matchDetailsWrap(Match match, boolean alreadyJoin, RequestMatchStatistics statistics) {
         return ResponseMatchDetails.builder()
             .matchId(match.getId())
             .matchDate(match.getMatchDate())
@@ -43,6 +43,7 @@ public class MatchWrapper {
             .field(fieldWrapper.fieldDataWrap(match.getField()))
             .matchStatus(match.getMatchStatus())
             .alreadyJoin(alreadyJoin)
+            .statistics(statistics)
             .build();
     }
 

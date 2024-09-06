@@ -13,7 +13,7 @@ public interface JpaOrderRepository extends JpaRepository<Order, Long> {
 
     boolean existsByMatch_IdAndUser_IdAndOrderStatus(long matchId, long userId, OrderStatus status);
     List<Order> findAllByUser_IdAndOrderStatusAndMatch_MatchDateAfterOrderByMatch_MatchDate(Long userId, OrderStatus status, LocalDateTime now);
-
-    Optional<Order> findByUser_IdAndMatch_Id(Long userId, Long matchId);
+    Optional<Order> findByUser_IdAndMatch_IdAndOrderStatus(Long userId, Long matchId, OrderStatus status);
     long countByMatchAndOrderStatus(Match match, OrderStatus status);
+    List<Order> findAllByMatchAndCancelDateIsNull(Match match);
 }

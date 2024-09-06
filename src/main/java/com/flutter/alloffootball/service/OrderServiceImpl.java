@@ -42,11 +42,11 @@ public class OrderServiceImpl implements OrderService {
     public synchronized ResponseOrderResult order(RequestOrder requestOrder, long userId, LocalDateTime now) {
         Match match = matchRepository.findById(requestOrder.getMatchId());
         User user = userRepository.findById(userId);
+        UserCoupon userCoupon = userCouponRepository.findById(requestOrder.getCouponId());
 
         int price = match.getTotalPrice();
 
         // 쿠폰사용을 하지 않았다면 userCoupon == null
-        UserCoupon userCoupon = userCouponRepository.findById(requestOrder.getCouponId());
         ResponseCouponUse couponUse = userCouponRepository.useCoupon(userCoupon, userId, now, price);
 
         int finalPrice = (couponUse == null) ? price : couponUse.getTotalPrice();

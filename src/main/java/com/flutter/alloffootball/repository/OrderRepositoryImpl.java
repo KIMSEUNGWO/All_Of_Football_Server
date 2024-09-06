@@ -15,12 +15,12 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Repository
 @RequiredArgsConstructor
 public class OrderRepositoryImpl implements OrderRepository {
 
-    private final MatchRepository matchRepository;
     private final JpaOrderRepository jpaOrderRepository;
     private final QueryDslOrderRepository queryDslOrderRepository;
 
@@ -66,9 +66,9 @@ public class OrderRepositoryImpl implements OrderRepository {
     }
 
     @Override
-    public Order findByUserIdAndMatchId(Long userId, Long matchId) {
+    public Order findByUserIdAndMatchIdAndOrderStatusIsUSE(Long userId, Long matchId) {
         if (userId == null || matchId == null) throw new OrderException(OrderError.ORDER_NOT_EXISTS);
-        return jpaOrderRepository.findByUser_IdAndMatch_Id(userId, matchId)
+        return jpaOrderRepository.findByUser_IdAndMatch_IdAndOrderStatus(userId, matchId, OrderStatus.USE)
             .orElseThrow(() -> new OrderException(OrderError.ORDER_NOT_EXISTS));
     }
 
@@ -81,5 +81,10 @@ public class OrderRepositoryImpl implements OrderRepository {
     public void refreshMatchStatus(Match match) {
         long orderUseCount = jpaOrderRepository.countByMatchAndOrderStatus(match, OrderStatus.USE);
         match.refreshEnabledOrder(orderUseCount);
+    }
+
+    @Override
+    public Stream<User> getParticipants(Match match) {
+        return jpaOrderRepository.findAllByMatchAndCancelDateIsNull(match).stream().map(x -> x.getUser());
     }
 }

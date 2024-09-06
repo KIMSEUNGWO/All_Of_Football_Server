@@ -7,6 +7,7 @@ import com.flutter.alloffootball.common.domain.user.User;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Stream;
 
 public interface OrderRepository {
     boolean isAlreadyJoin(long matchId, CustomUserDetails userDetails);
@@ -19,9 +20,11 @@ public interface OrderRepository {
 
     List<Order> findAllByMatchSoon(Long userId, LocalDateTime now);
 
-    Order findByUserIdAndMatchId(Long userId, Long matchId);
+    Order findByUserIdAndMatchIdAndOrderStatusIsUSE(Long userId, Long matchId);
 
     void delete(Order order);
 
     void refreshMatchStatus(Match match);
+
+    Stream<User> getParticipants(Match match);
 }

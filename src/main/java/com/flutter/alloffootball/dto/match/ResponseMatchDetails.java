@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 @Getter
 @Builder
@@ -25,4 +26,6 @@ public class ResponseMatchDetails {
 
     // 로그인한 회원인 경우, 이미 참가했는지 여부
     private final boolean alreadyJoin;
+
+    private final RequestMatchStatistics statistics;
 }

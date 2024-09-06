@@ -1,0 +1,37 @@
+package com.flutter.alloffootball.component;
+
+import com.flutter.alloffootball.common.domain.user.User;
+import com.flutter.alloffootball.common.enums.SexType;
+import com.flutter.alloffootball.dto.match.RequestMatchStatistics;
+
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+public class MatchStatisticsBuilder {
+
+    private final Stream<User> userStream;
+    private final RequestMatchStatistics statistics;
+
+    public static RequestMatchStatistics build(Stream<User> userStream) {
+        return new MatchStatisticsBuilder(userStream)
+            .sexStatistics()
+            .build();
+    }
+    private MatchStatisticsBuilder(Stream<User> userStream) {
+        this.userStream = userStream;
+        statistics = new RequestMatchStatistics();
+    }
+
+    private MatchStatisticsBuilder sexStatistics() {
+        Map<SexType, Integer> result = userStream.collect(Collectors.groupingBy(
+            user -> user.getUserInfo().getSex(),
+            Collectors.collectingAndThen(Collectors.counting(), Long::intValue)));
+        statistics.setSexStatistics(result);
+        return this;
+    }
+
+    private RequestMatchStatistics build() {
+        return statistics;
+    }
+}
