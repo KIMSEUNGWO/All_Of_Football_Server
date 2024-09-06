@@ -31,7 +31,7 @@ public class MatchServiceImpl implements MatchService {
     private final MatchWrapper matchWrapper;
 
     @Override
-    public List<ResponseMatchView> findAllByMatchData(RequestSearchMatch searchMatch, Pageable pageable) {
+    public List<ResponseMatchView> search(RequestSearchMatch searchMatch, Pageable pageable) {
         return matchRepository.findAllByMatchData(searchMatch, pageable).stream()
             .map(matchWrapper::matchViewWrap)
             .toList();

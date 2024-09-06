@@ -1,6 +1,7 @@
 package com.flutter.alloffootball.wrapper;
 
 import com.flutter.alloffootball.common.domain.user.User;
+import com.flutter.alloffootball.dto.user.ResponseBoardUser;
 import com.flutter.alloffootball.dto.user.ResponseUserProfile;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +18,14 @@ public class UserWrapper {
             .birth(user.getUserInfo().getBirth())
             .couponCount(user.possibleCouponList().size())
             .cash(user.getCash())
+            .build();
+    }
+
+    public ResponseBoardUser boardUserWrap(User user) {
+        return ResponseBoardUser.builder()
+            .id(user.getId())
+            .image(user.getProfile().getThumbnailName())
+            .nickname(user.getNickname())
             .build();
     }
 }
