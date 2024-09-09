@@ -1,5 +1,6 @@
 package com.flutter.alloffootball.service;
 
+import com.flutter.alloffootball.dto.board.RequestCreateBoard;
 import com.flutter.alloffootball.dto.board.RequestSearchBoard;
 import com.flutter.alloffootball.dto.board.ResponseBoard;
 import com.flutter.alloffootball.dto.board.ResponseBoardDetail;
@@ -11,4 +12,6 @@ public interface BoardService {
     List<ResponseBoard> search(RequestSearchBoard searchBoard, Pageable pageable);
 
     ResponseBoardDetail findBoardDetail(Long boardId);
+
+    void createBoard(RequestCreateBoard createBoard, Long userId);
 }

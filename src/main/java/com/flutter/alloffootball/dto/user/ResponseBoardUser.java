@@ -9,7 +9,7 @@ import lombok.Getter;
 @Builder
 public class ResponseBoardUser {
 
-    private final long id;
+    private final long userId;
     private final String image;
     private final String nickname;
 }

@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class ResponseBoard {
 
+    private final Long boardId;
     private final String title;
     private final Region region;
     private final LocalDateTime createDate;

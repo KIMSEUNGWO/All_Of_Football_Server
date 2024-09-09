@@ -29,4 +29,8 @@ public class BoardRepository {
     public List<Board> search(RequestSearchBoard searchBoard, Pageable pageable) {
         return queryDslBoardRepository.search(searchBoard, pageable);
     }
+
+    public void save(Board saveBoard) {
+        jpaBoardRepository.save(saveBoard);
+    }
 }

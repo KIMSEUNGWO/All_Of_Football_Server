@@ -23,7 +23,7 @@ public class UserWrapper {
 
     public ResponseBoardUser boardUserWrap(User user) {
         return ResponseBoardUser.builder()
-            .id(user.getId())
+            .userId(user.getId())
             .image(user.getProfile().getThumbnailName())
             .nickname(user.getNickname())
             .build();

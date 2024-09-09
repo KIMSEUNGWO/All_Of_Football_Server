@@ -90,6 +90,10 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         String path = request.getRequestURI();
         if (path.equals("/")) return true;
+        // Define paths to exclude
+        if (path.equals("/board") || path.matches("^/board/\\d+$")) {
+            return true;
+        }
         return excludePath.stream().anyMatch(path::startsWith);
     }
 }

@@ -15,6 +15,7 @@ public class BoardWrapper {
 
     public ResponseBoard boardWrap(Board board) {
         return ResponseBoard.builder()
+            .boardId(board.getId())
             .title(board.getTitle())
             .region(board.getRegion())
             .createDate(board.getCreateDate())
@@ -23,6 +24,7 @@ public class BoardWrapper {
     }
     public ResponseBoardDetail boardDetailWrap(Board board) {
         return ResponseBoardDetail.builder()
+            .boardId(board.getId())
             .title(board.getTitle())
             .content(board.getContent())
             .region(board.getRegion())
