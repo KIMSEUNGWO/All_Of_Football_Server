@@ -1,10 +1,11 @@
 package com.flutter.alloffootball.controller;
 
 import com.flutter.alloffootball.common.config.security.CustomUserDetails;
-import com.flutter.alloffootball.common.domain.board.Board;
 import com.flutter.alloffootball.common.dto.Response;
 import com.flutter.alloffootball.common.exception.BindingException;
 import com.flutter.alloffootball.dto.board.RequestCreateBoard;
+import com.flutter.alloffootball.dto.board.RequestDeleteBoard;
+import com.flutter.alloffootball.dto.board.RequestEditBoard;
 import com.flutter.alloffootball.dto.board.ResponseBoardDetail;
 import com.flutter.alloffootball.service.BoardService;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +36,23 @@ public class BoardController {
         if (bindingResult.hasErrors()) throw new BindingException(bindingResult);
 
         boardService.createBoard(createBoard, userDetails.getUser().getId());
+        return Response.ok();
+    }
+
+    @PatchMapping("/method")
+    public ResponseEntity<Response> editBoard(@Validated @RequestBody RequestEditBoard editBoard,
+                                             BindingResult bindingResult,
+                                             @AuthenticationPrincipal CustomUserDetails userDetails) {
+        if (bindingResult.hasErrors()) throw new BindingException(bindingResult);
+
+        boardService.editBoard(editBoard, userDetails.getUser().getId());
+        return Response.ok();
+    }
+
+    @DeleteMapping("/method")
+    public ResponseEntity<Response> deleteBoard(@Validated @RequestBody RequestDeleteBoard deleteBoard,
+                                             @AuthenticationPrincipal CustomUserDetails userDetails) {
+        boardService.deleteBoard(deleteBoard, userDetails.getUser().getId());
         return Response.ok();
     }
 

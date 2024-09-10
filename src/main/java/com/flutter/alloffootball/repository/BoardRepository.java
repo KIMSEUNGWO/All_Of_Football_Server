@@ -33,4 +33,8 @@ public class BoardRepository {
     public void save(Board saveBoard) {
         jpaBoardRepository.save(saveBoard);
     }
+
+    public void delete(Board board) {
+        jpaBoardRepository.delete(board);
+    }
 }

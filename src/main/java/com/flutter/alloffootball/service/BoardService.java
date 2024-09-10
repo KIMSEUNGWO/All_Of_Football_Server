@@ -1,9 +1,6 @@
 package com.flutter.alloffootball.service;
 
-import com.flutter.alloffootball.dto.board.RequestCreateBoard;
-import com.flutter.alloffootball.dto.board.RequestSearchBoard;
-import com.flutter.alloffootball.dto.board.ResponseBoard;
-import com.flutter.alloffootball.dto.board.ResponseBoardDetail;
+import com.flutter.alloffootball.dto.board.*;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -14,4 +11,8 @@ public interface BoardService {
     ResponseBoardDetail findBoardDetail(Long boardId);
 
     void createBoard(RequestCreateBoard createBoard, Long userId);
+
+    void editBoard(RequestEditBoard editBoard, Long userId);
+
+    void deleteBoard(RequestDeleteBoard deleteBoard, Long userId);
 }

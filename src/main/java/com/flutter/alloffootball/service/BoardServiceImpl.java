@@ -3,11 +3,10 @@ package com.flutter.alloffootball.service;
 import com.flutter.alloffootball.common.domain.board.Board;
 import com.flutter.alloffootball.common.domain.match.Match;
 import com.flutter.alloffootball.common.domain.user.User;
+import com.flutter.alloffootball.common.exception.CustomRuntimeException;
+import com.flutter.alloffootball.common.exception.DefaultError;
 import com.flutter.alloffootball.common.jparepository.JpaMatchRepository;
-import com.flutter.alloffootball.dto.board.RequestCreateBoard;
-import com.flutter.alloffootball.dto.board.RequestSearchBoard;
-import com.flutter.alloffootball.dto.board.ResponseBoard;
-import com.flutter.alloffootball.dto.board.ResponseBoardDetail;
+import com.flutter.alloffootball.dto.board.*;
 import com.flutter.alloffootball.repository.BoardRepository;
 import com.flutter.alloffootball.repository.UserRepository;
 import com.flutter.alloffootball.wrapper.BoardWrapper;
@@ -57,5 +56,31 @@ public class BoardServiceImpl implements BoardService {
             .region(createBoard.getRegion())
             .build();
         boardRepository.save(saveBoard);
+    }
+
+    @Override
+    public void editBoard(RequestEditBoard editBoard, Long userId) {
+        Board board = boardRepository.findById(editBoard.getBoardId());
+        // 자신의 게시물이 아닌 경우
+        if (!board.getUser().getId().equals(userId)) {
+            throw new CustomRuntimeException(DefaultError.NOT_AUTHENTICATION);
+        }
+        Match match = null;
+        if (editBoard.getMatchId() != null) {
+            match = jpaMatchRepository.findById(editBoard.getMatchId()).orElse(null);
+        }
+
+        board.update(editBoard.getTitle(), editBoard.getContent(), editBoard.getRegion(), match);
+    }
+
+    @Override
+    public void deleteBoard(RequestDeleteBoard deleteBoard, Long userId) {
+        Board board = boardRepository.findById(deleteBoard.getBoardId());
+        // 자신의 게시물이 아닌 경우
+        if (!board.getUser().getId().equals(userId)) {
+            throw new CustomRuntimeException(DefaultError.NOT_AUTHENTICATION);
+        }
+
+        boardRepository.delete(board);
     }
 }

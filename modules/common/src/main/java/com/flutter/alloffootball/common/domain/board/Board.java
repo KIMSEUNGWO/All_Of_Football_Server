@@ -37,9 +37,16 @@ public class Board extends BaseEntityTime {
     @Lob
     private String content;
 
+    @Enumerated(EnumType.STRING)
     private Region region;
 
     private LocalDateTime updateDate;
 
-
+    public void update(String title, String content, Region region, Match match) {
+        this.title = title;
+        this.content = content;
+        this.region = region;
+        this.match = match;
+        this.updateDate = LocalDateTime.now();
+    }
 }
