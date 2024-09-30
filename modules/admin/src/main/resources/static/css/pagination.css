@@ -3,7 +3,7 @@
 	display: flex;
     justify-content: center;
 	padding: 12px 0;
-	background-color: #fff;
+	background-color: #ffffff00;
 }
 
 .pagination button:disabled svg {

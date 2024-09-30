@@ -20,168 +20,100 @@
     font-family: 'Pretendard-ExtraBold';
     src: url(/font/Pretendard-ExtraBold.otf);
 }
-:root{
-    --main-color: #2f69dd;
-    --main-color-hover: #295dc4;
-    --main-font-color: #3f9de0;
-    --main-font-color-hover: #3992d1;
-    --border-radius: 0.3rem;
-    --border-color: #d7d7d7;
-    --gray: #757575;
-    --container-color: #fafafa;
-    --on: #1d74ff;
-    --on-hover: #1a63d9;
-    --on-2: #ff2c2c;
-    --on-2-hover: #dd2828;
-    --off: #bbbbbb;
 
-    --red-team: rgb(255, 80, 80);
-    --red-team-hover: rgb(235, 75, 75);
-    --blue-team: rgb(80, 80, 255);
-    --blue-team-hover: rgb(69, 69, 220);
-    --yellow-team: rgb(255, 255, 80);
-    --yellow-team-hover: rgb(235, 235, 74);
+@font-face {
+    font-family: 'Tmoney-Regular';
+    src: url(/static/font/TmoneyRoundWindRegular.otf);
+}
+@font-face {
+    font-family: 'Tmoney-ExtraBold';
+    src: url(/static/font/TmoneyRoundWindExtraBold.otf);
+}
+:root{
+    --container-color: #FBFBFB;
+
+    --main-color-1: #F3EFEA;
+    --main-color-2: #DCD8D0;
+    --point-color: #8F5C54;
+
+    --font-color-1: #292929;
+    --font-color-2: #767676;
+    --font-color-3: #888888;
+
+    --button-color-1: #253331;
+    --button-color-2: #A5B0AF;
 }
 
 *{
-    font-family: 'Pretendard-Medium';
+    font-family: 'Tmoney-Regular';
     box-sizing: border-box;
-    margin: 0 auto;
+    margin: 0;
+    color: var(--font-color-1);
 }
 
 body{
     background-color: var(--container-color);
 }
 
-
-.container{
-    max-width: 75rem;
+button {
+    cursor: pointer;
+}
+button:hover {
+    opacity: 0.85;
 }
 
-h1, h2, h3 {
-    margin-bottom: 2rem;
-}
-h4, h5 {
-    margin-bottom: 1rem;
+span {
+    font-size: 14px;
 }
 
-ul{
-    list-style: none;
+ul {
     padding: 0;
 }
-li{
-    cursor: pointer;
+li {
+    list-style: none;
 }
-
-a, a *{
-    color: black;
+a {
     text-decoration: none;
 }
-
-pre {
-    white-space: pre-line;
-    font-family: 'Pretendard-light';
+svg {
+    width: 20px;
+    height: 20px;
 }
 
-.box {
-    border: 0.1rem solid var(--border-color);
-    border-radius: 1rem;
-    background-color: white;
-    box-shadow: 2px 2px 5px #e4e4e4;
-    padding: 1.5rem;
+input {
+    outline: none;
+    padding: 12px 15px;
 }
 
-.btnBox {
-    border: 0.1rem solid var(--border-color);
-    border-radius: var(--border-radius);
+.inputBox {
+    border: solid 1px #E1DFE9;
     background-color: white;
+    border-radius: 5px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 1rem;
-    font-size: 1.1rem;
-    outline: none;
-    cursor: pointer;
-}
-.btnBox * {
-    pointer-events: none;
+    justify-content: center;
 }
 
-.resultButton {
-    margin: 0 0.5rem 0 1rem;
-    width: 6.5rem;
-    height: 75%;
-    border: none;
-    border-radius: 0.7rem;
+.mainBtn {
+    background-color: var(--button-color-1);
     color: white;
-    box-shadow: 2px 2px 5px #b3b3b3;
-    font-size: 1.05rem;
-    cursor: pointer;
-}
-
-.sideHr {
-    width: 100%;
-    left: 0;
-    background-color: var(--border-color);
-    height: 2px;
-    border: 0;
-    margin: 1.5rem 0;
-}
-
-.svgBox {
     border: none;
-    background:none;
+    border-radius: 5px;
+}
+.mainBtn:hover {
+    opacity: 0.85;
+}
+.subBtn:hover {
+    opacity: 0.85;
+}
+.subBtn {
+    background-color: var(--button-color-2);
+    color: white;
+    border: none;
+    border-radius: 5px;
 }
 
-svg {
-    margin: 0;
-    width: 1rem;
-    height: 1rem;
-}
-
-.errorMsgBox {
-    text-align: center;
-    margin-top: 0.5rem;
-}
-.errorBox {
-    text-align: center;
-}
-
-.errorMsg{
-    color: red;
-    font-size: 0.9rem;
-}
-
-.subOption.disabled {
-    display: none;
-}
 
 .disabled {
     display: none !important;
-}
-
-
-/* 신청, 마감임박, 마감 버튼*/
-.on {
-    background-color: var(--on);
-}
-.on:hover {
-    background-color: var(--on-hover);
-}
-.on-2 {
-    background-color: var(--on-2);
-}
-.on-2:hover {
-    background-color: var(--on-2-hover);
-}
-.off {
-    background-color: var(--off);
-    pointer-events: none;
-}
-
-@media screen and (max-width: 75rem) {
-    body {
-        padding: 1rem;
-    }
-    
 }

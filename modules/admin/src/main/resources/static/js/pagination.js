@@ -148,7 +148,7 @@ export class Pagination {
         let regionRadio = document.querySelector(`input[name="region"][value="${this.region ?? ''}"]`);
         regionRadio.checked = true;
         let label = document.querySelector(`label[for="${regionRadio.id}"]`);
-        let text = document.querySelector('.option > .region.btnBox > span');
+        let text = document.querySelector('.region > span');
         text.innerHTML = label.textContent;
 
         let searchWord = document.querySelector('input[name="searchWord"]');
@@ -193,7 +193,7 @@ export class Pagination {
                     this.searchBtn();
                 }
             })
-            const searchBtn = document.querySelector('#searchBtn');
+            const searchBtn = document.querySelector('#search');
             searchBtn.addEventListener('click', ()=>{
                 this.searchBtn();
             })

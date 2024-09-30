@@ -22,18 +22,15 @@ form table, .view table {
     border-spacing: 0 1rem;
 }
 
-
-
-
 /* 이미지 */
 .preview {
     display: flex;
-    gap: 1rem;
     flex-wrap: wrap;
+    gap: 12px;
 }
 .imgBox {
-    width: 15rem;
-    height: 15rem;
+    width: 230px;
+    height: 200px;
     border: 0.1rem solid var(--border-color);
     border-radius: var(--border-radius);
     overflow: hidden;

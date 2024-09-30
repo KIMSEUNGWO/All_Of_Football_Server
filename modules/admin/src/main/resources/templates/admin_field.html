@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/admin_menu.css">
     <link rel="stylesheet" href="/css/admin_main.css">
     <link rel="stylesheet" href="/css/admin_ground.css">
     <link rel="stylesheet" href="/css/pagination.css">
@@ -14,18 +15,20 @@
     <title>구장관리 :: 관리자</title>
 </head>
 <body>
-    <body>
-        <header th:replace="~{/common/header :: header}"></header>
-        <div class="container">
-            <aside class="side box" th:replace="~{/common/admin_menu :: adminMenu}"></aside>
-            <div class="mainBox box">
-                <h2>구장관리</h2>
-                <div class="option">
-                    <button class="region btnBox">
-                        <span>지역</span>
-                        <svg viewBox="0 0 9 6" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M4.5 6L8.39711 0.75H0.602886L4.5 6Z" fill="currentColor"></path></svg>
+    <header th:replace="~{/common/header :: header}"></header>
+    <div class="container">
+        <aside class="side box" th:replace="~{/common/admin_menu :: adminMenu}"></aside>
+        <div id="main">
+            <h3>구장관리</h3>
+            <div id="searchControll">
+                <div id="searchL">
+                    <button class="region inputBox">
+                        <span>전체</span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9.1706 14.7687C9.56697 15.3571 10.433 15.3571 10.8294 14.7687L15.0123 8.55866C15.4597 7.89443 14.9838 7 14.1829 7H5.81709C5.01624 7 4.54029 7.89443 4.9877 8.55866L9.1706 14.7687Z" fill="black"/>
+                        </svg>
                     </button>
-                    <ul class="subOption regionOption disabled">
+                    <ul class="subOption regionOption inputBox disabled ">
                         <li>
                             <input type="radio" name="region" id="all" value="" checked>
                             <label for="all">전국</label>
@@ -35,12 +38,16 @@
                             <label th:for="${loc.name()}" th:text="${loc}"></label>
                         </li>
                     </ul>
-                    <input type="text" name="searchWord" id="searchWord" placeholder="구장 이름을 입력해주세요.">
-                    <button type="button" class="btn" id="searchBtn">검색</button>
+                    <input type="text" class="inputBox" name="searchWord" id="searchWord" placeholder="구장 이름을 입력해주세요.">
                 </div>
+                <div id="searchR">
+                    <button type="button" class="mainBtn" id="search">검색</button>
+                </div>
+            </div>
+            <div id="result">
                 <div class="group">
-                    <span class="total">총 0건</span>
-                    <a href="/admin/field/add" class="btn" id="groundAdd">등록</a>
+                    <h4 class="total">총 0건</h4>
+                    <a href="/admin/field/add" class="mainBtn" id="fieldAdd">등록</a>
                 </div>
                 <ul class="searchResult" id="searchTitle">
                     <a disabled>
@@ -50,8 +57,46 @@
                         <li>구장주소</li>
                     </a>
                 </ul>
-                <ul class="searchResult" id="searchResult">
+                <!-- <ul class="searchResult" id="searchResult">
                     <li class="none">검색 결과가 없습니다.</li>
+                </ul> -->
+                <ul class="searchResult" id="searchResult">
+                    <a href="/admin/field/3" class="result">
+                        <span>3000000</span>
+                        <span>HOKKAIDO</span>
+                        <span>테스트 구장 이름</span>
+                        <span>인천 남동구 간석로 1123123123123123a</span>
+                    </a>
+                    <a href="/admin/field/3" class="result">
+                        <span>3</span>
+                        <span>HOKKAIDO</span>
+                        <span>테스트 구장 이름</span>
+                        <span>인천 남동구 간석로 1</span>
+                    </a>
+                    <a href="/admin/field/3" class="result">
+                        <span>3</span>
+                        <span>HOKKAIDO</span>
+                        <span>테스트 구장 이름</span>
+                        <span>인천 남동구 간석로 1</span>
+                    </a>
+                    <a href="/admin/field/3" class="result">
+                        <span>3</span>
+                        <span>HOKKAIDO</span>
+                        <span>테스트 구장 이름</span>
+                        <span>인천 남동구 간석로 1</span>
+                    </a>
+                    <a href="/admin/field/3" class="result">
+                        <span>3</span>
+                        <span>HOKKAIDO</span>
+                        <span>테스트 구장 이름</span>
+                        <span>인천 남동구 간석로 1</span>
+                    </a>
+                    <a href="/admin/field/3" class="result">
+                        <span>3</span>
+                        <span>HOKKAIDO</span>
+                        <span>테스트 구장 이름</span>
+                        <span>인천 남동구 간석로 1</span>
+                    </a>
                 </ul>
                 <div class="pagination">
                     <button type="button" class="button_first" disabled="true" id="first-page">
@@ -67,9 +112,9 @@
                     <button type="button" class="button_last" id="last-page">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M470.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 256 265.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160zm-352 160l160-160c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L210.7 256 73.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0z"/></svg>
                     </button>
-                </div>
+                </div>    
             </div>
         </div>
-    </body>
+    </div>
 </body>
 </html>
