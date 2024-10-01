@@ -1,0 +1,37 @@
+window.addEventListener('load', function(){
+    const optionButtons = document.querySelectorAll('button.option');
+    const optionList = document.querySelectorAll('.subOption');
+
+    optionButtons.forEach(optionButton => {
+        optionButton.addEventListener('click', () => {
+            let subOption = optionButton.parentElement.querySelector('.subOption');
+            addDisabled(optionList, subOption);
+            subOption?.classList.toggle('disabled');
+        });
+    });
+
+    connectionLabel('region');
+    connectionLabel('toliet');
+    connectionLabel('shower');
+    connectionLabel('parking');
+    connectionLabel('sex');
+
+})
+
+function addDisabled(optionList, e) {
+    for (let i=0;i<optionList.length;i++){
+        if (!optionList[i].isEqualNode(e)) {
+            optionList[i].classList.add('disabled');
+        }
+    }
+}
+
+function connectionLabel(name) {
+    const inputs = document.querySelectorAll('input[name="' + name +'"]');
+    const label = document.querySelector('span[aria-label="' + name +'"]');
+    inputs?.forEach(input => {
+        input.addEventListener('change', (e) => {
+            label.innerHTML = document.querySelector('label[for=' + input.id + ']').textContent;
+        })
+    })
+}

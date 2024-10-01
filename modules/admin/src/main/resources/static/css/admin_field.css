@@ -13,12 +13,6 @@
     width: 100px;
     height: 100%;
 }
-.region {
-    display: flex;
-    min-width: 100px;
-    justify-content: space-evenly;
-    padding: 0 10px;
-}
 
 
 .group {

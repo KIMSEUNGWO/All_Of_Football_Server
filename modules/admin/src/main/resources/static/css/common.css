@@ -96,24 +96,30 @@ input {
 
 .mainBtn {
     background-color: var(--button-color-1);
-    color: white;
-    border: none;
-    border-radius: 5px;
-}
-.mainBtn:hover {
-    opacity: 0.85;
-}
-.subBtn:hover {
-    opacity: 0.85;
 }
 .subBtn {
     background-color: var(--button-color-2);
+}
+
+.mainBtn, .subBtn {
     color: white;
     border: none;
     border-radius: 5px;
+    cursor: pointer;
+}
+
+.mainBtn span, .subBtn span {
+    pointer-events: none;
+}
+.mainBtn:hover, .subBtn:hover {
+    opacity: 0.85;
 }
 
 
 .disabled {
     display: none !important;
+}
+
+.option * {
+    pointer-events: none;
 }
