@@ -29,9 +29,15 @@ function addDisabled(optionList, e) {
 function connectionLabel(name) {
     const inputs = document.querySelectorAll('input[name="' + name +'"]');
     const label = document.querySelector('span[aria-label="' + name +'"]');
+
+    let initalName = document.querySelector('input[name="' + name + '"]:checked')?.id;
+    console.log(initalName);
+    if (label != null) {
+        label.innerHTML =  document.querySelector('label[for="' + initalName + '"]')?.textContent ?? '';
+    }
     inputs?.forEach(input => {
         input.addEventListener('change', (e) => {
-            label.innerHTML = document.querySelector('label[for=' + input.id + ']').textContent;
+            label.innerHTML = document.querySelector('label[for"=' + input.id + '"]').textContent;
         })
     })
 }
