@@ -23,9 +23,6 @@ public class FileRepositoryInDB implements FileRepository {
         String originalPath = filePathHelper.getOriginalPath(storeName, fileType);
         String thumbnailPath = filePathHelper.getThumbnailPath(thumbnailName, fileType);
 
-        System.out.println("originalPath = " + originalPath);
-        System.out.println("thumbnailPath = " + thumbnailPath);
-
         File data = new File(originalPath);
         file.transferTo(data);
 

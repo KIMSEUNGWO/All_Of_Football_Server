@@ -59,7 +59,7 @@
                                 </svg>
                             </button>
                             <ul class="subOption infoBox disabled">
-                                <li th:each="loc : ${region}">
+                                <li th:each="loc : ${options.region}">
                                     <input type="radio" name="region" th:id="${loc.name()}" th:value="${loc}" th:checked="${loc == editField.region}">
                                     <label th:for="${loc.name()}" th:text="${loc.getKo()}"></label>
                                 </li>
@@ -97,17 +97,9 @@
                                 </svg>
                             </button>
                             <ul class="subOption infoBox disabled">
-                                <li>
-                                    <input type="radio" th:field="*{parking}" id="FREE" th:value="*{parking.FREE.name()}" th:errorclass="field-error">
-                                    <label for="FREE">무료주차</label>
-                                </li>
-                                <li>
-                                    <input type="radio" th:field="*{parking}" id="PAID" th:value="*{parking.PAID.name()}" th:errorclass="field-error">
-                                    <label for="PAID">유료주차</label>
-                                </li>
-                                <li>
-                                    <input type="radio" th:field="*{parking}" id="NOT_AVAILABLE" th:value="*{parking.NOT_AVAILABLE.name()}" th:errorclass="field-error">
-                                    <label for="NOT_AVAILABLE">주차불가</label>
+                                <li th:each="parking : ${options.parking}">
+                                    <input type="radio" name="parking" th:id="${'parking' + parking.name()}" th:value="${parking.name()}" th:errorclass="field-error" th:checked="${parking == editField.parking}">
+                                    <label th:for="${'parking' + parking.name()}" th:text="${parking.getKo()}"></label>
                                 </li>
                             </ul>
                         </div>
@@ -122,11 +114,9 @@
                                 </svg>
                             </button>
                             <ul class="subOption infoBox disabled">
-                                <li><input type="radio" th:field="*{shower}" id="oShower" value="Y" th:errorclass="field-error">
-                                    <label for="oShower">샤워장 있음</label>
-                                </li>
-                                <li><input type="radio" th:field="*{shower}" id="xShower" value="N" th:errorclass="field-error">
-                                    <label for="xShower">샤워장 없음</label>
+                                <li th:each="shower : ${options.shower}">
+                                    <input type="radio" name="shower" th:id="${'shower' + shower.name()}" th:value="${shower.name()}" th:errorclass="field-error" th:checked="${shower == editField.shower}">
+                                    <label th:for="${'shower' + shower.name()}" th:text="${shower.getKo()}"></label>
                                 </li>
                             </ul>
                         </div>
@@ -148,13 +138,9 @@
                                 </svg>
                             </button>
                             <ul class="subOption infoBox disabled">
-                                <li>
-                                    <input type="radio" th:field="*{toilet}" id="oToilet" value="Y" th:errorclass="field-error">
-                                    <label for="oToilet">화장실 있음</label>
-                                </li>
-                                <li>
-                                    <input type="radio" th:field="*{toilet}" id="xToilet" value="N" th:errorclass="field-error">
-                                    <label for="xToilet">화장실 없음</label>
+                                <li th:each="toilet : ${options.toilet}">
+                                    <input type="radio" name="toilet" th:id="${'toilet' + toilet.name()}" th:value="${toilet.name()}" th:errorclass="field-error" th:checked="${toilet == editField.toilet}">
+                                    <label th:for="${'toilet' + toilet.name()}" th:text="${toilet.getKo()}"></label>
                                 </li>
                             </ul>
                         </div>

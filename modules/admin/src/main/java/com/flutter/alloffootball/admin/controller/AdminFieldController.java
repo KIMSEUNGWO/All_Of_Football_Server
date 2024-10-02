@@ -2,19 +2,17 @@ package com.flutter.alloffootball.admin.controller;
 
 import com.flutter.alloffootball.admin.dto.RequestSaveFieldForm;
 import com.flutter.alloffootball.admin.dto.ResponseViewField;
+import com.flutter.alloffootball.admin.dto.field.FieldOption;
 import com.flutter.alloffootball.admin.dto.field.ResponseEditField;
 import com.flutter.alloffootball.admin.service.AdminService;
-import com.flutter.alloffootball.common.config.security.AdminUserDetails;
 import com.flutter.alloffootball.common.enums.region.Region;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Locale;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequiredArgsConstructor
@@ -39,15 +37,6 @@ public class AdminFieldController {
         return "admin_field_view";
     }
 
-    @PatchMapping("/{fieldId}")
-    public String fieldPatch(@PathVariable("fieldId") Long fieldId,
-                             @ModelAttribute("editField") ResponseEditField editField) {
-        System.out.println("editField = " + editField);
-        adminService.patchEditField(fieldId, editField);
-        return "redirect:/admin/field/" + fieldId;
-    }
-
-
     /**
      * 구장 정보 수정
      */
@@ -55,7 +44,7 @@ public class AdminFieldController {
     public String fieldEdit(@PathVariable("fieldId") Long fieldId, Model model) {
         ResponseEditField form = adminService.getEditFieldForm(fieldId);
 
-        model.addAttribute("region", Region.values());
+        model.addAttribute("options", new FieldOption());
         model.addAttribute("fieldId", fieldId);
         model.addAttribute("editField", form);
         return "admin_field_edit";
@@ -66,10 +55,31 @@ public class AdminFieldController {
      */
     @GetMapping("/add")
     public String getFieldAdd(Model model) {
-        model.addAttribute("region", Region.values());
+        model.addAttribute("options", new FieldOption());
         model.addAttribute("saveFieldForm", new RequestSaveFieldForm());
         return "admin_field_add";
     }
+
+
+    /**
+     * PATCH 구장 수정
+     */
+    @PatchMapping("/{fieldId}")
+    public String fieldPatch(@PathVariable("fieldId") Long fieldId,
+                             RedirectAttributes redirectAttributes,
+                             @ModelAttribute("editField") ResponseEditField editField) {
+        System.out.println("editField = " + editField);
+        try {
+            adminService.patchEditField(fieldId, editField);
+            return "redirect:/admin/field/" + fieldId;
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("options", new FieldOption());
+            redirectAttributes.addFlashAttribute("fieldId", fieldId);
+            redirectAttributes.addFlashAttribute("editField", editField);
+            return "admin_field_edit";
+        }
+    }
+
 
     /**
      * POST 구장 등록

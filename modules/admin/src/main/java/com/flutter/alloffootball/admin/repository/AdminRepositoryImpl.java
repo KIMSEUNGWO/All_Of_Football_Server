@@ -46,12 +46,10 @@ public class AdminRepositoryImpl implements AdminRepository {
 
         BooleanExpression keywordExpression = getKeywordExpression(word, compareWord);
 
-
-        System.out.println("pageable.getOffset() = " + pageable.getOffset());
-        System.out.println("pageable.getPageSize() = " + pageable.getPageSize());
         List<Field> fieldList = query.select(field)
             .from(field)
             .where(keywordExpression, compareRegion)
+            .orderBy(field.id.desc())
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
             .fetch();
