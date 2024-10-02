@@ -31,7 +31,7 @@
 }
 
 .searchResult > a {
-    grid-template-columns: 10% 15% 40% 35%;
+    grid-template-columns: 10% 10% 35% 45%;
 }
 .searchResult > a > * {
     height: 100%;

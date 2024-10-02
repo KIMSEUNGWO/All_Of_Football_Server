@@ -24,11 +24,7 @@ public class AdminFieldController {
     private final AdminService adminService;
 
     @GetMapping
-    public String field(Model model,
-                        @AuthenticationPrincipal AdminUserDetails userDetails, Locale locale) {
-        System.out.println("locale = " + locale);
-        model.addAttribute("name", userDetails.getAdmin().getName());
-        model.addAttribute("authority", userDetails.getAdmin().getAuthority().getKo());
+    public String field(Model model) {
         model.addAttribute("region", Region.values());
         return "admin_field";
     }
@@ -37,10 +33,8 @@ public class AdminFieldController {
      * 구장 정보 조회
      */
     @GetMapping("/{fieldId}")
-    public String fieldViewPage(@PathVariable("fieldId") long fieldId, @AuthenticationPrincipal AdminUserDetails userDetails, Model model) {
+    public String fieldViewPage(@PathVariable("fieldId") long fieldId, Model model) {
         ResponseViewField viewField = adminService.findByIdViewField(fieldId);
-        model.addAttribute("name", userDetails.getAdmin().getName());
-        model.addAttribute("authority", userDetails.getAdmin().getAuthority().getKo());
         model.addAttribute("field", viewField);
         return "admin_field_view";
     }
@@ -58,11 +52,9 @@ public class AdminFieldController {
      * 구장 정보 수정
      */
     @GetMapping("/{fieldId}/edit")
-    public String fieldEdit(@PathVariable("fieldId") Long fieldId, Model model, @AuthenticationPrincipal AdminUserDetails userDetails) {
+    public String fieldEdit(@PathVariable("fieldId") Long fieldId, Model model) {
         ResponseEditField form = adminService.getEditFieldForm(fieldId);
 
-        model.addAttribute("name", userDetails.getAdmin().getName());
-        model.addAttribute("authority", userDetails.getAdmin().getAuthority().getKo());
         model.addAttribute("region", Region.values());
         model.addAttribute("fieldId", fieldId);
         model.addAttribute("editField", form);
