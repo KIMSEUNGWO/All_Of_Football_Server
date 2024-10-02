@@ -11,7 +11,7 @@ window.addEventListener('load', function(){
     });
 
     connectionLabel('region');
-    connectionLabel('toliet');
+    connectionLabel('toilet');
     connectionLabel('shower');
     connectionLabel('parking');
     connectionLabel('sex');
@@ -26,18 +26,25 @@ function addDisabled(optionList, e) {
     }
 }
 
+function allDisabled() {
+    const options = document.querySelectorAll('.subOption');
+    options.forEach(option => {
+        option.classList.add('disabled');
+    })
+}
+
 function connectionLabel(name) {
     const inputs = document.querySelectorAll('input[name="' + name +'"]');
     const label = document.querySelector('span[aria-label="' + name +'"]');
 
-    let initalName = document.querySelector('input[name="' + name + '"]:checked')?.id;
-    console.log(initalName);
+    let initial = document.querySelector('input[name="' + name + '"]:checked')?.id;
     if (label != null) {
-        label.innerHTML =  document.querySelector('label[for="' + initalName + '"]')?.textContent ?? '';
+        label.innerHTML =  document.querySelector('label[for="' + initial + '"]')?.textContent ?? '';
     }
     inputs?.forEach(input => {
         input.addEventListener('change', (e) => {
-            label.innerHTML = document.querySelector('label[for"=' + input.id + '"]').textContent;
+            label.innerHTML = document.querySelector('label[for="' + input.id + '"]').textContent;
+            allDisabled();
         })
     })
 }

@@ -4,6 +4,7 @@ import com.flutter.alloffootball.common.domain.BaseEntityImage;
 import com.flutter.alloffootball.common.domain.field.Field;
 import com.flutter.alloffootball.common.domain.field.FieldImage;
 import com.flutter.alloffootball.common.jparepository.JpaFieldImageRepository;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,6 +20,7 @@ public class FileService {
 
     private final FileRepository fileRepository;
     private final JpaFieldImageRepository fieldImageRepository;
+    private final EntityManager em;
 
 
     public void editImage(MultipartFile file, BaseEntityImage imageEntity, FileType fileType) {
@@ -83,9 +85,17 @@ public class FileService {
             deleteImage(image);
         }
     }
+    public void deleteImages(String... storeImages) {
+        for (String storeImage : storeImages) {
+            fieldImageRepository
+                .findByStoreName(storeImage)
+                .ifPresent(this::deleteImage);
+        }
+    }
 
     public void deleteImage(BaseEntityImage image) {
         fileRepository.delete(image.getStoreName(), image.getThumbnailName(), FileType.FIELD_IMAGE);
+        em.remove(image);
     }
 
     private String createName(String originalFileName) {

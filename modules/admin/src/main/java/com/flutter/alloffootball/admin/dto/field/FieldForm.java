@@ -19,9 +19,9 @@ public abstract class FieldForm {
     private String title;
     private Region region;
     private String address;
+    private String link;
 
-    private int sizeX;
-    private int sizeY;
+    private int size;
 
     private Parking parking;
     private Toilet toilet;
@@ -33,8 +33,8 @@ public abstract class FieldForm {
         title = field.getTitle();
         region = field.getAddress().getRegion();
         address = field.getAddress().getAddress();
-        sizeX = field.getFieldData().getSizeX();
-        sizeY = field.getFieldData().getSizeY();
+        link = field.getAddress().getLink();
+        size = field.getFieldData().getSize();
         parking = field.getFieldData().getParking();
         toilet = field.getFieldData().getToilet();
         shower = field.getFieldData().getShower();

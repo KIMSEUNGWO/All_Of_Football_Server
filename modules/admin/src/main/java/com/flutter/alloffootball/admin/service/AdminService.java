@@ -16,4 +16,6 @@ public interface AdminService {
     ResponseViewField findByIdViewField(long fieldId);
 
     ResponseEditField getEditFieldForm(Long fieldId);
+
+    void patchEditField(Long fieldId, ResponseEditField editField);
 }

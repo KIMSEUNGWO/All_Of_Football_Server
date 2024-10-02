@@ -38,7 +38,6 @@ export class Pagination {
 
     searchResult(result) {
         const request = this.url + this.getParam();
-        console.log(request);
         history.pushState({data : result}, '',  request);
         this.onPopState(result);
     }
@@ -46,7 +45,6 @@ export class Pagination {
     onPopState(result) {
         this.word = result.data.word;
         this.region = result.data.region;
-        console.log(result);
         this.setCondition();
 
         const total = document.querySelector('.total');
@@ -121,16 +119,16 @@ export class Pagination {
 
     getParam() {
         let param = '?';
-        let p = this.createParam('page', this.page);
-        if (p != null) param += p;
-        p = this.createParam('word', this.word);
-        if (p != null) param += '&' + p;
-        p = this.createParam('region', this.region);
-        if (p != null) param += '&' + p;
+        let page = this.createParam('page', this.page);
+        if (page != null) param += page;
+        let word = this.createParam('word', this.word);
+        if (word != null) param += '&' + word;
+        let region = this.createParam('region', this.region);
+        if (region != null) param += '&' + region;
         return param;
     }
     createParam(key, value) {
-        if (value == null) return null;
+        if (value === '' || value == null) return null;
         return `${key}=${value}`;
     }
 
@@ -148,7 +146,7 @@ export class Pagination {
         let regionRadio = document.querySelector(`input[name="region"][value="${this.region ?? ''}"]`);
         regionRadio.checked = true;
         let label = document.querySelector(`label[for="${regionRadio.id}"]`);
-        let text = document.querySelector('.region > span');
+        let text = document.querySelector('span[aria-label="region"]');
         text.innerHTML = label.textContent;
 
         let searchWord = document.querySelector('input[name="searchWord"]');
@@ -196,22 +194,6 @@ export class Pagination {
             const searchBtn = document.querySelector('#search');
             searchBtn.addEventListener('click', ()=>{
                 this.searchBtn();
-            })
-            const region = document.querySelector('.region');
-            const regionOption = document.querySelector('.regionOption');
-
-            region.addEventListener('click', () => regionOption.classList.toggle('disabled'));
-
-            const inputRegion = document.querySelectorAll('input[name="region"]');
-            inputRegion.forEach((el) => {
-                el.addEventListener('change', (e) => {
-                    regionOption.classList.add('disabled');
-
-                    let check = document.querySelector('input[name="region"]:checked').id;
-                    let label = document.querySelector('label[for="' + check +'"]')
-                    let text = document.querySelector('.option > .region.btnBox > span');
-                    text.innerHTML = label.textContent;
-                })
             })
         })
 

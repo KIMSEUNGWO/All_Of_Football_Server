@@ -20,14 +20,13 @@ public class ResponseViewField {
     private final String title;
     private final Region region;
     private final String address;
+    private final String link;
 
-    private final int sizeX;
-    private final int sizeY;
+    private final int size;
 
     private final Parking parking;
     private final Toilet toilet;
     private final Shower shower;
 
     private final String description;
-    private final int hourPrice;
 }

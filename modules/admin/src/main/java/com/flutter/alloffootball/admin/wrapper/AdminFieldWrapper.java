@@ -12,7 +12,7 @@ public class AdminFieldWrapper {
     public ResponseSearchField searchFieldWrap(Field field) {
         return ResponseSearchField.builder()
             .fieldId(field.getId())
-            .region(field.getAddress().getRegion())
+            .region(field.getAddress().getRegion().getKo())
             .title(field.getTitle())
             .address(field.getAddress().getAddress())
             .build();
@@ -24,13 +24,12 @@ public class AdminFieldWrapper {
             .title(field.getTitle())
             .description(field.getDescription())
             .address(field.getAddress().getAddress())
+            .link(field.getAddress().getLink())
             .region(field.getAddress().getRegion())
-            .sizeX(field.getFieldData().getSizeX())
-            .sizeY(field.getFieldData().getSizeY())
+            .size(field.getFieldData().getSize())
             .parking(field.getFieldData().getParking())
             .shower(field.getFieldData().getShower())
             .toilet(field.getFieldData().getToilet())
-            .hourPrice(field.getFieldData().getHourPrice())
             .build();
     }
 }

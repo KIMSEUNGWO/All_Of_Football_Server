@@ -6,11 +6,9 @@ import com.flutter.alloffootball.common.enums.field.Toilet;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+@Setter
 @Getter
 @Embeddable
 @AllArgsConstructor
@@ -27,12 +25,6 @@ public class FieldData {
     @Enumerated(EnumType.STRING)
     private Toilet toilet;
 
-    private int sizeX;
-    private int sizeY;
+    private int size; // 제곱미터
 
-    private int hourPrice; // 구장 시간 당 가격
-
-    public String getFieldSize() {
-        return String.format("%dm x %dm", sizeX, sizeY);
-    }
 }

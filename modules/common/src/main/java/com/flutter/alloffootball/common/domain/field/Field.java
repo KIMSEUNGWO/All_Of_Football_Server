@@ -3,10 +3,7 @@ package com.flutter.alloffootball.common.domain.field;
 import com.flutter.alloffootball.common.domain.Favorite;
 import com.flutter.alloffootball.common.domain.match.Match;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +21,10 @@ public class Field {
     @Column(name = "FIELD_ID")
     private Long id;
 
+    @Setter
     private String title;
 
-    @Lob
+    @Lob @Setter
     private String description;
 
     @Embedded
@@ -47,7 +45,4 @@ public class Field {
     @OneToMany(mappedBy = "field", orphanRemoval = true)
     private List<Favorite> favoriteList = new ArrayList<>();
 
-    public String getFieldSize() {
-        return fieldData.getFieldSize();
-    }
 }

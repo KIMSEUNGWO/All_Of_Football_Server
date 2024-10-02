@@ -23,11 +23,11 @@
 
 @font-face {
     font-family: 'Tmoney-Regular';
-    src: url(/static/font/TmoneyRoundWindRegular.otf);
+    src: url(/font/TmoneyRoundWindRegular.otf);
 }
 @font-face {
     font-family: 'Tmoney-ExtraBold';
-    src: url(/static/font/TmoneyRoundWindExtraBold.otf);
+    src: url(/font/TmoneyRoundWindExtraBold.otf);
 }
 :root{
     --container-color: #FBFBFB;
@@ -42,6 +42,9 @@
 
     --button-color-1: #253331;
     --button-color-2: #A5B0AF;
+
+    --border-color: #D7D7D7;
+    --border-radius: 5px;
 }
 
 *{

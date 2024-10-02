@@ -33,9 +33,7 @@ public class RequestSaveFieldForm {
     private String address;
 
     @NotNull
-    private int sizeX;
-    @NotNull
-    private int sizeY;
+    private int size;
 
     @NotNull
     private Parking parking;
@@ -44,9 +42,6 @@ public class RequestSaveFieldForm {
     @NotNull
     private Shower shower;
 
-    private double lng;
-    private double lat;
+    private String link;
 
-    @Min(1000)
-    private int hourPrice; // 구장 시간 당 가격
 }

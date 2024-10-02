@@ -4,11 +4,9 @@ import com.flutter.alloffootball.common.enums.region.Region;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+@Setter
 @Getter
 @AllArgsConstructor
 @Builder
@@ -21,8 +19,5 @@ public class Address {
     @Enumerated(EnumType.STRING)
     private Region region;
 
-    // 위도
-    private double lat;
-    // 경도
-    private double lng;
+    private String link;
 }

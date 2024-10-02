@@ -18,9 +18,9 @@
 
 .infoBox {
     background-color: white;
-    border-radius: 5px;
+    border-radius: var(--border-radius);
     box-shadow: 2px 2px 5px rgba(228, 228, 228, 0.25);
-    border: 1px solid #d7d7d7;
+    border: 1px solid var(--border-color);
     padding: 14px 8px;
     display: flex;
     align-items: center;
@@ -74,6 +74,7 @@
     z-index: 1;
     flex-direction: column;
     gap: 0.5rem;
+    align-items: start;
 }
 .subOption li {
     display: flex;
@@ -100,8 +101,22 @@
     width: 100%;
     height: 40px;
     align-items: center;
-    border: 0.1rem solid var(--border-color);
     display: grid;
+
+    border-bottom: 1px solid var(--border-color);
+    border-left: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+
+}
+#searchTitle > a {
+    border-top: 1px solid var(--border-color);
+    border-top-left-radius: var(--border-radius);
+    border-top-right-radius: var(--border-radius);
+}
+.searchResult:not(#searchTitle) > a:last-child {
+    border-bottom: 1px solid var(--border-color);
+    border-bottom-left-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
 }
 .searchResult > a > span {
     display: flex;
@@ -121,11 +136,8 @@
     color: var(--font-color-2);
     cursor: default;
     display: flex;
+    background: white;
 }
-.searchResult a {
-    border-bottom: 0.5px solid hsla(0, 0%, 0%, 0.4);
-}
-
 .grid-container {
     display: grid; /* Grid Layout을 활성화 */
     grid-template-columns: repeat(4, 1fr); /* 4개의 열을 같은 비율로 설정 */

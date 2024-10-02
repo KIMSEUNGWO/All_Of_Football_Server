@@ -34,7 +34,7 @@ public class FieldWrapper {
         return ResponseSearchField.builder()
             .fieldId(field.getId())
             .title(field.getTitle())
-            .region(field.getAddress().getRegion())
+            .region(field.getAddress().getRegion().getKo())
             .address(field.getAddress().getAddress())
             .build();
     }

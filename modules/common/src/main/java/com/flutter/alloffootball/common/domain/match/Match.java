@@ -43,6 +43,8 @@ public class Match {
     // 6:6이면 6, 5:5이면 5
     private int personCount;
 
+    private int hourPrice; // 시간 당 가격
+
     @Enumerated(EnumType.STRING)
     private MatchStatus matchStatus;
 
@@ -51,7 +53,7 @@ public class Match {
     private List<Order> orderList = new ArrayList<>();
 
     public int getTotalPrice() {
-        return field.getFieldData().getHourPrice() * matchTime;
+        return hourPrice * matchTime;
     }
 
     private int getMaxPerson() {

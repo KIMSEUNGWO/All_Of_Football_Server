@@ -13,7 +13,7 @@ import lombok.ToString;
 public class ResponseSearchField {
 
     private final Long fieldId;
-    private final Region region;
+    private final String region;
     private final String title;
     private final String address;
 }

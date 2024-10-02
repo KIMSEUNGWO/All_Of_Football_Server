@@ -14,6 +14,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Locale;
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/admin/field")
@@ -23,9 +25,10 @@ public class AdminFieldController {
 
     @GetMapping
     public String field(Model model,
-                         @AuthenticationPrincipal AdminUserDetails userDetails) {
-//        model.addAttribute("name", userDetails.getAdmin().getName());
-//        model.addAttribute("authority", userDetails.getAdmin().getAuthority().getKo());
+                        @AuthenticationPrincipal AdminUserDetails userDetails, Locale locale) {
+        System.out.println("locale = " + locale);
+        model.addAttribute("name", userDetails.getAdmin().getName());
+        model.addAttribute("authority", userDetails.getAdmin().getAuthority().getKo());
         model.addAttribute("region", Region.values());
         return "admin_field";
     }
@@ -34,10 +37,36 @@ public class AdminFieldController {
      * 구장 정보 조회
      */
     @GetMapping("/{fieldId}")
-    public String fieldView(@PathVariable("fieldId") long fieldId, Model model) {
+    public String fieldViewPage(@PathVariable("fieldId") long fieldId, @AuthenticationPrincipal AdminUserDetails userDetails, Model model) {
         ResponseViewField viewField = adminService.findByIdViewField(fieldId);
+        model.addAttribute("name", userDetails.getAdmin().getName());
+        model.addAttribute("authority", userDetails.getAdmin().getAuthority().getKo());
         model.addAttribute("field", viewField);
         return "admin_field_view";
+    }
+
+    @PatchMapping("/{fieldId}")
+    public String fieldPatch(@PathVariable("fieldId") Long fieldId,
+                             @ModelAttribute("editField") ResponseEditField editField) {
+        System.out.println("editField = " + editField);
+        adminService.patchEditField(fieldId, editField);
+        return "redirect:/admin/field/" + fieldId;
+    }
+
+
+    /**
+     * 구장 정보 수정
+     */
+    @GetMapping("/{fieldId}/edit")
+    public String fieldEdit(@PathVariable("fieldId") Long fieldId, Model model, @AuthenticationPrincipal AdminUserDetails userDetails) {
+        ResponseEditField form = adminService.getEditFieldForm(fieldId);
+
+        model.addAttribute("name", userDetails.getAdmin().getName());
+        model.addAttribute("authority", userDetails.getAdmin().getAuthority().getKo());
+        model.addAttribute("region", Region.values());
+        model.addAttribute("fieldId", fieldId);
+        model.addAttribute("editField", form);
+        return "admin_field_edit";
     }
 
     /**
@@ -61,18 +90,5 @@ public class AdminFieldController {
         adminService.saveField(saveFieldForm);
         return "redirect:/admin/field";
     }
-
-    @GetMapping("/{fieldId}/edit")
-    public String fieldEdit(@PathVariable("fieldId") Long fieldId, Model model) {
-        ResponseEditField form = adminService.getEditFieldForm(fieldId);
-
-        model.addAttribute("regions", Region.values());
-        model.addAttribute("fieldId", fieldId);
-        model.addAttribute("editField", form);
-        return "admin_field_edit";
-    }
-
-
-
 
 }
