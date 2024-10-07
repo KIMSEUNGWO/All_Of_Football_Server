@@ -67,7 +67,7 @@ input[name="matchDate"] {
 }
 
 .searchResult > * {
-    grid-template-columns: 25% 15% 12% 28% 10% 10%;
+    grid-template-columns: 20% 15% 12% 33% 10% 10%;
 }
 
 .searchResult .result > *:nth-child(4) {

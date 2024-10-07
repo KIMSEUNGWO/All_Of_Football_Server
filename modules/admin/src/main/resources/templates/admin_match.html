@@ -81,59 +81,61 @@
                             </div>
                         </div>
                     </div>
-                    <div class="option_box">
-                        <button class="inputBox option" id="region" style="justify-content: space-between">
-                            <span aria-label="region">전체</span>
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M9.1706 14.7687C9.56697 15.3571 10.433 15.3571 10.8294 14.7687L15.0123 8.55866C15.4597 7.89443 14.9838 7 14.1829 7H5.81709C5.01624 7 4.54029 7.89443 4.9877 8.55866L9.1706 14.7687Z" fill="black"/>
-                            </svg>
-                        </button>
-                        <ul class="subOption inputBox disabled regionOption">
-                            <li>
-                                <input type="radio" name="region" id="regionAll" value="" checked>
-                                <label for="regionAll">전국</label>
-                            </li>
-                            <li th:each="loc : ${region}">
-                                <input type="radio" name="region" th:id="${loc.name()}" th:value="${loc}">
-                                <label th:for="${loc.name()}" th:text="${loc.getKo()}"></label>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="option_box">
-                        <button class="inputBox option" id="sex" style="justify-content: space-between">
-                            <span aria-label="sex">전체</span>
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M9.1706 14.7687C9.56697 15.3571 10.433 15.3571 10.8294 14.7687L15.0123 8.55866C15.4597 7.89443 14.9838 7 14.1829 7H5.81709C5.01624 7 4.54029 7.89443 4.9877 8.55866L9.1706 14.7687Z" fill="black"/>
-                            </svg>
-                        </button>
-                        <ul class="subOption inputBox disabled">
-                            <li>
-                                <input type="radio" name="sex" id="sexAll" value="" checked>
-                                <label for="sexAll">남녀모두</label>
-                            </li>
-                            <li th:each="sexType : ${sex}">
-                                <input type="radio" name="sex" th:id="${sexType.name()}" th:value="${sexType.name()}">
-                                <label th:for="${sexType.name()}" th:text="${sexType.getKo()}"></label>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="option_box">
-                        <button class="inputBox option" id="state" style="justify-content: space-between">
-                            <span aria-label="state"></span>
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M9.1706 14.7687C9.56697 15.3571 10.433 15.3571 10.8294 14.7687L15.0123 8.55866C15.4597 7.89443 14.9838 7 14.1829 7H5.81709C5.01624 7 4.54029 7.89443 4.9877 8.55866L9.1706 14.7687Z" fill="black"/>
-                            </svg>
-                        </button>
-                        <ul class="subOption inputBox disabled">
-                            <li>
-                                <input type="radio" name="state" id="stateAll" value="" checked>
-                                <label for="stateAll">상태전체</label>
-                            </li>
-                            <li th:each="matchStatus : ${state}">
-                                <input type="radio" name="state" th:id="${matchStatus.name()}" th:value="${matchStatus.name()}">
-                                <label th:for="${matchStatus.name()}" th:text="${matchStatus.getKo()}"></label>
-                            </li>
-                        </ul>
+                    <div style="display: flex; gap: 12px">
+                        <div class="option_box">
+                            <button class="inputBox option" id="region" style="justify-content: space-between">
+                                <span aria-label="region">전체</span>
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9.1706 14.7687C9.56697 15.3571 10.433 15.3571 10.8294 14.7687L15.0123 8.55866C15.4597 7.89443 14.9838 7 14.1829 7H5.81709C5.01624 7 4.54029 7.89443 4.9877 8.55866L9.1706 14.7687Z" fill="black"/>
+                                </svg>
+                            </button>
+                            <ul class="subOption inputBox disabled regionOption">
+                                <li>
+                                    <input type="radio" name="region" id="regionAll" value="" checked>
+                                    <label for="regionAll">전국</label>
+                                </li>
+                                <li th:each="loc : ${region}">
+                                    <input type="radio" name="region" th:id="${loc.name()}" th:value="${loc}">
+                                    <label th:for="${loc.name()}" th:text="${loc.getKo()}"></label>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="option_box">
+                            <button class="inputBox option" id="sex" style="justify-content: space-between">
+                                <span aria-label="sex">전체</span>
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9.1706 14.7687C9.56697 15.3571 10.433 15.3571 10.8294 14.7687L15.0123 8.55866C15.4597 7.89443 14.9838 7 14.1829 7H5.81709C5.01624 7 4.54029 7.89443 4.9877 8.55866L9.1706 14.7687Z" fill="black"/>
+                                </svg>
+                            </button>
+                            <ul class="subOption inputBox disabled">
+                                <li>
+                                    <input type="radio" name="sex" id="sexAll" value="" checked>
+                                    <label for="sexAll">남녀모두</label>
+                                </li>
+                                <li th:each="sexType : ${sex}">
+                                    <input type="radio" name="sex" th:id="${sexType.name()}" th:value="${sexType.name()}">
+                                    <label th:for="${sexType.name()}" th:text="${sexType.getKo()}"></label>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="option_box">
+                            <button class="inputBox option" id="state" style="justify-content: space-between">
+                                <span aria-label="state"></span>
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9.1706 14.7687C9.56697 15.3571 10.433 15.3571 10.8294 14.7687L15.0123 8.55866C15.4597 7.89443 14.9838 7 14.1829 7H5.81709C5.01624 7 4.54029 7.89443 4.9877 8.55866L9.1706 14.7687Z" fill="black"/>
+                                </svg>
+                            </button>
+                            <ul class="subOption inputBox disabled">
+                                <li>
+                                    <input type="radio" name="state" id="stateAll" value="" checked>
+                                    <label for="stateAll">상태전체</label>
+                                </li>
+                                <li th:each="matchStatus : ${state}">
+                                    <input type="radio" name="state" th:id="${matchStatus.name()}" th:value="${matchStatus.name()}">
+                                    <label th:for="${matchStatus.name()}" th:text="${matchStatus.getKo()}"></label>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 
@@ -141,12 +143,10 @@
                     <input type="text" style="width: 330px;" class="inputBox" name="searchWord" id="searchWord" placeholder="구장 이름을 입력해주세요.">
                     <div id="searchR">
                         <button type="button" class="mainBtn" id="search">검색</button>
-                        <button type="reset" class="subBtn" id="reset">초기화</button>
                     </div>
                 </div>
                 <div class="group">
                     <h4 class="total">총 0건</h4>
-                    <a href="/admin/match/add" class="mainBtn" id="add">등록</a>
                 </div>
                 <ul class="searchResult" id="searchTitle">
                     <a disabled>

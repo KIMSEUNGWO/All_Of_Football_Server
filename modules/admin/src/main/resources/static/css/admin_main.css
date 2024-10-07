@@ -182,10 +182,16 @@
 .options {
     display: flex;
     gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
 }
 .option_box {
     position: relative;
 }
 .option {
     height: 40px;
+}
+
+@media (max-width: 845px) {
+
 }

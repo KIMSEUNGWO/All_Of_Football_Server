@@ -4,10 +4,6 @@
     display: flex;
     position: relative;
     gap: 24px;
-    margin-bottom: 1rem;
-}
-.date_picker_wrapper * {
-    margin: 0;
 }
 
 /* 기간 버튼 */

@@ -60,9 +60,9 @@
     }
     #sideMenu:hover li {
         width: 200px;
+        overflow: hidden;
     }
     #sideMenu:hover {
-        overflow: hidden;
         span {
             display: initial;
             white-space: nowrap;
