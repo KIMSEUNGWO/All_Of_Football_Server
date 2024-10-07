@@ -40,6 +40,7 @@ public class FlutterAuthorizationFilter extends OncePerRequestFilter {
         if (!API_KEY.equals(apiKey)) {
             System.out.println("API_KEY = " + API_KEY);
             System.out.println("apiKey = " + apiKey);
+            System.out.println("url = " + request.getRequestURI());
             log.error("외부 요청이 발생했습니다.");
             throw new RuntimeException();
         }

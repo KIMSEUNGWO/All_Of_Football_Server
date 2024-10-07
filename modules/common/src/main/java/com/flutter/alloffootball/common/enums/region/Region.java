@@ -6,6 +6,11 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Locale;
+
 
 @Getter
 @AllArgsConstructor
@@ -89,6 +94,10 @@ public enum Region {
     @JsonValue
     public String toJson() {
         return this.name();
+    }
+
+    public static List<Region> sortedValues(Locale locale) {
+        return Arrays.stream(Region.values()).sorted(Comparator.comparing(o -> o.ko)).toList();
     }
 
 }

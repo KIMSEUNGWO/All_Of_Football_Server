@@ -1,8 +1,6 @@
 package com.flutter.alloffootball.admin.service;
 
-import com.flutter.alloffootball.admin.dto.RequestSaveFieldForm;
-import com.flutter.alloffootball.admin.dto.ResponseSearchField;
-import com.flutter.alloffootball.admin.dto.ResponseViewField;
+import com.flutter.alloffootball.admin.dto.*;
 import com.flutter.alloffootball.admin.dto.field.ResponseEditField;
 import com.flutter.alloffootball.admin.repository.AdminRepository;
 import com.flutter.alloffootball.admin.wrapper.AdminFieldWrapper;
@@ -10,6 +8,8 @@ import com.flutter.alloffootball.common.component.file.FileService;
 import com.flutter.alloffootball.common.domain.field.Address;
 import com.flutter.alloffootball.common.domain.field.Field;
 import com.flutter.alloffootball.common.domain.field.FieldData;
+import com.flutter.alloffootball.common.enums.MatchStatus;
+import com.flutter.alloffootball.common.enums.SexType;
 import com.flutter.alloffootball.common.enums.region.Region;
 import com.flutter.alloffootball.common.exception.FieldError;
 import com.flutter.alloffootball.common.exception.FieldException;
@@ -19,8 +19,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -35,8 +33,14 @@ public class AdminServiceImpl implements AdminService {
 
     @Transactional(readOnly = true)
     @Override
-    public Page<ResponseSearchField> findAllBySearchField(Region region, String word, Pageable pageable) {
-        return adminRepository.findAllBySearch(region, word, pageable);
+    public Page<ResponseSearchField> findAllBySearchField(RequestSearchField data, Pageable pageable) {
+        return adminRepository.findAllBySearchField(data, pageable);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Page<ResponseSearchMatch> findAllBySearchMatch(RequestSearchMatch data, Pageable pageable) {
+        return adminRepository.findAllBySearchMatch(data, pageable);
     }
 
     @Override

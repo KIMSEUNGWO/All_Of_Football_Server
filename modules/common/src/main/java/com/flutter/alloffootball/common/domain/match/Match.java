@@ -56,7 +56,7 @@ public class Match {
         return hourPrice * matchTime;
     }
 
-    private int getMaxPerson() {
+    public int getMaxPerson() {
         return matchCount * personCount;
     }
 

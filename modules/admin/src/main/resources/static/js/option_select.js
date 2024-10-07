@@ -15,6 +15,7 @@ window.addEventListener('load', function(){
     connectionLabel('shower');
     connectionLabel('parking');
     connectionLabel('sex');
+    connectionLabel('state');
 
 })
 

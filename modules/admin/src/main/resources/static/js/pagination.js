@@ -2,16 +2,17 @@ import { fetchGet } from "./fetch.js";
 
 export class Pagination {
 
-    
-    constructor(url, form) {
+    constructor(url, form, dataList) {
         this.url = url;
         this.getUrl = url + '/get';
         this.form = form;
         this.searchResultWrap = document.querySelector('#searchResult');
         const urlParams = new URLSearchParams(window.location.search);
-        this.word = urlParams.get('word');
-        this.region = urlParams.get('region');
         this.page = urlParams.get('page') ?? 1;
+        dataList.forEach(pageData => {
+            pageData.setData(urlParams.get(pageData.name));
+        });
+        this.dataList = dataList;
 
 
         this.pageList = document.querySelector('.page_list');
@@ -24,8 +25,6 @@ export class Pagination {
     }
 
     searchBtn() {
-        this.word = this.getWord();
-        this.region = this.getRegion();
         this.page = 1;
         this.search();
     }
@@ -43,9 +42,7 @@ export class Pagination {
     }
 
     onPopState(result) {
-        this.word = result.data.word;
-        this.region = result.data.region;
-        this.setCondition();
+        this.dataList.forEach(data => data.setData(result));
 
         const total = document.querySelector('.total');
 
@@ -121,10 +118,12 @@ export class Pagination {
         let param = '?';
         let page = this.createParam('page', this.page);
         if (page != null) param += page;
-        let word = this.createParam('word', this.word);
-        if (word != null) param += '&' + word;
-        let region = this.createParam('region', this.region);
-        if (region != null) param += '&' + region;
+        
+        this.dataList.forEach(data => {
+            let a = this.createParam(data.name, data.getData());
+            if (a != null) param += '&' + a; 
+        });
+
         return param;
     }
     createParam(key, value) {
@@ -141,29 +140,6 @@ export class Pagination {
                 this.search();
             })
         )
-    }
-    setCondition() {
-        let regionRadio = document.querySelector(`input[name="region"][value="${this.region ?? ''}"]`);
-        regionRadio.checked = true;
-        let label = document.querySelector(`label[for="${regionRadio.id}"]`);
-        let text = document.querySelector('span[aria-label="region"]');
-        text.innerHTML = label.textContent;
-
-        let searchWord = document.querySelector('input[name="searchWord"]');
-        searchWord.value = this.word ?? '';
-    }
-
-    setOption() {
-        this.region = this.getRegion();
-        this.word = this.getWord();
-    }
-
-    getRegion() {
-        return document.querySelector('input[name="region"]:checked')?.value;
-    }
-
-    getWord() {
-        return document.querySelector('input[name="searchWord"]')?.value;
     }
 
     initBtnEventListener() {
@@ -198,5 +174,14 @@ export class Pagination {
         })
 
 
+    }
+}
+
+export class PageData {
+
+    constructor(name, getData, setData) {
+        this.name = name;
+        this.getData = getData;
+        this.setData = setData;
     }
 }

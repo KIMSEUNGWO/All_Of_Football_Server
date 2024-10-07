@@ -103,11 +103,6 @@ div.imgBox svg {
     gap: 2rem;
 }
 
-.options {
-    border: 0.1rem solid var(--border-color);
-    border-radius: var(--border-radius);
-    padding: 0.5rem 1rem;
-}
 .radioBox {
     display: flex;
     gap: 1rem;

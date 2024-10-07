@@ -16,6 +16,22 @@
     }
 }
 
+#searchControll {
+    margin-bottom: 50px;
+    display: flex;
+    gap: 15px;
+    height: 40px;
+}
+#searchL {
+    display: flex;
+    gap: 10px;
+    position: relative;
+}
+#searchR button {
+    width: 100px;
+    height: 100%;
+}
+
 .infoBox {
     background-color: white;
     border-radius: var(--border-radius);
@@ -60,7 +76,7 @@
 }
 
 /* 검색조건 공통 CSS */
-#region {
+#region, #sex, #state {
     display: flex;
     min-width: 120px;
     padding: 0 10px;
@@ -146,7 +162,7 @@
 .grid-container {
     display: grid; /* Grid Layout을 활성화 */
     grid-template-columns: repeat(4, 1fr); /* 4개의 열을 같은 비율로 설정 */
-    grid-template-rows: 50px 50px auto;
+    grid-template-rows: 50px 50px 50px auto;
     gap: 12px;
 }
 
@@ -161,4 +177,15 @@
 }
 .infoBox.item-4 > * {
     display: block;
+}
+
+.options {
+    display: flex;
+    gap: 12px;
+}
+.option_box {
+    position: relative;
+}
+.option {
+    height: 40px;
 }

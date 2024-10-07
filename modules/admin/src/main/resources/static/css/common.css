@@ -43,7 +43,7 @@
     --button-color-1: #253331;
     --button-color-2: #A5B0AF;
 
-    --border-color: #D7D7D7;
+    --border-color: #E1DFE9;
     --border-radius: 5px;
 }
 
@@ -89,9 +89,9 @@ input {
 }
 
 .inputBox {
-    border: solid 1px #E1DFE9;
+    border: solid 1px var(--border-color);
     background-color: white;
-    border-radius: 5px;
+    border-radius: var(--border-radius);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -125,4 +125,8 @@ input {
 
 .option * {
     pointer-events: none;
+}
+.regionOption {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
 }

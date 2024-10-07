@@ -12,40 +12,29 @@ let flag = true; //  true = 왼쪽 startDate 변경됨, false = 오른쪽 endDat
 
 window.addEventListener('load', () => {
 
-    let week1 = document.querySelector('#date_picker_1weeks');
+    const preBtn = document.querySelector('#preButton');
+    const nextBtn = document.querySelector('#nextButton');
 
-    let preBtn = document.querySelector('#preButton');
-    let nextBtn = document.querySelector('#nextButton');
-
-    let startDate = document.querySelector('input[name="startDate"]');
-    let endDate = document.querySelector('input[name="endDate"]');
-    let calendar = document.querySelector('#date_range_calendar');
+    const startDate = document.querySelector('input[name="startDate"]');
+    const endDate = document.querySelector('input[name="endDate"]');
+    const calendar = document.querySelector('#date_range_calendar');
 
     initial();
 
-    let confirmBtn = document.querySelector('div#calendar_bottom #confirmButton');
+    let confirmBtn = document.querySelector('#calendar_confirm');
     confirmBtn.addEventListener('click', () => {
-        search();
-    })
-
-    let buttons = document.querySelectorAll('.date_picker_buttons button');
-    buttons.forEach(el => {
-        el.addEventListener('click', (e) => {
-            clearButtons();
-            calendar.classList.remove('display');
-            select(el);
-            renderCalendar();
-            select(el);
-            // 검색 Fetch
-            search();
-        })
+        calendar.classList.add('disabled');
     })
 
     startDate.addEventListener('click', () => {
-        calendar.classList.add('display');
+        calendar.classList.toggle('disabled');
+        flag = true;
+        focusInputDate(startDate, endDate);
     })
     endDate.addEventListener('click', () => {
-        calendar.classList.add('display');
+        calendar.classList.toggle('disabled');
+        flag = false;
+        focusInputDate(startDate, endDate);
     })
 
 
@@ -62,21 +51,17 @@ window.addEventListener('load', () => {
         let calDate = new Date(year, month-1, 0);
         let compareDate = new Date(fixYear, fixMonth+1, 0);
 
-        if (calDate.getTime() >= compareDate.getTime()) {
-            nextBtn.disabled = true;
-        } else {
-            nextBtn.disabled = false;
-        }
+        nextBtn.disabled = calDate.getTime() >= compareDate.getTime();
 
         checkToday();
         drawRange();
     
-    }
+    };
 
     renderCalendar();
 
     preBtn.addEventListener('click', () => {
-        if (month == 1) {
+        if (month === 1) {
             month = 12;
             year--;
         } else {
@@ -84,9 +69,8 @@ window.addEventListener('load', () => {
         }
         renderCalendar();
     })
-
     nextBtn.addEventListener('click', () => {
-        if (month-1 == 12) {
+        if (month-1 === 12) {
             month = 1;
             year++;
         } else {
@@ -97,53 +81,45 @@ window.addEventListener('load', () => {
     })
 
 
-    this.document.addEventListener('click', (e) => {
+    document.addEventListener('click', (e) => {
         if (e.target.hasAttribute('aria-pressed') && e.target.hasAttribute('data-is-today')) {
 
             let clickDate = clickAndGetDate(e.target);
 
-            let start = document.querySelector('input[name="startDate"]');
-            let startDateForm = getDateForm(start);
-            let end = document.querySelector('input[name="endDate"]')
-            let endDateForm = getDateForm(end);
+            let startDateForm = getDateForm(startDate);
+            let endDateForm = getDateForm(endDate);
 
             let innerDate = dateForm(clickDate.getFullYear(), clickDate.getMonth()+1, clickDate.getDate());
 
-            selectDateForm(innerDate, clickDate.getTime(), start, startDateForm.getTime(), end, endDateForm.getTime());
-            focusInputDate(start, end);
+            selectDateForm(innerDate, clickDate.getTime(), startDate, startDateForm.getTime(), endDate, endDateForm.getTime());
+            focusInputDate(startDate, endDate);
             drawRange();
         }
-    })
-
-    let cal_confirmBtn = document.querySelector('#confirmButton');
-    cal_confirmBtn.addEventListener('click', () => {
-        calendar.classList.remove('display');
-
-        // fetch
-
     })
 
 })
 
 function initial() {
-    const addDay = 14;
+    let startDate = document.querySelector('input[name="startDate"]');
+    let endDate = document.querySelector('input[name="endDate"]');
+    if (startDate.value !== '' && endDate.value !== '') return;
+
+    const addDay = 30;
 
     let date = new Date();
-    
+
     let year = date.getFullYear();
     let month = date.getMonth() + 1;
     let day = date.getDate();
 
-    let startDate = document.querySelector('input[name="startDate"]');
     startDate.value = dateForm(year, month, day);
-    
+
     let newDate = new Date(year, month-1, day+addDay);
     console.log(newDate);
     let newYear = newDate.getFullYear();
     let newMonth = newDate.getMonth() + 1;
     let newDay = newDate.getDate();
-    
-    let endDate = document.querySelector('input[name="endDate"]');
+
     endDate.value = dateForm(newYear, newMonth, newDay);
 }
 
@@ -373,65 +349,8 @@ function createWeek(now, lastDateMonth, startDateMonth) {
 }
 
 
-function clearButtons() {
-    let buttons = document.querySelectorAll('.date_picker_buttons button');
-    buttons.forEach(el => {
-        el.setAttribute('aria-pressed', 'false');    
-    })
-
-}
-
-function select(button) {
-    let currentState = (button.getAttribute('aria-pressed') === 'true');
-    // 현재 상태를 반전시킴
-    button.setAttribute('aria-pressed', !currentState);    
-    inputDate(button);
-}
-
-function inputDate(button) {
-    let currentState = (button.getAttribute('aria-pressed') === 'true');
-    if (currentState) {
-        if (button.id == 'date_picker_1weeks') {
-            addDate(0, 7);
-        } else if (button.id == 'date_picker_1months') {
-            addDate(1, 0);
-        } else if (button.id == 'date_picker_6months') {
-            addDate(6, 0);
-        }
-    } else {
-        clearDate();
-    }
-}
-
-function clearDate() {
-    let endDate = document.querySelector('input[name="endDate"]');
-    let startDate = document.querySelector('input[name="startDate"]');
-    endDate.value = ''
-    startDate.value = '';
-}
-
-function addDate(addMonth, addDay) {
-    let date = new Date();
-    
-    let year = date.getFullYear();
-    let month = date.getMonth() + 1;
-    let day = date.getDate();
-
-    let endDate = document.querySelector('input[name="endDate"]');
-    endDate.value = dateForm(year, month, day);
-
-    let newDate = new Date(year, month-addMonth-1, day-addDay);
-    console.log(newDate);
-    let newYear = newDate.getFullYear();
-    let newMonth = newDate.getMonth() + 1;
-    let newDay = newDate.getDate();
-
-    let startDate = document.querySelector('input[name="startDate"]');
-    startDate.value = dateForm(newYear, newMonth, newDay);
-}
-
 function getDate(value) {
-    if (value == '') {
+    if (value === '') {
         return null;
     }
     let split = value.split("/");

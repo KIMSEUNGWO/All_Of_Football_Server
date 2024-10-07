@@ -14,6 +14,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Locale;
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/admin/field")
@@ -22,8 +24,8 @@ public class AdminFieldController {
     private final AdminService adminService;
 
     @GetMapping
-    public String field(Model model) {
-        model.addAttribute("region", Region.values());
+    public String field(Model model, Locale locale) {
+        model.addAttribute("region", Region.sortedValues(locale));
         return "admin_field";
     }
 
