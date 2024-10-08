@@ -19,6 +19,7 @@ public class AdminRestFieldController {
 
     @GetMapping("/get")
     public ResponseEntity<Response> fieldList(@ModelAttribute RequestSearchField data) {
+        System.out.println("data = " + data);
         Pageable pageable = PageRequest.of(data.getPage() - 1, 10);
         return Response.ok(new PageField<>(adminService.findAllBySearchField(data, pageable), data));
     }
