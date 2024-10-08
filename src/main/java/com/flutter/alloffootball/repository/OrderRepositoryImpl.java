@@ -85,6 +85,6 @@ public class OrderRepositoryImpl implements OrderRepository {
 
     @Override
     public Stream<User> getParticipants(Match match) {
-        return jpaOrderRepository.findAllByMatchAndCancelDateIsNull(match).stream().map(x -> x.getUser());
+        return jpaOrderRepository.findAllByMatchAndCancelDateIsNull(match).stream().map(Order::getUser);
     }
 }

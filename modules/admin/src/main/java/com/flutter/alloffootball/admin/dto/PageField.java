@@ -1,5 +1,6 @@
 package com.flutter.alloffootball.admin.dto;
 
+import com.flutter.alloffootball.admin.dto.field.RequestSearchField;
 import com.flutter.alloffootball.common.dto.PageDto;
 import com.flutter.alloffootball.common.enums.region.Region;
 import lombok.Getter;

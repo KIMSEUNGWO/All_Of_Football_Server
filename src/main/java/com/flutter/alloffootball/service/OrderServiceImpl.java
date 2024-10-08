@@ -44,7 +44,7 @@ public class OrderServiceImpl implements OrderService {
         User user = userRepository.findById(userId);
         UserCoupon userCoupon = userCouponRepository.findById(requestOrder.getCouponId());
 
-        int price = match.getTotalPrice();
+        int price = match.getPrice();
 
         // 쿠폰사용을 하지 않았다면 userCoupon == null
         ResponseCouponUse couponUse = userCouponRepository.useCoupon(userCoupon, userId, now, price);

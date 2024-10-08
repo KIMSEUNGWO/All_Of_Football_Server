@@ -19,8 +19,6 @@ public class AdminRestMatchController {
 
     @GetMapping("/get")
     public ResponseEntity<Response> matchList(@ModelAttribute RequestSearchMatch data) {
-        System.out.println("startDate = " + data.getStartDate());
-        System.out.println("endDate = " + data.getEndDate());
         Pageable pageable = PageRequest.of(data.getPage() - 1, 10);
         return Response.ok(new PageMatch<>(adminService.findAllBySearchMatch(data, pageable), data));
     }

@@ -6,7 +6,6 @@ import com.flutter.alloffootball.common.component.file.FileType;
 import com.flutter.alloffootball.common.domain.user.User;
 import com.flutter.alloffootball.common.dto.InvalidData;
 import com.flutter.alloffootball.common.exception.InvalidDataException;
-import com.flutter.alloffootball.common.exception.UserException;
 import com.flutter.alloffootball.dto.user.RequestEditUser;
 import com.flutter.alloffootball.dto.user.ResponseUserProfile;
 import com.flutter.alloffootball.repository.UserRepository;

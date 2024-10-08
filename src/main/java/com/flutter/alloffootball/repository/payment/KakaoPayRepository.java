@@ -1,5 +1,6 @@
 package com.flutter.alloffootball.repository.payment;
 
+import com.flutter.alloffootball.dto.payment.KakaoPayConst;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -35,9 +36,9 @@ public class KakaoPayRepository {
         parameters.put("quantity", String.valueOf(1));
         parameters.put("total_amount", String.valueOf(amount));
         parameters.put("tax_free_amount", "0");
-        parameters.put("approval_url", APPROVAL_URI); // 결제승인시 넘어갈 url
-        parameters.put("cancel_url", CANCEL_URI); // 결제취소시 넘어갈 url
-        parameters.put("fail_url", FAIL_URI); // 결제 실패시 넘어갈 url
+        parameters.put("approval_url", KakaoPayConst.APPROVAL_URI); // 결제승인시 넘어갈 url
+        parameters.put("cancel_url", KakaoPayConst.CANCEL_URI); // 결제취소시 넘어갈 url
+        parameters.put("fail_url", KakaoPayConst.FAIL_URI); // 결제 실패시 넘어갈 url
         return parameters;
     }
 

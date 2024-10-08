@@ -3,7 +3,6 @@ package com.flutter.alloffootball.service;
 import com.flutter.alloffootball.common.config.security.CustomUserDetails;
 import com.flutter.alloffootball.common.domain.match.Match;
 import com.flutter.alloffootball.common.domain.user.User;
-import com.flutter.alloffootball.common.enums.SexType;
 import com.flutter.alloffootball.component.MatchStatisticsBuilder;
 import com.flutter.alloffootball.dto.match.*;
 import com.flutter.alloffootball.dto.order.ResponseOrderSimp;
@@ -16,8 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service

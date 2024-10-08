@@ -1,20 +1,3 @@
-.searchResult > a > * {
-    height: 100%;
-}
-.searchResult > a > *:nth-child(odd):not(.none) {
-    background-color: var(--main-color-1);
-} 
-.searchResult li {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-}
-
-#searchResult {
-    display: block;
-}
-
 .group {
     display: flex;
     justify-content: space-between;

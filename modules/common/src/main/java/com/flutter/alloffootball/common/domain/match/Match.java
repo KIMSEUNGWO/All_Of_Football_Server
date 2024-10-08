@@ -43,7 +43,7 @@ public class Match {
     // 6:6이면 6, 5:5이면 5
     private int personCount;
 
-    private int hourPrice; // 시간 당 가격
+    private int price;
 
     @Enumerated(EnumType.STRING)
     private MatchStatus matchStatus;
@@ -51,10 +51,6 @@ public class Match {
     @Builder.Default
     @OneToMany(mappedBy = "match", orphanRemoval = true)
     private List<Order> orderList = new ArrayList<>();
-
-    public int getTotalPrice() {
-        return hourPrice * matchTime;
-    }
 
     public int getMaxPerson() {
         return matchCount * personCount;

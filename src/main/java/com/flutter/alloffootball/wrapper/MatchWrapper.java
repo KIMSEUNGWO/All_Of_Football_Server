@@ -63,7 +63,7 @@ public class MatchWrapper {
     public ResponseOrderSimp orderSimpWrap(Match match, User user) {
         return ResponseOrderSimp.builder()
             .title(match.getField().getTitle())
-            .totalPrice(match.getTotalPrice())
+            .totalPrice(match.getPrice())
             .matchHour(match.getMatchTime())
             .address(match.getField().getAddress())
             .matchDate(match.getMatchDate())

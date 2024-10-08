@@ -1,6 +1,6 @@
 package com.flutter.alloffootball.controller;
 
-import com.flutter.alloffootball.admin.dto.ResponseSearchField;
+import com.flutter.alloffootball.admin.dto.field.ResponseSearchField;
 import com.flutter.alloffootball.common.dto.Response;
 import com.flutter.alloffootball.dto.board.RequestSearchBoard;
 import com.flutter.alloffootball.dto.board.ResponseBoard;

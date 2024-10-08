@@ -14,7 +14,7 @@ public class OrderWrapper {
 
     public ResponseOrderResult orderResultWrap(Match match, Order order, User user, ResponseCouponUse couponUse) {
         return ResponseOrderResult.builder()
-            .totalPrice(match.getTotalPrice())
+            .totalPrice(match.getPrice())
             .coupon(couponUse)
             .finalPrice(order.getPrice())
             .remainCash(user.getCash())

@@ -14,6 +14,10 @@
         width: 18px;
         height: 19px;
     }
+
+    a:hover {
+        text-decoration: underline;
+    }
 }
 
 #searchControll {
@@ -42,6 +46,8 @@
     align-items: center;
     gap: 12px;
     position: relative;
+    height: 45px;
+
 }
 .infoBox > *:first-child {
     color: var(--font-color-3);
@@ -73,6 +79,14 @@
     width: 100%;
     border: none;
     outline: none;
+}
+
+/* 구장정보 */
+.infoWrap {
+    margin-top: 40px;
+}
+.infoWrap > h4 {
+    margin-bottom: 21px;
 }
 
 /* 검색조건 공통 CSS */
@@ -116,11 +130,14 @@
     height: 40px;
     align-items: center;
     display: grid;
+    overflow: hidden;
 
     border-bottom: 1px solid var(--border-color);
     border-left: 1px solid var(--border-color);
     border-right: 1px solid var(--border-color);
-
+}
+.searchResult:not(#searchTitle) > a:hover {
+    opacity: 0.75;
 }
 #searchTitle > a {
     border-top: 1px solid var(--border-color);
@@ -159,11 +176,33 @@
     border-bottom-left-radius: var(--border-radius);
     border-bottom-right-radius: var(--border-radius);
 }
+
+.searchResult > a > * {
+    height: 100%;
+}
+.searchResult > a > *:nth-child(odd):not(.none) {
+    background-color: var(--main-color-1);
+}
+.searchResult > a > *:nth-child(even):not(.none) {
+    background-color: white;
+}
+.searchResult li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+#searchResult {
+    display: block;
+}
+
 .grid-container {
     display: grid; /* Grid Layout을 활성화 */
-    grid-template-columns: repeat(4, 1fr); /* 4개의 열을 같은 비율로 설정 */
-    grid-template-rows: 50px 50px 50px auto;
     gap: 12px;
+}
+#fieldInfo, #matchInfo {
+    grid-template-columns: repeat(4, 1fr); /* 4개의 열을 같은 비율로 설정 */
 }
 
 .item-4 {

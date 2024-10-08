@@ -46,7 +46,7 @@ div.imgBox {
 div.imgBox .xBox {
     width: 1.5rem;
     height: 1.5rem;
-    background-color: rgb(60, 146, 252);
+    background-color: var(--point-color);
     position: absolute;
     display: flex;
     justify-content: center;
@@ -54,9 +54,10 @@ div.imgBox .xBox {
     border-radius: 0.5rem;
     top: 0.5rem;
     right: 0.5rem;
+    cursor: pointer;
 }
 div.imgBox .xBox:hover {
-    background-color: rgb(48, 117, 202);
+    opacity: 0.8;
 }
 div.imgBox svg {
     width: 90%;
@@ -153,12 +154,3 @@ input[name=fieldAddress] {
     font-size: 14px;
 }
 
-
-
-/* 구장정보 */
-#fieldInfoWrap {
-    margin-top: 40px;
-}
-#fieldInfoWrap > h4 {
-    margin-bottom: 21px;
-}

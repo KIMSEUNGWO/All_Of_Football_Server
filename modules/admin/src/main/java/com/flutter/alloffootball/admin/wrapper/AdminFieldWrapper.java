@@ -1,7 +1,7 @@
 package com.flutter.alloffootball.admin.wrapper;
 
-import com.flutter.alloffootball.admin.dto.ResponseSearchField;
-import com.flutter.alloffootball.admin.dto.ResponseViewField;
+import com.flutter.alloffootball.admin.dto.field.ResponseSearchField;
+import com.flutter.alloffootball.admin.dto.field.ResponseViewField;
 import com.flutter.alloffootball.common.domain.BaseEntityImage;
 import com.flutter.alloffootball.common.domain.field.Field;
 import org.springframework.stereotype.Component;
@@ -20,6 +20,7 @@ public class AdminFieldWrapper {
 
     public ResponseViewField viewFieldWrap(Field field) {
         return ResponseViewField.builder()
+            .fieldId(field.getId())
             .images(field.getFieldImages().stream().map(BaseEntityImage::getStoreName).toList())
             .title(field.getTitle())
             .description(field.getDescription())

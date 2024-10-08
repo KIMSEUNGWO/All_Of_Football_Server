@@ -1,14 +1,13 @@
 package com.flutter.alloffootball.admin.repository;
 
-import com.flutter.alloffootball.admin.dto.RequestSearchField;
+import com.flutter.alloffootball.admin.dto.field.RequestSearchField;
 import com.flutter.alloffootball.admin.dto.RequestSearchMatch;
-import com.flutter.alloffootball.admin.dto.ResponseSearchField;
+import com.flutter.alloffootball.admin.dto.field.ResponseSearchField;
 import com.flutter.alloffootball.admin.dto.ResponseSearchMatch;
 import com.flutter.alloffootball.admin.wrapper.AdminFieldWrapper;
 import com.flutter.alloffootball.admin.wrapper.AdminMatchWrapper;
 import com.flutter.alloffootball.common.domain.field.Field;
 import com.flutter.alloffootball.common.domain.match.Match;
-import com.flutter.alloffootball.common.domain.match.QMatch;
 import com.flutter.alloffootball.common.enums.MatchStatus;
 import com.flutter.alloffootball.common.enums.OrderStatus;
 import com.flutter.alloffootball.common.enums.SexType;
@@ -32,7 +31,6 @@ import java.time.LocalTime;
 import java.util.List;
 
 import static com.flutter.alloffootball.common.domain.field.QField.*;
-import static com.flutter.alloffootball.common.domain.match.QMatch.*;
 import static com.flutter.alloffootball.common.domain.match.QMatch.match;
 
 @Repository

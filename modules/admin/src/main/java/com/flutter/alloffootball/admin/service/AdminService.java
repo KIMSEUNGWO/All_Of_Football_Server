@@ -1,10 +1,8 @@
 package com.flutter.alloffootball.admin.service;
 
 import com.flutter.alloffootball.admin.dto.*;
-import com.flutter.alloffootball.admin.dto.field.ResponseEditField;
-import com.flutter.alloffootball.common.enums.MatchStatus;
-import com.flutter.alloffootball.common.enums.SexType;
-import com.flutter.alloffootball.common.enums.region.Region;
+import com.flutter.alloffootball.admin.dto.field.*;
+import com.flutter.alloffootball.admin.dto.match.ResponseViewMatch;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -15,8 +13,10 @@ public interface AdminService {
     void saveField(RequestSaveFieldForm saveFieldForm);
 
     ResponseViewField findByIdViewField(long fieldId);
+    ResponseViewMatch findByIdViewMatch(long matchId);
 
     ResponseEditField getEditFieldForm(Long fieldId);
 
     void patchEditField(Long fieldId, ResponseEditField editField);
+
 }

@@ -1,6 +1,6 @@
 package com.flutter.alloffootball.service;
 
-import com.flutter.alloffootball.admin.dto.ResponseSearchField;
+import com.flutter.alloffootball.admin.dto.field.ResponseSearchField;
 import com.flutter.alloffootball.common.config.security.CustomUserDetails;
 import com.flutter.alloffootball.common.domain.field.Field;
 import com.flutter.alloffootball.common.jparepository.JpaFavoriteRepository;

@@ -1,9 +1,7 @@
 package com.flutter.alloffootball.service;
 
-import com.flutter.alloffootball.common.domain.Cash;
 import com.flutter.alloffootball.common.domain.user.User;
 import com.flutter.alloffootball.common.enums.CashType;
-import com.flutter.alloffootball.common.jparepository.JpaCashRepository;
 import com.flutter.alloffootball.repository.PaymentRepository;
 import com.flutter.alloffootball.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

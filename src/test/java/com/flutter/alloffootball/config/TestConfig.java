@@ -96,7 +96,7 @@ public class TestConfig {
 
     @Bean
     OrderRepository orderRepository() {
-        return new OrderRepositoryImpl(matchRepository(), jpaOrderRepository, queryDslOrderRepository());
+        return new OrderRepositoryImpl(jpaOrderRepository, queryDslOrderRepository());
     }
 
     @Bean

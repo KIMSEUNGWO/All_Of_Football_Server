@@ -1,6 +1,5 @@
-package com.flutter.alloffootball.admin.dto;
+package com.flutter.alloffootball.admin.dto.field;
 
-import com.flutter.alloffootball.common.enums.region.Region;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

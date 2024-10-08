@@ -1,4 +1,4 @@
-package com.flutter.alloffootball.admin.dto;
+package com.flutter.alloffootball.admin.dto.field;
 
 import com.flutter.alloffootball.common.enums.field.Parking;
 import com.flutter.alloffootball.common.enums.field.Shower;
@@ -17,6 +17,7 @@ public class ResponseViewField {
 
     private final List<String> images;
 
+    private final long fieldId;
     private final String title;
     private final Region region;
     private final String address;

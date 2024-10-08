@@ -1,24 +1,32 @@
 package com.flutter.alloffootball.admin.service;
 
 import com.flutter.alloffootball.admin.dto.*;
-import com.flutter.alloffootball.admin.dto.field.ResponseEditField;
+import com.flutter.alloffootball.admin.dto.field.*;
+import com.flutter.alloffootball.admin.dto.match.ResponseViewMatch;
+import com.flutter.alloffootball.admin.dto.match.ResponseViewUser;
 import com.flutter.alloffootball.admin.repository.AdminRepository;
 import com.flutter.alloffootball.admin.wrapper.AdminFieldWrapper;
+import com.flutter.alloffootball.admin.wrapper.AdminMatchWrapper;
 import com.flutter.alloffootball.common.component.file.FileService;
 import com.flutter.alloffootball.common.domain.field.Address;
 import com.flutter.alloffootball.common.domain.field.Field;
 import com.flutter.alloffootball.common.domain.field.FieldData;
-import com.flutter.alloffootball.common.enums.MatchStatus;
-import com.flutter.alloffootball.common.enums.SexType;
-import com.flutter.alloffootball.common.enums.region.Region;
+import com.flutter.alloffootball.common.domain.match.Match;
 import com.flutter.alloffootball.common.exception.FieldError;
 import com.flutter.alloffootball.common.exception.FieldException;
+import com.flutter.alloffootball.common.exception.MatchError;
+import com.flutter.alloffootball.common.exception.MatchException;
 import com.flutter.alloffootball.common.jparepository.JpaFieldRepository;
+import com.flutter.alloffootball.common.jparepository.JpaMatchRepository;
+import com.flutter.alloffootball.common.jparepository.JpaOrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Comparator;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -27,9 +35,12 @@ public class AdminServiceImpl implements AdminService {
 
     private final FileService fileService;
     private final JpaFieldRepository jpaFieldRepository;
+    private final JpaOrderRepository jpaOrderRepository;
     private final AdminRepository adminRepository;
 
     private final AdminFieldWrapper adminFieldWrapper;
+    private final JpaMatchRepository jpaMatchRepository;
+    private final AdminMatchWrapper adminMatchWrapper;
 
     @Transactional(readOnly = true)
     @Override
@@ -75,6 +86,16 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    public ResponseViewMatch findByIdViewMatch(long matchId) {
+        Match match = matchFindById(matchId);
+        List<ResponseViewUser> userList = jpaOrderRepository.findAllByMatchAndCancelDateIsNull(match)
+            .stream().map(adminMatchWrapper::viewUserWrap)
+            .sorted(Comparator.comparingLong(ResponseViewUser::getUserId))
+            .toList();
+        return adminMatchWrapper.viewMatchWrap(match, userList);
+    }
+
+    @Override
     public ResponseEditField getEditFieldForm(Long fieldId) {
         Field field = fieldFindById(fieldId);
         return new ResponseEditField(field);
@@ -108,5 +129,10 @@ public class AdminServiceImpl implements AdminService {
     Field fieldFindById(long fieldId) {
         return jpaFieldRepository.findById(fieldId)
             .orElseThrow(() -> new FieldException(FieldError.FIELD_NOT_EXISTS));
+    }
+
+    Match matchFindById(long matchId) {
+        return jpaMatchRepository.findById(matchId)
+            .orElseThrow(() -> new MatchException(MatchError.MATCH_NOT_EXISTS));
     }
 }

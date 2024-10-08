@@ -1,6 +1,6 @@
 package com.flutter.alloffootball.wrapper;
 
-import com.flutter.alloffootball.admin.dto.ResponseSearchField;
+import com.flutter.alloffootball.admin.dto.field.ResponseSearchField;
 import com.flutter.alloffootball.common.domain.BaseEntityImage;
 import com.flutter.alloffootball.common.domain.field.Field;
 import com.flutter.alloffootball.dto.field.ResponseFavorite;
