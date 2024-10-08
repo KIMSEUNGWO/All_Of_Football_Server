@@ -8,7 +8,7 @@ export class Pagination {
         this.form = form;
         this.searchResultWrap = document.querySelector('#searchResult');
         const urlParams = new URLSearchParams(window.location.search);
-        this.page = urlParams.get('page') ?? 1;
+        this.page = Number(urlParams.get('page')) ?? 1;
         dataList.forEach(pageData => {
             pageData.setData(urlParams.get(pageData.name));
         });
