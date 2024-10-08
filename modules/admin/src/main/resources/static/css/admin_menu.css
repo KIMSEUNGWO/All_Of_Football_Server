@@ -23,7 +23,7 @@
 }
 
 #menus > li {
-    width: 200px;
+    width: 180px;
     transition: width 0.3s ease-in-out;
     height: 50px;
     border-radius: 6px;

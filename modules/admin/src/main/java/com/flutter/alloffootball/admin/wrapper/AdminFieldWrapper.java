@@ -1,5 +1,6 @@
 package com.flutter.alloffootball.admin.wrapper;
 
+import com.flutter.alloffootball.admin.dto.field.ResponseFieldSimpInfo;
 import com.flutter.alloffootball.admin.dto.field.ResponseSearchField;
 import com.flutter.alloffootball.admin.dto.field.ResponseViewField;
 import com.flutter.alloffootball.common.domain.BaseEntityImage;
@@ -31,6 +32,13 @@ public class AdminFieldWrapper {
             .parking(field.getFieldData().getParking())
             .shower(field.getFieldData().getShower())
             .toilet(field.getFieldData().getToilet())
+            .build();
+    }
+
+    public ResponseFieldSimpInfo fieldSimpInfoWrap(Field field) {
+        return ResponseFieldSimpInfo.builder()
+            .fieldId(field.getId())
+            .title(field.getTitle())
             .build();
     }
 }

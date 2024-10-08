@@ -107,6 +107,9 @@
     align-items: start;
     font-size: 14px;
 }
+.subOption.infoBox {
+    height: initial;
+}
 .subOption li {
     display: flex;
     gap: 16px;

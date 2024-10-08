@@ -2,6 +2,7 @@ package com.flutter.alloffootball.admin.service;
 
 import com.flutter.alloffootball.admin.dto.*;
 import com.flutter.alloffootball.admin.dto.field.*;
+import com.flutter.alloffootball.admin.dto.match.RequestSaveMatchForm;
 import com.flutter.alloffootball.admin.dto.match.ResponseViewMatch;
 import com.flutter.alloffootball.admin.dto.match.ResponseViewUser;
 import com.flutter.alloffootball.admin.repository.AdminRepository;
@@ -12,6 +13,7 @@ import com.flutter.alloffootball.common.domain.field.Address;
 import com.flutter.alloffootball.common.domain.field.Field;
 import com.flutter.alloffootball.common.domain.field.FieldData;
 import com.flutter.alloffootball.common.domain.match.Match;
+import com.flutter.alloffootball.common.enums.MatchStatus;
 import com.flutter.alloffootball.common.exception.FieldError;
 import com.flutter.alloffootball.common.exception.FieldException;
 import com.flutter.alloffootball.common.exception.MatchError;
@@ -25,6 +27,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Comparator;
 import java.util.List;
 
@@ -124,6 +128,28 @@ public class AdminServiceImpl implements AdminService {
         fieldData.setToilet(editField.getToilet());
         fieldData.setSize(editField.getSize());
 
+    }
+
+    @Override
+    public ResponseFieldSimpInfo findByIdFieldSimpInfo(long fieldId) {
+        Field field = fieldFindById(fieldId);
+        return adminFieldWrapper.fieldSimpInfoWrap(field);
+    }
+
+    @Override
+    public long createMatch(long fieldId, RequestSaveMatchForm form) {
+        Field field = fieldFindById(fieldId);
+        Match saveMatch = Match.builder()
+            .field(field)
+            .matchDate(LocalDateTime.of(form.getMatchDate(), form.getMatchHour()))
+            .matchTime(form.getMatchTime())
+            .matchSex(form.getSex())
+            .matchCount(form.getMatchCount())
+            .personCount(form.getMatchPerson())
+            .price(form.getPrice())
+            .matchStatus(MatchStatus.OPEN)
+            .build();
+        return jpaMatchRepository.save(saveMatch).getId();
     }
 
     Field fieldFindById(long fieldId) {

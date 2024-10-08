@@ -8,9 +8,10 @@ let year = date.getFullYear();
 let month = date.getMonth() + 1;
 let day = date.getDate();
 
+
 const afterYear = date.getFullYear();
 const afterMonth = date.getMonth();
-const afterDay = date.getDate() + 14; // 14일 후까지 
+const afterDay = date.getDate() + 30; // 30일 후까지 
 const afterDate = new Date(afterYear, afterMonth, afterDay);
 
 window.addEventListener('load', () => {
@@ -23,7 +24,7 @@ window.addEventListener('load', () => {
     let calendar = document.querySelector('#date_range_calendar');
 
     matchDate.addEventListener('click', () => {
-        calendar.classList.add('display');
+        calendar.classList.toggle('display');
     })
 
     let renderCalendar = () => {
@@ -94,7 +95,6 @@ window.addEventListener('load', () => {
 })
 
 function setTime(target) {
-    console.log(target);
     const select = document.querySelector('select[name="matchHour"]');
     
     let dateHour = 0;
@@ -110,8 +110,8 @@ function setTime(target) {
     let temp = '';
     for (let i=dateHour;i<=24;i++) {
         let time = String(i).padStart(2, '0');
-        let option = '<option value="' + time + '">' + time + '</option>';
-        temp += option;
+        temp += `<option value="${time}:00">${time}:00</option>`;
+        temp += `<option value="${time}:30">${time}:30</option>`;
     }
     select.innerHTML = temp;
 }

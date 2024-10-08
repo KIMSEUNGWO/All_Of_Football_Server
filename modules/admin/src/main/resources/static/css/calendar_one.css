@@ -3,8 +3,6 @@
 .date_picker_wrapper {
     display: flex;
     position: relative;
-    width: 100%;
-    gap: 1rem;
     align-items: center;
 }
 .date_picker_wrapper * {
@@ -139,17 +137,16 @@
 }
 
 .cell button:hover {
-    background-color: #5584e1;
+    background-color: var(--main-color-2);
     color: white;
 }
 
-
 .cell button[aria-pressed="true"] {
-    background-color: var(--main-color);
+    background-color: var(--point-color);
     color: white;
 }
 .cell button[aria-pressed="true"]:hover {
-    background-color: var(--main-color);
+    background-color: var(--point-color);
     color: white;
 }
 
