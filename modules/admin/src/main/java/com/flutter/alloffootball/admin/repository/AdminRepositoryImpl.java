@@ -1,11 +1,14 @@
 package com.flutter.alloffootball.admin.repository;
 
 import com.flutter.alloffootball.admin.dto.field.RequestSearchField;
-import com.flutter.alloffootball.admin.dto.RequestSearchMatch;
+import com.flutter.alloffootball.admin.dto.match.RequestSearchMatch;
 import com.flutter.alloffootball.admin.dto.field.ResponseSearchField;
-import com.flutter.alloffootball.admin.dto.ResponseSearchMatch;
+import com.flutter.alloffootball.admin.dto.match.ResponseSearchMatch;
+import com.flutter.alloffootball.admin.dto.user.RequestSearchUser;
+import com.flutter.alloffootball.admin.dto.user.ResponseSearchUser;
 import com.flutter.alloffootball.admin.wrapper.AdminFieldWrapper;
 import com.flutter.alloffootball.admin.wrapper.AdminMatchWrapper;
+import com.flutter.alloffootball.admin.wrapper.AdminUserWrapper;
 import com.flutter.alloffootball.common.domain.field.Field;
 import com.flutter.alloffootball.common.domain.match.Match;
 import com.flutter.alloffootball.common.enums.MatchStatus;
@@ -15,6 +18,7 @@ import com.flutter.alloffootball.common.enums.region.Region;
 import com.flutter.alloffootball.common.jparepository.JpaAdminRepository;
 import com.flutter.alloffootball.common.domain.Admin;
 import com.flutter.alloffootball.common.jparepository.JpaOrderRepository;
+import com.flutter.alloffootball.common.jparepository.JpaUserRepository;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.StringExpression;
@@ -32,6 +36,7 @@ import java.util.List;
 
 import static com.flutter.alloffootball.common.domain.field.QField.*;
 import static com.flutter.alloffootball.common.domain.match.QMatch.match;
+import static com.flutter.alloffootball.common.domain.user.QUser.*;
 
 @Repository
 @RequiredArgsConstructor
@@ -39,8 +44,11 @@ public class AdminRepositoryImpl implements AdminRepository {
 
     private final JpaAdminRepository jpaAdminRepository;
     private final JpaOrderRepository jpaOrderRepository;
+    private final JpaUserRepository jpaUserRepository;
+
     private final AdminFieldWrapper adminFieldWrapper;
     private final AdminMatchWrapper adminMatchWrapper;
+    private final AdminUserWrapper adminUserWrapper;
 
     private final JPAQueryFactory query;
 
@@ -112,6 +120,12 @@ public class AdminRepositoryImpl implements AdminRepository {
 
         System.out.println("list = " + list);
         return new PageImpl<>(list, pageable, totalCount);
+    }
+
+    @Override
+    public Page<ResponseSearchUser> findAllBySearchUser(RequestSearchUser data, Pageable pageable) {
+        return jpaUserRepository.findAllByNicknameContainingIgnoreCaseOrderByIdDesc(data.getWord(), pageable)
+            .map(adminUserWrapper::searchUserWrap);
     }
 
     private BooleanExpression getKeywordExpression(String word, StringExpression compareWord) {

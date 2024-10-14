@@ -1,6 +1,5 @@
 package com.flutter.alloffootball.common.dto;
 
-import com.flutter.alloffootball.common.enums.region.Region;
 import lombok.Getter;
 import org.springframework.data.domain.Page;
 

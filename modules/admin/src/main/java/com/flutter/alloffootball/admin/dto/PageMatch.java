@@ -1,5 +1,6 @@
 package com.flutter.alloffootball.admin.dto;
 
+import com.flutter.alloffootball.admin.dto.match.RequestSearchMatch;
 import com.flutter.alloffootball.common.dto.PageDto;
 import com.flutter.alloffootball.common.enums.MatchStatus;
 import com.flutter.alloffootball.common.enums.SexType;

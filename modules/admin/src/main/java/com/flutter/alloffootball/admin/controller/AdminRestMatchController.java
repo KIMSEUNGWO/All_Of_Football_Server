@@ -1,6 +1,6 @@
 package com.flutter.alloffootball.admin.controller;
 
-import com.flutter.alloffootball.admin.dto.RequestSearchMatch;
+import com.flutter.alloffootball.admin.dto.match.RequestSearchMatch;
 import com.flutter.alloffootball.admin.service.AdminService;
 import com.flutter.alloffootball.admin.dto.PageMatch;
 import com.flutter.alloffootball.common.dto.Response;

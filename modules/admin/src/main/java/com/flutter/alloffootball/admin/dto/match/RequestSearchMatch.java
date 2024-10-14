@@ -1,4 +1,4 @@
-package com.flutter.alloffootball.admin.dto;
+package com.flutter.alloffootball.admin.dto.match;
 
 import com.flutter.alloffootball.common.enums.MatchStatus;
 import com.flutter.alloffootball.common.enums.SexType;

@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Builder
 @Getter
-public class ResponseViewUser {
+public class ResponseViewMatchUser {
 
     private final long userId;
     private final String nickname;

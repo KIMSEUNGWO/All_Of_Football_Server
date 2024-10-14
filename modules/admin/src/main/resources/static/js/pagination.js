@@ -136,7 +136,7 @@ export class Pagination {
         let pageBtn = document.querySelectorAll('.page_link');
         pageBtn.forEach(page => 
             page.addEventListener('click', () => {
-                this.page = page.textContent;
+                this.page = Number(page.textContent);
                 this.search();
             })
         )

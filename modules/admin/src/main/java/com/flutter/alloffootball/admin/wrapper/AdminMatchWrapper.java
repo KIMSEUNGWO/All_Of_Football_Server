@@ -1,8 +1,8 @@
 package com.flutter.alloffootball.admin.wrapper;
 
-import com.flutter.alloffootball.admin.dto.ResponseSearchMatch;
+import com.flutter.alloffootball.admin.dto.match.ResponseSearchMatch;
 import com.flutter.alloffootball.admin.dto.match.ResponseViewMatch;
-import com.flutter.alloffootball.admin.dto.match.ResponseViewUser;
+import com.flutter.alloffootball.admin.dto.match.ResponseViewMatchUser;
 import com.flutter.alloffootball.common.domain.match.Match;
 import com.flutter.alloffootball.common.domain.orders.Order;
 import com.flutter.alloffootball.common.enums.MatchStatus;
@@ -30,7 +30,7 @@ public class AdminMatchWrapper {
             .build();
     }
 
-    public ResponseViewMatch viewMatchWrap(Match match, List<ResponseViewUser> userList) {
+    public ResponseViewMatch viewMatchWrap(Match match, List<ResponseViewMatchUser> userList) {
         return ResponseViewMatch.builder()
             .matchId(match.getId())
             .matchDate(match.getMatchDate())
@@ -45,8 +45,8 @@ public class AdminMatchWrapper {
             .build();
     }
 
-    public ResponseViewUser viewUserWrap(Order order) {
-        return ResponseViewUser.builder()
+    public ResponseViewMatchUser viewUserWrap(Order order) {
+        return ResponseViewMatchUser.builder()
             .userId(order.getUser().getId())
             .nickname(order.getUser().getNickname())
             .price(order.getPrice())

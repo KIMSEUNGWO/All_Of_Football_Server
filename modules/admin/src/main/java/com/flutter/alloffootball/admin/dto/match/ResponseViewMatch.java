@@ -1,7 +1,6 @@
 package com.flutter.alloffootball.admin.dto.match;
 
 import com.flutter.alloffootball.admin.dto.field.ResponseViewField;
-import com.flutter.alloffootball.common.domain.match.Match;
 import com.flutter.alloffootball.common.enums.MatchStatus;
 import com.flutter.alloffootball.common.enums.SexType;
 import lombok.AllArgsConstructor;
@@ -25,7 +24,7 @@ public class ResponseViewMatch {
     private final MatchStatus status;
     private final LocalDateTime matchDate;
 
-    private final List<ResponseViewUser> users;
+    private final List<ResponseViewMatchUser> users;
 
     private final ResponseViewField field;
 

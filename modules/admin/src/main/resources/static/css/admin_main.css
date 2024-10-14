@@ -90,10 +90,11 @@
 }
 
 /* 검색조건 공통 CSS */
-#region, #sex, #state {
+#region, #sex, #state, #matchCount, #matchPerson, #matchTime {
     display: flex;
     min-width: 120px;
     padding: 0 10px;
+    flex: 1;
 }
 
 .subOption {

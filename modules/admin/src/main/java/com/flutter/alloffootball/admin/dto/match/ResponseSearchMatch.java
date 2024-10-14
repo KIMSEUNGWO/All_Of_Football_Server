@@ -1,6 +1,5 @@
-package com.flutter.alloffootball.admin.dto;
+package com.flutter.alloffootball.admin.dto.match;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
@@ -9,7 +8,6 @@ import java.time.LocalDateTime;
 
 @Getter
 @Builder
-@AllArgsConstructor
 @ToString
 public class ResponseSearchMatch {
 

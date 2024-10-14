@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @Slf4j
-@RestControllerAdvice
+@RestControllerAdvice(basePackages = "../../../src/main/java/com/flutter/alloffootball")
 public class CustomExceptionHandler {
 
     @ExceptionHandler(CustomRuntimeException.class)
