@@ -5,7 +5,6 @@ import com.flutter.alloffootball.common.component.JwtUtil;
 import com.flutter.alloffootball.common.component.SecurityUtil;
 import com.flutter.alloffootball.common.dto.Response;
 import com.flutter.alloffootball.common.exception.ErrorCode;
-import com.flutter.alloffootball.common.exception.TokenError;
 import com.flutter.alloffootball.common.exception.TokenException;
 import com.flutter.alloffootball.common.exception.UserError;
 import jakarta.servlet.FilterChain;
@@ -28,7 +27,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
     private final SecurityUtil securityUtil;
-    private final ObjectMapper mapper = new ObjectMapper();
+    private final ObjectMapper mapper;
 
     private final List<String> excludePath = List.of(
         "/favicon.ico",

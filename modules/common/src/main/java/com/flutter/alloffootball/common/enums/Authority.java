@@ -8,9 +8,9 @@ import lombok.Getter;
 public enum Authority {
 
     SUPER_ADMIN("최고관리자"),
-    MATCH_MANAGER("경기담당자"),
-    HR_MANAGER("인사담당자"),
-    INQUIRE_MANAGER("문의담당자");
+    MATCH_ADMIN("경기담당자"),
+    HR_ADMIN("인사담당자"),
+    INQUIRE_ADMIN("문의담당자");
 
     private final String ko;
 }

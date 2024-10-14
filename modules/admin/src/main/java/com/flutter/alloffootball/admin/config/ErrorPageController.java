@@ -1,7 +1,5 @@
 package com.flutter.alloffootball.admin.config;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -9,7 +7,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ErrorPageController {
 
     @RequestMapping("/error-page/400")
-    public String errorPage404(HttpServletRequest request, HttpServletResponse response) {
+    public String errorPage404() {
         return "error-page/400";
+    }
+
+    @RequestMapping("/error-page/403")
+    public String errorPage403() {
+        return "error-page/403";
     }
 }

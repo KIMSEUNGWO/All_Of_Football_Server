@@ -1,5 +1,6 @@
 package com.flutter.alloffootball.common.config;
 
+import com.flutter.alloffootball.common.enums.Authority;
 import com.flutter.alloffootball.common.enums.Role;
 import com.flutter.alloffootball.common.filter.FlutterAuthorizationFilter;
 import com.flutter.alloffootball.common.filter.JwtAuthorizationFilter;
@@ -37,9 +38,12 @@ public class SecureConfig {
             request
                 .requestMatchers("/user/**", "/order/**").authenticated()
                 .requestMatchers("/admin/login").permitAll()
+                .requestMatchers("/admin/user/**").hasAnyAuthority(Authority.SUPER_ADMIN.name(), Authority.HR_ADMIN.name())
+                .requestMatchers("/admin/match/**").hasAnyAuthority(Authority.SUPER_ADMIN.name(), Authority.MATCH_ADMIN.name())
                 .requestMatchers("/admin/**").hasRole(Role.ADMIN.name())
                 .anyRequest().permitAll()
         );
+
 
         http.formLogin(formLogin ->
             formLogin
