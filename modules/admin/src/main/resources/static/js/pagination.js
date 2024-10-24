@@ -3,7 +3,7 @@ import { fetchGet } from "./fetch.js";
 export class Pagination {
 
     constructor(url, form, dataList) {
-        this.url = url;
+        this.url = window.location.pathname;
         this.getUrl = url + '/get';
         this.form = form;
         this.searchResultWrap = document.querySelector('#searchResult');
@@ -52,10 +52,10 @@ export class Pagination {
         this.pagination(pageable);
 
         if (pageable.content.length <= 0) {
-            total.innerHTML = '총 0건';
+            total != null ? total.innerHTML = '총 0건' : '';
             this.searchResultWrap.innerHTML = '<li class="none">검색 결과가 없습니다.</li>';
         } else {
-            total.innerHTML = '총 ' + pageable.totalElements + '건';
+            total != null ? total.innerHTML = '총 ' + pageable.totalElements + '건' : '';
             this.createFormList(pageable.content);
         }
     }
@@ -162,13 +162,13 @@ export class Pagination {
             })
 
             const searchWord = document.querySelector('input[name="searchWord"]');
-            searchWord.addEventListener('keyup', (e)=>{
+            searchWord?.addEventListener('keyup', (e)=>{
                 if (searchWord.isEqualNode(e.target) && e.key === 'Enter') {
                     this.searchBtn();
                 }
             })
             const searchBtn = document.querySelector('#search');
-            searchBtn.addEventListener('click', ()=>{
+            searchBtn?.addEventListener('click', ()=>{
                 this.searchBtn();
             })
         })

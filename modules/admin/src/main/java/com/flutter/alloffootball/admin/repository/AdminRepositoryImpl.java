@@ -6,8 +6,10 @@ import com.flutter.alloffootball.admin.dto.field.ResponseSearchField;
 import com.flutter.alloffootball.admin.dto.match.ResponseSearchMatch;
 import com.flutter.alloffootball.admin.dto.user.RequestSearchUser;
 import com.flutter.alloffootball.admin.dto.user.ResponseSearchUser;
+import com.flutter.alloffootball.admin.dto.user.ResponseUserOrder;
 import com.flutter.alloffootball.admin.wrapper.AdminFieldWrapper;
 import com.flutter.alloffootball.admin.wrapper.AdminMatchWrapper;
+import com.flutter.alloffootball.admin.wrapper.AdminOrderWrapper;
 import com.flutter.alloffootball.admin.wrapper.AdminUserWrapper;
 import com.flutter.alloffootball.common.domain.field.Field;
 import com.flutter.alloffootball.common.domain.match.Match;
@@ -36,7 +38,6 @@ import java.util.List;
 
 import static com.flutter.alloffootball.common.domain.field.QField.*;
 import static com.flutter.alloffootball.common.domain.match.QMatch.match;
-import static com.flutter.alloffootball.common.domain.user.QUser.*;
 
 @Repository
 @RequiredArgsConstructor
@@ -49,6 +50,7 @@ public class AdminRepositoryImpl implements AdminRepository {
     private final AdminFieldWrapper adminFieldWrapper;
     private final AdminMatchWrapper adminMatchWrapper;
     private final AdminUserWrapper adminUserWrapper;
+    private final AdminOrderWrapper adminOrderWrapper;
 
     private final JPAQueryFactory query;
 
@@ -126,6 +128,12 @@ public class AdminRepositoryImpl implements AdminRepository {
     public Page<ResponseSearchUser> findAllBySearchUser(RequestSearchUser data, Pageable pageable) {
         return jpaUserRepository.findAllByNicknameContainingIgnoreCaseOrderByIdDesc(data.getWord(), pageable)
             .map(adminUserWrapper::searchUserWrap);
+    }
+
+    @Override
+    public Page<ResponseUserOrder> findAllByUserOrder(Long userId, Pageable pageable) {
+        return jpaOrderRepository.findAllByUser_idOrderByCreateDateDesc(userId, pageable)
+            .map(adminOrderWrapper::userOrderWrap);
     }
 
     private BooleanExpression getKeywordExpression(String word, StringExpression compareWord) {

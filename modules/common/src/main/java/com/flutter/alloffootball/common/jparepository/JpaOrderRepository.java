@@ -3,6 +3,8 @@ package com.flutter.alloffootball.common.jparepository;
 import com.flutter.alloffootball.common.domain.match.Match;
 import com.flutter.alloffootball.common.domain.orders.Order;
 import com.flutter.alloffootball.common.enums.OrderStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDateTime;
@@ -16,4 +18,6 @@ public interface JpaOrderRepository extends JpaRepository<Order, Long> {
     Optional<Order> findByUser_IdAndMatch_IdAndOrderStatus(Long userId, Long matchId, OrderStatus status);
     long countByMatchAndOrderStatus(Match match, OrderStatus status);
     List<Order> findAllByMatchAndCancelDateIsNull(Match match);
+
+    Page<Order> findAllByUser_idOrderByCreateDateDesc(Long userId, Pageable pageable);
 }

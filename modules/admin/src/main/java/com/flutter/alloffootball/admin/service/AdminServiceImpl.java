@@ -4,6 +4,7 @@ import com.flutter.alloffootball.admin.dto.field.*;
 import com.flutter.alloffootball.admin.dto.match.*;
 import com.flutter.alloffootball.admin.dto.user.RequestSearchUser;
 import com.flutter.alloffootball.admin.dto.user.ResponseSearchUser;
+import com.flutter.alloffootball.admin.dto.user.ResponseUserOrder;
 import com.flutter.alloffootball.admin.dto.user.ResponseViewUser;
 import com.flutter.alloffootball.admin.repository.AdminRepository;
 import com.flutter.alloffootball.admin.wrapper.AdminFieldWrapper;
@@ -59,9 +60,16 @@ public class AdminServiceImpl implements AdminService {
         return adminRepository.findAllBySearchMatch(data, pageable);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Page<ResponseSearchUser> findAllBySearchUser(RequestSearchUser data, Pageable pageable) {
         return adminRepository.findAllBySearchUser(data, pageable);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Page<ResponseUserOrder> findAllByUserOrder(Long userId, Pageable pageable) {
+        return adminRepository.findAllByUserOrder(userId, pageable);
     }
 
     @Override
@@ -110,7 +118,6 @@ public class AdminServiceImpl implements AdminService {
         User user = userFindById(userId);
         return adminUserWrapper.viewUserWrap(user);
     }
-
 
 
     @Override

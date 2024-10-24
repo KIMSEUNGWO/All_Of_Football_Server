@@ -1,6 +1,6 @@
 package com.flutter.alloffootball.test;
 
-import ban.inspector.dto.Word;
+import ban.inspector.domain.Word;
 import ban.inspector.inspector.Inspector;
 import com.flutter.alloffootball.common.config.security.CustomUserDetails;
 import com.flutter.alloffootball.common.dto.Response;

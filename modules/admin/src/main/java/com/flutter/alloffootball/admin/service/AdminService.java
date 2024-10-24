@@ -4,6 +4,7 @@ import com.flutter.alloffootball.admin.dto.field.*;
 import com.flutter.alloffootball.admin.dto.match.*;
 import com.flutter.alloffootball.admin.dto.user.RequestSearchUser;
 import com.flutter.alloffootball.admin.dto.user.ResponseSearchUser;
+import com.flutter.alloffootball.admin.dto.user.ResponseUserOrder;
 import com.flutter.alloffootball.admin.dto.user.ResponseViewUser;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,4 +28,6 @@ public interface AdminService {
     long createMatch(long fieldId, RequestSaveMatchForm form);
 
     ResponseViewUser findByIdViewUser(long userId);
+
+    Page<ResponseUserOrder> findAllByUserOrder(Long userId, Pageable pageable);
 }
