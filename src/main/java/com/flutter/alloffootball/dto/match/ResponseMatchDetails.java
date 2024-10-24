@@ -15,13 +15,14 @@ import java.util.Map;
 @AllArgsConstructor
 public class ResponseMatchDetails {
 
-    final Long matchId;
-    final LocalDateTime matchDate;
-    final SexType sexType;
-    final int person;
-    final int matchCount;
-    final int matchHour;
-    final MatchStatus matchStatus;
+    private final Long matchId;
+    private final LocalDateTime matchDate;
+    private final SexType sexType;
+    private final int person;
+    private final int matchCount;
+    private final int matchHour;
+    private final int price;
+    private final MatchStatus matchStatus;
     private final ResponseFieldData field;
 
     // 로그인한 회원인 경우, 이미 참가했는지 여부

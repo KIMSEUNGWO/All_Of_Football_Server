@@ -27,7 +27,7 @@ public class MatchWrapper {
         return MatchData.builder()
             .sex(match.getMatchSex())
             .region(match.getField().getAddress().getRegion())
-            .person(match.getMatchCount())
+            .person(match.getPersonCount())
             .matchCount(match.getMatchCount())
             .build();
     }
@@ -38,6 +38,7 @@ public class MatchWrapper {
             .matchDate(match.getMatchDate())
             .sexType(match.getMatchSex())
             .person(match.getPersonCount())
+            .price(match.getPrice())
             .matchCount(match.getMatchCount())
             .matchHour(match.getMatchTime())
             .field(fieldWrapper.fieldDataWrap(match.getField()))
@@ -54,7 +55,7 @@ public class MatchWrapper {
             .matchDate(match.getMatchDate())
             .matchData(MatchData.builder()
                 .sex(match.getMatchSex())
-                .person(match.getMatchCount())
+                .person(match.getPersonCount())
                 .matchCount(match.getMatchCount())
                 .build())
             .build();

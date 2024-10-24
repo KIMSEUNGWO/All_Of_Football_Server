@@ -6,6 +6,11 @@
     gap: 24px;
 }
 
+#calendar_confirm {
+    width: 60px;
+    height: 30px;
+    float: right;
+}
 /* 기간 버튼 */
 
 .date_picker_buttons {
