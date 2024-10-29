@@ -1,15 +1,14 @@
 package com.flutter.alloffootball.dto.order;
 
+import com.flutter.alloffootball.common.domain.match.Match;
+import com.flutter.alloffootball.common.domain.orders.Order;
+import com.flutter.alloffootball.common.domain.user.User;
 import com.flutter.alloffootball.dto.coupon.ResponseCouponUse;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.lang.Nullable;
 
 @Getter
-@AllArgsConstructor
-@Builder
 @ToString
 public class ResponseOrderResult {
 
@@ -24,4 +23,11 @@ public class ResponseOrderResult {
 
     // 남은 잔액
     private final int remainCash;
+
+    public ResponseOrderResult(Match match, Order order, User user, ResponseCouponUse couponUse) {
+        this.totalPrice = match.getPrice();
+        this.coupon = couponUse;
+        this.finalPrice = order.getPrice();
+        this.remainCash = user.getCash();
+    }
 }

@@ -21,23 +21,19 @@ public class MockField {
         this.fieldRepository = fieldRepository;
     }
 
-    public Field mockField(int hourPrice) {
+    public Field mockField() {
         Field saveField = Field.builder()
             .title("구장 이름")
             .description("어쩌구 저쩌구 설명")
             .address(Address.builder()
                 .address("인천 어디어디")
-                .region(Region.ADACHI)
-                .lat(0)
-                .lng(0)
+                .region(Region.AOMORI)
                 .build())
             .fieldData(FieldData.builder()
                 .parking(Parking.FREE)
                 .shower(Shower.Y)
                 .toilet(Toilet.Y)
-                .sizeX(123)
-                .sizeY(50)
-                .hourPrice(hourPrice)
+                .size(123)
                 .build())
             .build();
         return fieldRepository.save(saveField);

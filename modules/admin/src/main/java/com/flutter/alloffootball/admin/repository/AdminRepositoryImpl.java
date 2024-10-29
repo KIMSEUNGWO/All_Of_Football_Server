@@ -7,10 +7,6 @@ import com.flutter.alloffootball.admin.dto.match.ResponseSearchMatch;
 import com.flutter.alloffootball.admin.dto.user.RequestSearchUser;
 import com.flutter.alloffootball.admin.dto.user.ResponseSearchUser;
 import com.flutter.alloffootball.admin.dto.user.ResponseUserOrder;
-import com.flutter.alloffootball.admin.wrapper.AdminFieldWrapper;
-import com.flutter.alloffootball.admin.wrapper.AdminMatchWrapper;
-import com.flutter.alloffootball.admin.wrapper.AdminOrderWrapper;
-import com.flutter.alloffootball.admin.wrapper.AdminUserWrapper;
 import com.flutter.alloffootball.common.domain.field.Field;
 import com.flutter.alloffootball.common.domain.match.Match;
 import com.flutter.alloffootball.common.enums.MatchStatus;
@@ -47,11 +43,6 @@ public class AdminRepositoryImpl implements AdminRepository {
     private final JpaOrderRepository jpaOrderRepository;
     private final JpaUserRepository jpaUserRepository;
 
-    private final AdminFieldWrapper adminFieldWrapper;
-    private final AdminMatchWrapper adminMatchWrapper;
-    private final AdminUserWrapper adminUserWrapper;
-    private final AdminOrderWrapper adminOrderWrapper;
-
     private final JPAQueryFactory query;
 
     @Override
@@ -62,8 +53,6 @@ public class AdminRepositoryImpl implements AdminRepository {
 
     @Override
     public Page<ResponseSearchField> findAllBySearchField(RequestSearchField data, Pageable pageable) {
-        System.out.println("data = " + data);
-
         BooleanExpression compareRegion = conditionRegion(data.getRegion());
 
         BooleanExpression keywordExpression = getKeywordExpression(data.getWord(), getLowerAndReplace(field.title));
@@ -83,7 +72,7 @@ public class AdminRepositoryImpl implements AdminRepository {
             .fetchFirst();
         if (totalCount == null) totalCount = 0L;
 
-        List<ResponseSearchField> list = fieldList.stream().map(adminFieldWrapper::searchFieldWrap).toList();
+        List<ResponseSearchField> list = fieldList.stream().map(ResponseSearchField::new).toList();
         System.out.println("list = " + list);
         return new PageImpl<>(list, pageable, totalCount);
     }
@@ -117,7 +106,7 @@ public class AdminRepositoryImpl implements AdminRepository {
 
         List<ResponseSearchMatch> list = matchList.stream().map(match -> {
             long countPerson = jpaOrderRepository.countByMatchAndOrderStatus(match, OrderStatus.USE);
-            return adminMatchWrapper.searchMatchWrap(match, countPerson);
+            return new ResponseSearchMatch(match, countPerson);
         }).toList();
 
         System.out.println("list = " + list);
@@ -127,13 +116,13 @@ public class AdminRepositoryImpl implements AdminRepository {
     @Override
     public Page<ResponseSearchUser> findAllBySearchUser(RequestSearchUser data, Pageable pageable) {
         return jpaUserRepository.findAllByNicknameContainingIgnoreCaseOrderByIdDesc(data.getWord(), pageable)
-            .map(adminUserWrapper::searchUserWrap);
+            .map(ResponseSearchUser::new);
     }
 
     @Override
     public Page<ResponseUserOrder> findAllByUserOrder(Long userId, Pageable pageable) {
         return jpaOrderRepository.findAllByUser_idOrderByCreateDateDesc(userId, pageable)
-            .map(adminOrderWrapper::userOrderWrap);
+            .map(ResponseUserOrder::new);
     }
 
     private BooleanExpression getKeywordExpression(String word, StringExpression compareWord) {

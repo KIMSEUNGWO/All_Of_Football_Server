@@ -1,17 +1,14 @@
 package com.flutter.alloffootball.admin.dto.match;
 
 import com.flutter.alloffootball.admin.dto.field.ResponseViewField;
+import com.flutter.alloffootball.common.domain.match.Match;
 import com.flutter.alloffootball.common.enums.MatchStatus;
 import com.flutter.alloffootball.common.enums.SexType;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Builder
-@AllArgsConstructor
 @Getter
 public class ResponseViewMatch {
 
@@ -28,5 +25,16 @@ public class ResponseViewMatch {
 
     private final ResponseViewField field;
 
-
+    public ResponseViewMatch(Match match, List<ResponseViewMatchUser> userList) {
+        this.matchId = match.getId();
+        this.personCount = match.getPersonCount();
+        this.matchCount = match.getMatchCount();
+        this.matchTime = match.getMatchTime();
+        this.sexType = match.getMatchSex();
+        this.price = match.getPrice();
+        this.status = match.getMatchStatus();
+        this.matchDate = match.getMatchDate();
+        this.users = userList;
+        this.field = new ResponseViewField(match.getField());
+    }
 }

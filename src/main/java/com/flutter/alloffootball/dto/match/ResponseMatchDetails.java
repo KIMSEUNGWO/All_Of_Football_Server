@@ -1,18 +1,14 @@
 package com.flutter.alloffootball.dto.match;
 
+import com.flutter.alloffootball.common.domain.match.Match;
 import com.flutter.alloffootball.common.enums.MatchStatus;
 import com.flutter.alloffootball.common.enums.SexType;
 import com.flutter.alloffootball.dto.field.ResponseFieldData;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
-import java.util.Map;
 
 @Getter
-@Builder
-@AllArgsConstructor
 public class ResponseMatchDetails {
 
     private final Long matchId;
@@ -29,4 +25,18 @@ public class ResponseMatchDetails {
     private final boolean alreadyJoin;
 
     private final RequestMatchStatistics statistics;
+
+    public ResponseMatchDetails(Match match, boolean alreadyJoin, RequestMatchStatistics statistics) {
+        this.matchId = match.getId();
+        this.matchDate = match.getMatchDate();
+        this.sexType = match.getMatchSex();
+        this.person = match.getPersonCount();
+        this.matchCount = match.getMatchCount();
+        this.matchHour = match.getMatchTime();
+        this.price = match.getPrice();
+        this.matchStatus = match.getMatchStatus();
+        this.field = new ResponseFieldData(match.getField());
+        this.alreadyJoin = alreadyJoin;
+        this.statistics = statistics;
+    }
 }

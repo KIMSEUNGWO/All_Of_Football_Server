@@ -1,12 +1,11 @@
 package com.flutter.alloffootball.admin.dto.user;
 
-import lombok.Builder;
+import com.flutter.alloffootball.common.domain.orders.Order;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
 
 @Getter
-@Builder
 public class ResponseUserOrder {
 
     private final long orderId;
@@ -16,4 +15,13 @@ public class ResponseUserOrder {
     private final int price;
     private final LocalDateTime cancelDate;
     private final LocalDateTime createDate;
+
+    public ResponseUserOrder(Order order) {
+        this.orderId = order.getId();
+        this.title = order.getMatch().getField().getTitle();
+        this.matchId = order.getMatch().getId();
+        this.price = order.getPrice();
+        this.cancelDate = order.getCancelDate();
+        this.createDate = order.getCreateDate();
+    }
 }

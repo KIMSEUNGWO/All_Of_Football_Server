@@ -8,7 +8,6 @@ import com.flutter.alloffootball.dto.match.*;
 import com.flutter.alloffootball.dto.order.ResponseOrderSimp;
 import com.flutter.alloffootball.repository.MatchRepository;
 import com.flutter.alloffootball.repository.OrderRepository;
-import com.flutter.alloffootball.wrapper.MatchWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -25,20 +24,19 @@ public class MatchServiceImpl implements MatchService {
     private final MatchRepository matchRepository;
     private final OrderRepository orderRepository;
 
-    private final MatchWrapper matchWrapper;
-
     @Override
     public List<ResponseMatchView> search(RequestSearchMatch searchMatch, Pageable pageable) {
         return matchRepository.findAllByMatchData(searchMatch, pageable).stream()
-            .map(matchWrapper::matchViewWrap)
+            .map(ResponseMatchView::new)
             .toList();
 
     }
 
+    // TODO MatchData 확인해야되는 Service
     @Override
     public List<ResponseMatchSimp> findAllByFieldIdToMatchData(long fieldId, Pageable pageable) {
         return matchRepository.findAllByFieldIdToMatchData(fieldId, pageable).stream()
-            .map(matchWrapper::matchSimpWrap)
+            .map(ResponseMatchSimp::new)
             .toList();
     }
 
@@ -51,13 +49,13 @@ public class MatchServiceImpl implements MatchService {
             Stream<User> participants = orderRepository.getParticipants(match);
             statistics = MatchStatisticsBuilder.build(participants);
         }
-        return matchWrapper.matchDetailsWrap(match, alreadyMatchJoin, statistics);
+        return new ResponseMatchDetails(match, alreadyMatchJoin, statistics);
     }
 
     @Override
     public ResponseOrderSimp getOrderSimp(long matchId, CustomUserDetails userDetails) {
         Match match = matchRepository.findById(matchId);
-        return matchWrapper.orderSimpWrap(match, userDetails.getUser());
+        return new ResponseOrderSimp(match);
     }
 
 }

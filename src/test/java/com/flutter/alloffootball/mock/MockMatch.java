@@ -20,7 +20,7 @@ public class MockMatch {
         this.jpaMatchRepository = jpaMatchRepository;
     }
 
-    public Match mockMatch(Field field, LocalDateTime matchDate, MatchStatus matchStatus, SexType matchSex, int matchTime, int matchCount, int personCount) {
+    public Match mockMatch(Field field, LocalDateTime matchDate, MatchStatus matchStatus, SexType matchSex, int matchTime, int matchCount, int personCount, int price) {
         Match saveMatch = Match.builder()
             .field(field)
             .matchDate(matchDate)
@@ -29,6 +29,7 @@ public class MockMatch {
             .matchSex(matchSex)
             .matchCount(matchCount)
             .personCount(personCount)
+            .price(price)
             .build();
         return jpaMatchRepository.save(saveMatch);
     }

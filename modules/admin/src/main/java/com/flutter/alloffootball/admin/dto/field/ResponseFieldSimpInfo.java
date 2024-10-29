@@ -1,12 +1,16 @@
 package com.flutter.alloffootball.admin.dto.field;
 
-import lombok.Builder;
+import com.flutter.alloffootball.common.domain.field.Field;
 import lombok.Getter;
 
-@Builder
 @Getter
 public class ResponseFieldSimpInfo {
 
     private final long fieldId;
     private final String title;
+
+    public ResponseFieldSimpInfo(Field field) {
+        this.fieldId = field.getId();
+        this.title = field.getTitle();
+    }
 }

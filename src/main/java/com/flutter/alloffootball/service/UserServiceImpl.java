@@ -9,7 +9,6 @@ import com.flutter.alloffootball.common.exception.InvalidDataException;
 import com.flutter.alloffootball.dto.user.RequestEditUser;
 import com.flutter.alloffootball.dto.user.ResponseUserProfile;
 import com.flutter.alloffootball.repository.UserRepository;
-import com.flutter.alloffootball.wrapper.UserWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,14 +24,13 @@ public class UserServiceImpl implements UserService {
 
     private final FileService fileService;
     private final UserRepository userRepository;
-    private final UserWrapper userWrapper;
 
     private final DataValidator dataValidator;
 
     @Override
     public ResponseUserProfile getUserProfile(Long userId) {
         User user = userRepository.findById(userId);
-        return userWrapper.userProfileWrap(user);
+        return new ResponseUserProfile(user);
     }
 
     @Override

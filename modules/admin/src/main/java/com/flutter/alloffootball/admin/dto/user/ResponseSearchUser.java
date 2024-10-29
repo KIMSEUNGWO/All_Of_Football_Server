@@ -1,14 +1,14 @@
 package com.flutter.alloffootball.admin.dto.user;
 
+import com.flutter.alloffootball.common.domain.user.User;
 import com.flutter.alloffootball.common.enums.Provider;
-import lombok.Builder;
+import com.flutter.alloffootball.common.enums.SexType;
 import lombok.Getter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
-@Builder
 public class ResponseSearchUser {
 
     private final Long userId;
@@ -18,4 +18,14 @@ public class ResponseSearchUser {
     private final LocalDate birth;
     private final LocalDateTime createDate;
     private final String status;
+
+    public ResponseSearchUser(User user) {
+        this.userId = user.getId();
+        this.nickname = user.getNickname();
+        this.social = user.getSocial().getProvider();
+        this.sex = user.getUserInfo().getSex() == SexType.MALE ? "남자" : "여자";
+        this.birth = user.getUserInfo().getBirth();
+        this.createDate = LocalDateTime.now();
+        this.status = "정상";
+    }
 }

@@ -12,8 +12,6 @@ import com.flutter.alloffootball.dto.order.RequestOrder;
 import com.flutter.alloffootball.dto.order.ResponseOrderResult;
 import com.flutter.alloffootball.common.enums.OrderStatus;
 import com.flutter.alloffootball.repository.*;
-import com.flutter.alloffootball.wrapper.MatchWrapper;
-import com.flutter.alloffootball.wrapper.OrderWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,9 +32,6 @@ public class OrderServiceImpl implements OrderService {
     private final MatchRepository matchRepository;
     private final OrderRepository orderRepository;
     private final UserCouponRepository userCouponRepository;
-
-    private final OrderWrapper orderWrapper;
-    private final MatchWrapper matchWrapper;
 
     @Override
     public synchronized ResponseOrderResult order(RequestOrder requestOrder, long userId, LocalDateTime now) {
@@ -66,7 +61,7 @@ public class OrderServiceImpl implements OrderService {
 
         paymentRepository.receipt(user, "경기 참여", CashType.USE, finalPrice);
 
-        return orderWrapper.orderResultWrap(match, saveOrder, user, couponUse);
+        return new ResponseOrderResult(match, saveOrder, user, couponUse);
     }
 
     @Transactional(readOnly = true)
@@ -77,7 +72,7 @@ public class OrderServiceImpl implements OrderService {
 
         return orderRepository.getHistory(user.getId(), startDate, endDate)
             .stream()
-            .map(order -> matchWrapper.matchViewWrap(order.getMatch()))
+            .map(order -> new ResponseMatchView(order.getMatch()))
             .collect(Collectors.groupingBy(matchView -> matchView.getMatchDate().getDayOfMonth()));
     }
 
@@ -85,7 +80,7 @@ public class OrderServiceImpl implements OrderService {
     public List<ResponseMatchView> findAllByUserIdAndMatchDateAfter(Long userId, LocalDateTime now) {
         return orderRepository.findAllByMatchSoon(userId, now)
             .stream()
-            .map(order -> matchWrapper.matchViewWrap(order.getMatch()))
+            .map(order -> new ResponseMatchView(order.getMatch()))
             .toList();
     }
 

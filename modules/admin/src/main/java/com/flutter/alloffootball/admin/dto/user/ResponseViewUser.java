@@ -1,15 +1,14 @@
 package com.flutter.alloffootball.admin.dto.user;
 
+import com.flutter.alloffootball.common.domain.user.User;
 import com.flutter.alloffootball.common.enums.Provider;
 import com.flutter.alloffootball.common.enums.SexType;
-import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
-@Builder
 public class ResponseViewUser {
 
     private final long userId;
@@ -21,4 +20,16 @@ public class ResponseViewUser {
     private final int cash;
     private final LocalDateTime createDate;
     private final String status;
+
+    public ResponseViewUser(User user) {
+        this.userId = user.getId();
+        this.profile = user.getProfile().getOriginalName();
+        this.nickname = user.getNickname();
+        this.birth = user.getUserInfo().getBirth();
+        this.sex = user.getUserInfo().getSex();
+        this.social = user.getSocial().getProvider();
+        this.cash = user.getCash();
+        this.createDate = user.getCreateDate();
+        this.status = "정상";
+    }
 }

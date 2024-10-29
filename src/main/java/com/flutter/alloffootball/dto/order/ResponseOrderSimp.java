@@ -1,21 +1,27 @@
 package com.flutter.alloffootball.dto.order;
 
 import com.flutter.alloffootball.common.domain.field.Address;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import com.flutter.alloffootball.common.domain.match.Match;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
 
-@Builder
-@AllArgsConstructor
 @Getter
 public class ResponseOrderSimp {
 
-    final String title;
-    final int totalPrice;
-    final int matchHour;
+    private final String title;
+    private final int totalPrice;
+    private final int matchHour;
 
-    final Address address;
-    final LocalDateTime matchDate;
+    private final Address address;
+    private final LocalDateTime matchDate;
+
+    public ResponseOrderSimp(Match match) {
+        this.title = match.getField().getTitle();
+        this.totalPrice = match.getPrice();
+        this.matchHour = match.getMatchTime();
+
+        this.matchDate = match.getMatchDate();
+        this.address = match.getField().getAddress();
+    }
 }

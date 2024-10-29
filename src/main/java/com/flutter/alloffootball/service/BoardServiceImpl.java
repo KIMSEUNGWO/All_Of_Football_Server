@@ -9,7 +9,6 @@ import com.flutter.alloffootball.common.jparepository.JpaMatchRepository;
 import com.flutter.alloffootball.dto.board.*;
 import com.flutter.alloffootball.repository.BoardRepository;
 import com.flutter.alloffootball.repository.UserRepository;
-import com.flutter.alloffootball.wrapper.BoardWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -25,19 +24,18 @@ public class BoardServiceImpl implements BoardService {
     private final UserRepository userRepository;
     private final JpaMatchRepository jpaMatchRepository;
     private final BoardRepository boardRepository;
-    private final BoardWrapper boardWrapper;
 
     @Override
     public List<ResponseBoard> search(RequestSearchBoard searchBoard, Pageable pageable) {
         return boardRepository.search(searchBoard, pageable).stream()
-            .map(boardWrapper::boardWrap)
+            .map(ResponseBoard::new)
             .toList();
     }
 
     @Override
     public ResponseBoardDetail findBoardDetail(Long boardId) {
         Board board = boardRepository.findById(boardId);
-        return boardWrapper.boardDetailWrap(board);
+        return new ResponseBoardDetail(board);
     }
 
     @Override

@@ -34,11 +34,11 @@ public class MockCreator {
 
 
 
-    public Field mockField(int hourPrice) {
-        return mockField.mockField(hourPrice);
+    public Field mockField() {
+        return mockField.mockField();
     }
-    public Match mockMatch(Field field, LocalDateTime matchDate, MatchStatus matchStatus, SexType matchSex, int matchTime, int matchCount, int personCount) {
-        return mockMatch.mockMatch(field, matchDate, matchStatus, matchSex, matchTime, matchCount, personCount);
+    public Match mockMatch(Field field, LocalDateTime matchDate, MatchStatus matchStatus, SexType matchSex, int matchTime, int matchCount, int personCount, int price) {
+        return mockMatch.mockMatch(field, matchDate, matchStatus, matchSex, matchTime, matchCount, personCount, price);
     }
     public User mockUser(UserInfo userInfo, Role role, int cash) {
         return mockUser.mockUser(userInfo, role, cash);

@@ -76,6 +76,9 @@ project(":admin") {
 
 		implementation project(":common")
 	}
+	bootJar {
+		enabled = false
+	}
 }
 
 project(":common") {
@@ -83,4 +86,8 @@ project(":common") {
 		// 썸네일
 		implementation 'net.coobird:thumbnailator:0.4.20'
 	}
+	bootJar {
+		enabled = false
+	}
 }
+

@@ -42,6 +42,8 @@ public class FieldController {
 
     /** 완료!
      * 구장별 경기목록 조회 ( 권한 필요없음 )
+     *
+     * TODO ResponseMatchSimp 안에 MatchData 안에 Region을 안쓰던데 뭔지 확인해야 함
      */
     @GetMapping("/{fieldId}/schedule")
     public ResponseEntity<Response> fieldSchedule(@PathVariable("fieldId") long fieldId, Pageable pageable) {

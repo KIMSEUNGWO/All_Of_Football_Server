@@ -54,12 +54,11 @@ class OrderServiceImplTest {
     @DisplayName("쿠폰을 사용하지 않은 주문 정상처리")
     void 주문_정상처리() {
 
-        int hourPrice = 10000;
+        int price = 20000;
         int matchTime = 2;
-        int totalPrice = hourPrice * matchTime;
         int userCash = 30000;
         // given
-        Match match = mockCreator.mockMatch(mockCreator.mockField(hourPrice), LocalDateTime.now(), MatchStatus.OPEN, null, matchTime, 3, 6);
+        Match match = mockCreator.mockMatch(mockCreator.mockField(), LocalDateTime.now(), MatchStatus.OPEN, null, matchTime, 3, 6, price);
         User user = mockCreator.mockUser(
             UserInfo.builder().birth(LocalDate.of(1996, 1, 10)).sex(SexType.MALE).build(),
             Role.USER,
@@ -80,10 +79,10 @@ class OrderServiceImplTest {
                 ResponseOrderResult::getFinalPrice,
                 ResponseOrderResult::getRemainCash)
             .containsExactly(
-                totalPrice,
+                price,
                 null,
-                totalPrice,
-                userCash - totalPrice);
+                price,
+                userCash - price);
 
         // Cash 사용
         List<Cash> receipt = jpaCashRepository.findAllByUser_Id(user.getId());
@@ -97,8 +96,8 @@ class OrderServiceImplTest {
             .containsExactly(
                 user.getId(),
                 CashType.USE,
-                -1 * totalPrice,
-                userCash - totalPrice
+                -1 * price,
+                userCash - price
             );
 
 
@@ -108,19 +107,20 @@ class OrderServiceImplTest {
     @DisplayName("최종가격보다 캐시가 적어도 쿠폰을 사용하면 정상처리되어야한다.")
     void 쿠폰을_사용한_주문_정상처리() {
 
-        int hourPrice = 10000;
+        int price = 20000;
         int matchTime = 2;
-        int totalPrice = hourPrice * matchTime;
         int userCash = 0;
         // given
         Match match = mockCreator.mockMatch(
-            mockCreator.mockField(hourPrice),
+            mockCreator.mockField(),
             LocalDateTime.now(),
             MatchStatus.OPEN,
             null,
             matchTime,
             3,
-            6);
+            6,
+            price
+            );
         User user = mockCreator.mockUser(
             UserInfo.builder().birth(LocalDate.of(1996, 1, 10)).sex(SexType.MALE).build(),
             Role.USER,
@@ -144,7 +144,7 @@ class OrderServiceImplTest {
         // 쿠폰 사용 처리
         assertThat(userCoupon.isUse()).isTrue();
         assertThat(order.getCoupon()).isNotNull();
-        int discount = (int) (-1 * (totalPrice * ((double) userCoupon.getCoupon().getDiscountPer() / 100)));
+        int discount = (int) (-1 * (price * ((double) userCoupon.getCoupon().getDiscountPer() / 100)));
         assertThat(order.getCoupon().getDiscount()).isEqualTo(discount);
 
         // 영수증 검증
@@ -154,9 +154,9 @@ class OrderServiceImplTest {
                 ResponseOrderResult::getFinalPrice,
                 ResponseOrderResult::getRemainCash)
             .containsExactly(
-                totalPrice,
-                totalPrice + discount,
-                userCash - (totalPrice + discount));
+                price,
+                price + discount,
+                userCash - (price + discount));
 
         // Cash 사용
         List<Cash> receipt = jpaCashRepository.findAllByUser_Id(user.getId());
@@ -170,8 +170,8 @@ class OrderServiceImplTest {
             .containsExactly(
                 user.getId(),
                 CashType.USE,
-                totalPrice + discount,
-                userCash - (totalPrice + discount)
+                price + discount,
+                userCash - (price + discount)
             );
 
 
@@ -198,7 +198,7 @@ class OrderServiceImplTest {
     @DisplayName("유저 정보가 존재하지않으면 예외가 발생한다.")
     void 주문시_예외상황_유저정보가_존재하지않음() {
         // given
-        Match match = mockCreator.mockMatch(mockCreator.mockField(10000), LocalDateTime.now(), MatchStatus.OPEN, null, 2, 3, 6);
+        Match match = mockCreator.mockMatch(mockCreator.mockField(), LocalDateTime.now(), MatchStatus.OPEN, null, 2, 3, 6, 10000);
 
         RequestOrder requestOrder = new RequestOrder();
         requestOrder.setCouponId(null);
@@ -220,11 +220,11 @@ class OrderServiceImplTest {
     void 주문시_캐시가_부족한경우(int userCash) {
 
         // 최종 금액 20000원
-        int hourPrice = 10000;
+        int price = 20000;
         int matchTime = 2;
 
         // given
-        Match match = mockCreator.mockMatch(mockCreator.mockField(hourPrice), LocalDateTime.now(), MatchStatus.OPEN, null, matchTime, 3, 6);
+        Match match = mockCreator.mockMatch(mockCreator.mockField(), LocalDateTime.now(), MatchStatus.OPEN, null, matchTime, 3, 6, price);
         User user = mockCreator.mockUser(
             UserInfo.builder().birth(LocalDate.of(1996, 1, 10)).sex(SexType.MALE).build(),
             Role.USER,
@@ -246,18 +246,20 @@ class OrderServiceImplTest {
     @Test
     @DisplayName("같은 경기에 중복참가인경우 예외가 발생해야한다.")
     void 주문시_이미_경기가_마감된경우() {
-        int hourPrice = 10000;
+        int price = 20000;
         int matchTime = 2;
         int userCash = 50000;
         // given
         Match match = mockCreator.mockMatch(
-            mockCreator.mockField(hourPrice),
+            mockCreator.mockField(),
             LocalDateTime.now(),
             MatchStatus.OPEN,
             null,
             matchTime,
             3,
-            6);
+            6,
+            price
+            );
         User user = mockCreator.mockUser(
             UserInfo.builder().birth(LocalDate.of(1996, 1, 10)).sex(SexType.MALE).build(),
             Role.USER,
@@ -283,18 +285,20 @@ class OrderServiceImplTest {
     @Test
     @DisplayName("마감된 경기는 참가할 수 없다.")
     void 경기가_이미_마감된_경우() {
-        int hourPrice = 10000;
+        int price = 20000;
         int matchTime = 2;
         int userCash = 50000;
         // given
         Match match = mockCreator.mockMatch(
-            mockCreator.mockField(hourPrice),
+            mockCreator.mockField(),
             LocalDateTime.now(),
             MatchStatus.CLOSED,
             null,
             matchTime,
             3,
-            6);
+            6,
+            price
+            );
         User user = mockCreator.mockUser(
             UserInfo.builder().birth(LocalDate.of(1996, 1, 10)).sex(SexType.MALE).build(),
             Role.USER,
@@ -318,18 +322,20 @@ class OrderServiceImplTest {
     @Test
     @DisplayName("성별이 일치하지 않은경우 예외가 발생해야한다.")
     void 경기_참가조건인_성별이_일차하지않은경우() {
-        int hourPrice = 10000;
+        int price = 20000;
         int matchTime = 2;
         int userCash = 50000;
         // given
         Match match = mockCreator.mockMatch(
-            mockCreator.mockField(hourPrice),
+            mockCreator.mockField(),
             LocalDateTime.now(),
             MatchStatus.CLOSED,
             SexType.FEMALE,
             matchTime,
             3,
-            6);
+            6,
+            price
+            );
         User user = mockCreator.mockUser(
             UserInfo.builder().birth(LocalDate.of(1996, 1, 10)).sex(SexType.MALE).build(),
             Role.USER,
@@ -354,18 +360,20 @@ class OrderServiceImplTest {
     @DisplayName("쿠폰을 사용해도 캐시가 부족하면 예외가 발생해야 한다.")
     void 쿠폰을_사용해도_캐시가_부족한_경우(int userCash) {
 
-        int hourPrice = 10000;
+        int price = 20000;
         int matchTime = 2;
         int discountPer = 50;
         // given
         Match match = mockCreator.mockMatch(
-            mockCreator.mockField(hourPrice),
+            mockCreator.mockField(),
             LocalDateTime.now(),
             MatchStatus.OPEN,
             null,
             matchTime,
             3,
-            6);
+            6,
+            price
+            );
         User user = mockCreator.mockUser(
             UserInfo.builder().birth(LocalDate.of(1996, 1, 10)).sex(SexType.MALE).build(),
             Role.USER,

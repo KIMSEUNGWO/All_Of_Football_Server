@@ -1,13 +1,10 @@
 package com.flutter.alloffootball.admin.dto.field;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import com.flutter.alloffootball.common.domain.field.Field;
 import lombok.Getter;
 import lombok.ToString;
 
 @Getter
-@Builder
-@AllArgsConstructor
 @ToString
 public class ResponseSearchField {
 
@@ -15,4 +12,11 @@ public class ResponseSearchField {
     private final String region;
     private final String title;
     private final String address;
+
+    public ResponseSearchField(Field field) {
+        this.fieldId = field.getId();
+        this.title = field.getTitle();
+        this.region = field.getAddress().getRegion().getKo();
+        this.address = field.getAddress().getAddress();
+    }
 }

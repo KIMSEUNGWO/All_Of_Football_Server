@@ -7,9 +7,6 @@ import com.flutter.alloffootball.admin.dto.user.ResponseSearchUser;
 import com.flutter.alloffootball.admin.dto.user.ResponseUserOrder;
 import com.flutter.alloffootball.admin.dto.user.ResponseViewUser;
 import com.flutter.alloffootball.admin.repository.AdminRepository;
-import com.flutter.alloffootball.admin.wrapper.AdminFieldWrapper;
-import com.flutter.alloffootball.admin.wrapper.AdminMatchWrapper;
-import com.flutter.alloffootball.admin.wrapper.AdminUserWrapper;
 import com.flutter.alloffootball.common.component.file.FileService;
 import com.flutter.alloffootball.common.domain.field.Address;
 import com.flutter.alloffootball.common.domain.field.Field;
@@ -42,11 +39,8 @@ public class AdminServiceImpl implements AdminService {
     private final JpaOrderRepository jpaOrderRepository;
     private final AdminRepository adminRepository;
 
-    private final AdminFieldWrapper adminFieldWrapper;
     private final JpaMatchRepository jpaMatchRepository;
-    private final AdminMatchWrapper adminMatchWrapper;
     private final JpaUserRepository jpaUserRepository;
-    private final AdminUserWrapper adminUserWrapper;
 
     @Transactional(readOnly = true)
     @Override
@@ -100,23 +94,23 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public ResponseViewField findByIdViewField(long fieldId) {
         Field field = fieldFindById(fieldId);
-        return adminFieldWrapper.viewFieldWrap(field);
+        return new ResponseViewField(field);
     }
 
     @Override
     public ResponseViewMatch findByIdViewMatch(long matchId) {
         Match match = matchFindById(matchId);
         List<ResponseViewMatchUser> userList = jpaOrderRepository.findAllByMatchAndCancelDateIsNull(match)
-            .stream().map(adminMatchWrapper::viewUserWrap)
+            .stream().map(ResponseViewMatchUser::new)
             .sorted(Comparator.comparingLong(ResponseViewMatchUser::getUserId))
             .toList();
-        return adminMatchWrapper.viewMatchWrap(match, userList);
+        return new ResponseViewMatch(match, userList);
     }
 
     @Override
     public ResponseViewUser findByIdViewUser(long userId) {
         User user = userFindById(userId);
-        return adminUserWrapper.viewUserWrap(user);
+        return new ResponseViewUser(user);
     }
 
 
@@ -154,7 +148,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public ResponseFieldSimpInfo findByIdFieldSimpInfo(long fieldId) {
         Field field = fieldFindById(fieldId);
-        return adminFieldWrapper.fieldSimpInfoWrap(field);
+        return new ResponseFieldSimpInfo(field);
     }
 
     @Override

@@ -1,16 +1,13 @@
 package com.flutter.alloffootball.dto.board;
 
+import com.flutter.alloffootball.common.domain.board.Board;
 import com.flutter.alloffootball.common.enums.region.Region;
 import com.flutter.alloffootball.dto.user.ResponseBoardUser;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
 
 @Getter
-@Builder
-@AllArgsConstructor
 public class ResponseBoard {
 
     private final Long boardId;
@@ -19,4 +16,12 @@ public class ResponseBoard {
     private final LocalDateTime createDate;
 
     private final ResponseBoardUser user;
+
+    public ResponseBoard(Board board) {
+        this.boardId = board.getId();
+        this.title = board.getTitle();
+        this.region = board.getRegion();
+        this.createDate = board.getCreateDate();
+        this.user = new ResponseBoardUser(board.getUser());
+    }
 }

@@ -42,7 +42,8 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         "/search",
         "/match",
         "/field",
-        "/api"
+        "/api",
+        "/test"
     );
 
     @Override
