@@ -6,6 +6,7 @@ import com.flutter.alloffootball.admin.dto.user.RequestSearchUser;
 import com.flutter.alloffootball.admin.dto.user.ResponseSearchUser;
 import com.flutter.alloffootball.admin.dto.user.ResponseUserOrder;
 import com.flutter.alloffootball.admin.dto.user.ResponseViewUser;
+import com.flutter.alloffootball.admin.repository.AdminPageRepository;
 import com.flutter.alloffootball.admin.repository.AdminRepository;
 import com.flutter.alloffootball.common.component.file.FileService;
 import com.flutter.alloffootball.common.domain.field.Address;
@@ -37,34 +38,10 @@ public class AdminServiceImpl implements AdminService {
     private final FileService fileService;
     private final JpaFieldRepository jpaFieldRepository;
     private final JpaOrderRepository jpaOrderRepository;
-    private final AdminRepository adminRepository;
 
     private final JpaMatchRepository jpaMatchRepository;
     private final JpaUserRepository jpaUserRepository;
 
-    @Transactional(readOnly = true)
-    @Override
-    public Page<ResponseSearchField> findAllBySearchField(RequestSearchField data, Pageable pageable) {
-        return adminRepository.findAllBySearchField(data, pageable);
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public Page<ResponseSearchMatch> findAllBySearchMatch(RequestSearchMatch data, Pageable pageable) {
-        return adminRepository.findAllBySearchMatch(data, pageable);
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public Page<ResponseSearchUser> findAllBySearchUser(RequestSearchUser data, Pageable pageable) {
-        return adminRepository.findAllBySearchUser(data, pageable);
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public Page<ResponseUserOrder> findAllByUserOrder(Long userId, Pageable pageable) {
-        return adminRepository.findAllByUserOrder(userId, pageable);
-    }
 
     @Override
     public void saveField(RequestSaveFieldForm form) {

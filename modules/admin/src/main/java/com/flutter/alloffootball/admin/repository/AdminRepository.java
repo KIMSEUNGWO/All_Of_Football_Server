@@ -15,11 +15,4 @@ public interface AdminRepository {
 
     Admin findByAccount(String account);
 
-    Page<ResponseSearchField> findAllBySearchField(RequestSearchField data, Pageable pageable);
-
-    Page<ResponseSearchMatch> findAllBySearchMatch(RequestSearchMatch data, Pageable pageable);
-
-    Page<ResponseSearchUser> findAllBySearchUser(RequestSearchUser data, Pageable pageable);
-
-    Page<ResponseUserOrder> findAllByUserOrder(Long userId, Pageable pageable);
 }

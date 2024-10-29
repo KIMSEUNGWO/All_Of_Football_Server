@@ -1,6 +1,7 @@
 package com.flutter.alloffootball.admin.controller;
 
 import com.flutter.alloffootball.admin.dto.field.RequestSearchField;
+import com.flutter.alloffootball.admin.service.AdminPageService;
 import com.flutter.alloffootball.admin.service.AdminService;
 import com.flutter.alloffootball.admin.dto.PageField;
 import com.flutter.alloffootball.common.dto.Response;
@@ -15,12 +16,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/admin/field")
 public class AdminRestFieldController {
 
-    private final AdminService adminService;
+    private final AdminPageService adminPageService;
 
     @GetMapping("/get")
     public ResponseEntity<Response> fieldList(@ModelAttribute RequestSearchField data) {
         System.out.println("data = " + data);
         Pageable pageable = PageRequest.of(data.getPage() - 1, 10);
-        return Response.ok(new PageField<>(adminService.findAllBySearchField(data, pageable), data));
+        return Response.ok(new PageField<>(adminPageService.findAllBySearchField(data, pageable), data));
     }
 }
