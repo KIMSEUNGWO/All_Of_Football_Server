@@ -50,8 +50,8 @@ public class OrderRepositoryImpl implements OrderRepository {
     }
 
     @Override
-    public void save(Order saveOrder) {
-        jpaOrderRepository.save(saveOrder);
+    public Order save(Order saveOrder) {
+        return jpaOrderRepository.save(saveOrder);
     }
 
 

@@ -39,6 +39,7 @@ public class User extends BaseEntityTime {
 
     @Setter
     @Getter
+    @Column(unique = true)
     private String nickname;
 
     @Getter

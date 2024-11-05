@@ -43,16 +43,18 @@ public class UserServiceImpl implements UserService {
 
         dataValidator.validNickname(editUser.getNickname());
 
-        List<Consumer<User>> consumers = new ArrayList<>();
+        Consumer<User> consumers = User::getId;
 
-        if (editUser.getNickname() != null && !editUser.getNickname().isEmpty()) {
-            boolean exists = distinctNickname(editUser.getNickname());
-            if (exists) throw new InvalidDataException(new InvalidData("nickname", "이미 사용중인 닉네임입니다."));
-            consumers.add(user -> user.setNickname(editUser.getNickname()));
+        if (editUser.hasNickname()) {
+            if (distinctNickname(editUser.getNickname())) {
+                throw new InvalidDataException(new InvalidData("nickname", "이미 사용중인 닉네임입니다."));
+            }
+            consumers = consumers.andThen(user -> user.setNickname(editUser.getNickname()));
         }
 
+
         User user = userRepository.findById(userId);
-        consumers.forEach(consumer -> consumer.accept(user));
+        consumers.accept(user);
 
         fileService.editImage(editUser.getImage(), user.getProfile(), FileType.PROFILE);
     }

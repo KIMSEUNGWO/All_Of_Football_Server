@@ -14,7 +14,7 @@ public interface OrderRepository {
 
     void valid(Match match, User user, int price);
 
-    void save(Order saveOrder);
+    Order save(Order saveOrder);
 
     List<Order> getHistory(Long userId, LocalDateTime startDate, LocalDateTime endDate);
 

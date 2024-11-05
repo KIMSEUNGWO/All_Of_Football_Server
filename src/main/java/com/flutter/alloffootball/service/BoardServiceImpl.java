@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -34,51 +35,62 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public ResponseBoardDetail findBoardDetail(Long boardId) {
-        Board board = boardRepository.findById(boardId);
+        Board board = findByBoardId(boardId);
         return new ResponseBoardDetail(board);
     }
 
     @Override
     public void createBoard(RequestCreateBoard createBoard, Long userId) {
         User user = userRepository.findById(userId);
-        Match match = null;
-        if (createBoard.getMatchId() != null) {
-            match = jpaMatchRepository.findById(createBoard.getMatchId()).orElse(null);
-        }
 
-        Board saveBoard = Board.builder()
+        // 게시글에 Match null 허용
+        Match match = findMatchOptionally(createBoard.getMatchId());
+
+        boardRepository.save(Board.builder()
             .user(user)
             .match(match)
             .title(createBoard.getTitle())
             .content(createBoard.getContent())
             .region(createBoard.getRegion())
-            .build();
-        boardRepository.save(saveBoard);
+            .build());
     }
 
     @Override
     public void editBoard(RequestEditBoard editBoard, Long userId) {
-        Board board = boardRepository.findById(editBoard.getBoardId());
+        Board board = findByBoardId(editBoard.getBoardId());
+
         // 자신의 게시물이 아닌 경우
-        if (!board.getUser().getId().equals(userId)) {
-            throw new CustomRuntimeException(DefaultError.NOT_AUTHENTICATION);
-        }
-        Match match = null;
-        if (editBoard.getMatchId() != null) {
-            match = jpaMatchRepository.findById(editBoard.getMatchId()).orElse(null);
-        }
+        validIsOwner(userId, board);
+
+        // 게시글에 Match null 허용
+        Match match = findMatchOptionally(editBoard.getMatchId());
 
         board.update(editBoard.getTitle(), editBoard.getContent(), editBoard.getRegion(), match);
     }
 
     @Override
     public void deleteBoard(RequestDeleteBoard deleteBoard, Long userId) {
-        Board board = boardRepository.findById(deleteBoard.getBoardId());
+        Board board = findByBoardId(deleteBoard.getBoardId());
+
         // 자신의 게시물이 아닌 경우
-        if (!board.getUser().getId().equals(userId)) {
-            throw new CustomRuntimeException(DefaultError.NOT_AUTHENTICATION);
-        }
+        validIsOwner(userId, board);
 
         boardRepository.delete(board);
+    }
+
+    // 게시글에 Match null 허용
+    private Match findMatchOptionally(Long matchId) {
+        return Optional.ofNullable(matchId)
+            .flatMap(jpaMatchRepository::findById)
+            .orElse(null);
+    }
+
+    // 자신의 게시물이 아닌 경우 예외발생
+    private void validIsOwner(Long userId, Board board) {
+        if (!board.isOwner(userId)) throw new CustomRuntimeException(DefaultError.NOT_AUTHENTICATION);
+    }
+
+    private Board findByBoardId(Long boardId) {
+        return boardRepository.findById(boardId);
     }
 }

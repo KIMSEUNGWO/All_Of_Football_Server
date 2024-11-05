@@ -1,6 +1,8 @@
 package com.flutter.alloffootball.service;
 
 import com.flutter.alloffootball.common.domain.Favorite;
+import com.flutter.alloffootball.common.domain.field.Field;
+import com.flutter.alloffootball.common.domain.user.User;
 import com.flutter.alloffootball.dto.user.RequestFavoriteToggle;
 import com.flutter.alloffootball.repository.FavoriteRepository;
 import com.flutter.alloffootball.repository.FieldRepository;
@@ -20,17 +22,17 @@ public class FavoriteServiceImpl implements FavoriteService {
     private final FavoriteRepository favoriteRepository;
 
     @Override
-    public void favoriteToggle(Long userId, RequestFavoriteToggle favoriteToggle) {
-        boolean toggle = favoriteToggle.isToggle();
+    public void favoriteToggle(Long userId, RequestFavoriteToggle request) {
+        User user = userRepository.findById(userId);
+        Field field = fieldRepository.findById(request.getFieldId());
 
-        if (toggle) { // 사용자가 즐겨찾기를 추가하면
-            Favorite saveFavorite = Favorite.builder()
-                .user(userRepository.findById(userId))
-                .field(fieldRepository.findById(favoriteToggle.getFieldId()))
-                .build();
-            favoriteRepository.save(saveFavorite);
+        if (request.isToggle()) { // 사용자가 즐겨찾기를 추가하면
+            favoriteRepository.save(Favorite.builder()
+                .user(user)
+                .field(field)
+                .build());
         } else { // 사용자가 즐겨찾기를 취소하면
-            favoriteRepository.deleteByUserIdAndFieldId(userId, favoriteToggle.getFieldId());
+            favoriteRepository.deleteByUserIdAndFieldId(user, field);
         }
     }
 }

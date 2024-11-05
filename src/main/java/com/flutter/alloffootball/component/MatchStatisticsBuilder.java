@@ -8,6 +8,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * 경기에 참가하는 참가자의 데이터 통계를 집계하는 class
+ * static build 메소드에 통계데이터를 추가하면됨
+ */
 public class MatchStatisticsBuilder {
 
     private final Stream<User> userStream;

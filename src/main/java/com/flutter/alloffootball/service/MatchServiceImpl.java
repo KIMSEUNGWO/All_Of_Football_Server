@@ -42,20 +42,26 @@ public class MatchServiceImpl implements MatchService {
 
     @Override
     public ResponseMatchDetails getMatchDetails(long matchId, CustomUserDetails userDetails) {
-        Match match = matchRepository.findById(matchId);
-        boolean alreadyMatchJoin = orderRepository.isAlreadyJoin(matchId, userDetails);
-        RequestMatchStatistics statistics = null;
-        if (alreadyMatchJoin) {
-            Stream<User> participants = orderRepository.getParticipants(match);
-            statistics = MatchStatisticsBuilder.build(participants);
-        }
-        return new ResponseMatchDetails(match, alreadyMatchJoin, statistics);
+        Match match = findByMatchId(matchId);
+        boolean isParticipation = orderRepository.isAlreadyJoin(matchId, userDetails);
+        RequestMatchStatistics statistics = getStatisticsIfParticipating(match, isParticipation);
+        return new ResponseMatchDetails(match, isParticipation, statistics);
     }
 
     @Override
     public ResponseOrderSimp getOrderSimp(long matchId, CustomUserDetails userDetails) {
-        Match match = matchRepository.findById(matchId);
+        Match match = findByMatchId(matchId);
         return new ResponseOrderSimp(match);
+    }
+
+    private RequestMatchStatistics getStatisticsIfParticipating(Match match, boolean isParticipating) {
+        if (!isParticipating) return null;
+        Stream<User> participants = orderRepository.getParticipants(match);
+        return MatchStatisticsBuilder.build(participants);
+    }
+
+    private Match findByMatchId(long matchId) {
+        return matchRepository.findById(matchId);
     }
 
 }

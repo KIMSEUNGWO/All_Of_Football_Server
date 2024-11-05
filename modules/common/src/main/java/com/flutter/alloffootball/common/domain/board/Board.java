@@ -49,4 +49,8 @@ public class Board extends BaseEntityTime {
         this.match = match;
         this.updateDate = LocalDateTime.now();
     }
+
+    public boolean isOwner(Long userId) {
+        return user.getId().equals(userId);
+    }
 }

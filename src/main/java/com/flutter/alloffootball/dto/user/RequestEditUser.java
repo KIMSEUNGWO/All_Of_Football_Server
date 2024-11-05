@@ -10,4 +10,8 @@ public class RequestEditUser {
 
     private MultipartFile image;
     private String nickname;
+
+    public boolean hasNickname() {
+        return !(nickname == null || nickname.isEmpty());
+    }
 }

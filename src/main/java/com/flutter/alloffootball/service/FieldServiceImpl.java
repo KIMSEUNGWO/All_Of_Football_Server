@@ -31,7 +31,7 @@ public class FieldServiceImpl implements FieldService {
     public List<ResponseFavorite> findAllByFavorite(Long userId) {
         return jpaFavoriteRepository.findAllByUser_Id(userId)
             .stream()
-            .map(favorite -> new ResponseFavorite(favorite.getField()))
+            .map(ResponseFavorite::new)
             .toList();
     }
 

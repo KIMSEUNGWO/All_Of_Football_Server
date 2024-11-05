@@ -6,6 +6,7 @@ import com.flutter.alloffootball.common.domain.match.Match;
 import com.flutter.alloffootball.common.domain.orders.Order;
 import com.flutter.alloffootball.common.domain.user.User;
 import com.flutter.alloffootball.common.enums.CashType;
+import com.flutter.alloffootball.component.OrderCalculator;
 import com.flutter.alloffootball.dto.coupon.ResponseCouponUse;
 import com.flutter.alloffootball.dto.match.ResponseMatchView;
 import com.flutter.alloffootball.dto.order.RequestOrder;
@@ -37,31 +38,54 @@ public class OrderServiceImpl implements OrderService {
     public synchronized ResponseOrderResult order(RequestOrder requestOrder, long userId, LocalDateTime now) {
         Match match = matchRepository.findById(requestOrder.getMatchId());
         User user = userRepository.findById(userId);
-        UserCoupon userCoupon = userCouponRepository.findById(requestOrder.getCouponId());
 
-        int price = match.getPrice();
+        // 1. 가격 계산
+        OrderCalculator calculator = calculateFinalPrice(match, requestOrder.getCouponId(), userId, now);
 
-        // 쿠폰사용을 하지 않았다면 userCoupon == null
-        ResponseCouponUse couponUse = userCouponRepository.useCoupon(userCoupon, userId, now, price);
+        // 2. 주문 생성 및 검증
+        Order saveOrder = createOrder(match, user, calculator);
 
-        int finalPrice = (couponUse == null) ? price : couponUse.getTotalPrice();
+        // 3. 주문 후처리
+        processOrderComplete(match, user, calculator.getFinalPrice());
 
-        orderRepository.valid(match, user, finalPrice);
-        Order saveOrder = Order.builder()
+        return new ResponseOrderResult(match, saveOrder, user, calculator.getResponseCouponUse());
+    }
+
+    private OrderCalculator calculateFinalPrice(Match match, Long couponId, Long userId, LocalDateTime now) {
+        int originalPrice = match.getPrice();
+
+        if (couponId == null) {
+            return new OrderCalculator(originalPrice, null, null);
+        }
+
+        UserCoupon userCoupon = userCouponRepository.findById(couponId);
+
+        ResponseCouponUse couponUse = userCouponRepository.useCoupon(userCoupon, userId, now, originalPrice);
+
+        return new OrderCalculator(
+            couponUse != null ? couponUse.getTotalPrice() : originalPrice,
+            couponUse,
+            userCoupon
+        );
+    }
+
+    private Order createOrder(Match match, User user, OrderCalculator priceResult) {
+        orderRepository.valid(match, user, priceResult.getFinalPrice());
+
+        Order order = Order.builder()
             .match(match)
             .user(user)
-            .price(finalPrice)
-            .userCoupon(userCoupon)
+            .price(priceResult.getFinalPrice())
+            .userCoupon(priceResult.getUserCoupon())
             .orderStatus(OrderStatus.USE)
             .build();
 
-        orderRepository.save(saveOrder);
+        return orderRepository.save(order);
+    }
 
+    private void processOrderComplete(Match match, User user, int finalPrice) {
         orderRepository.refreshMatchStatus(match);
-
         paymentRepository.receipt(user, "경기 참여", CashType.USE, finalPrice);
-
-        return new ResponseOrderResult(match, saveOrder, user, couponUse);
     }
 
     @Transactional(readOnly = true)

@@ -1,6 +1,6 @@
 package com.flutter.alloffootball.dto.field;
 
-import com.flutter.alloffootball.common.domain.field.Field;
+import com.flutter.alloffootball.common.domain.Favorite;
 import com.flutter.alloffootball.common.enums.region.Region;
 import lombok.Getter;
 
@@ -12,10 +12,10 @@ public class ResponseFavorite {
     private final Region region;
     private final String address;
 
-    public ResponseFavorite(Field field) {
-        this.fieldId = field.getId();
-        this.title = field.getTitle();
-        this.region = field.getAddress().getRegion();
-        this.address = field.getAddress().getAddress();
+    public ResponseFavorite(Favorite favorite) {
+        this.fieldId = favorite.getField().getId();
+        this.title = favorite.getField().getTitle();
+        this.region = favorite.getField().getAddress().getRegion();
+        this.address = favorite.getField().getAddress().getAddress();
     }
 }

@@ -5,9 +5,6 @@ import com.flutter.alloffootball.component.CouponCalculator;
 import com.flutter.alloffootball.querydsl.*;
 import com.flutter.alloffootball.repository.*;
 import com.flutter.alloffootball.service.*;
-import com.flutter.alloffootball.wrapper.FieldWrapper;
-import com.flutter.alloffootball.wrapper.MatchWrapper;
-import com.flutter.alloffootball.wrapper.OrderWrapper;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +37,7 @@ public class TestConfig {
     }
     @Bean
     OrderService orderService() {
-        return new OrderServiceImpl(paymentRepository(), userRepository(), matchRepository(), orderRepository(), userCouponRepository(), orderWrapper(), matchWrapper());
+        return new OrderServiceImpl(paymentRepository(), userRepository(), matchRepository(), orderRepository(), userCouponRepository());
     }
 
     @Bean
@@ -49,25 +46,12 @@ public class TestConfig {
     }
 
     @Bean
-    OrderWrapper orderWrapper() {
-        return new OrderWrapper();
-    }
-    @Bean
     FieldRepository fieldRepository() {
         return new FieldRepositoryImpl(jpaFieldRepository);
     }
     @Bean
     FieldService fieldService() {
-        return new FieldServiceImpl(queryDslFieldRepository(), fieldRepository(), jpaFavoriteRepository, fieldWrapper());
-    }
-
-    @Bean
-    FieldWrapper fieldWrapper() {
-        return new FieldWrapper();
-    }
-    @Bean
-    MatchWrapper matchWrapper() {
-        return new MatchWrapper(fieldWrapper());
+        return new FieldServiceImpl(queryDslFieldRepository(), fieldRepository(), jpaFavoriteRepository);
     }
 
     @Bean

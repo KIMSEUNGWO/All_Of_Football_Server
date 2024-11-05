@@ -38,7 +38,7 @@ public class RegisterServiceImpl implements RegisterService {
             .build();
 
         User user = User.builder()
-            .nickname(profile.getDisplayName() + "#" + register.getSocialId().substring(0, 5))
+            .nickname(String.format("%s#%s", profile.getDisplayName(), register.getSocialId().substring(0, 5)))
             .profile(new Profile())
             .userInfo(userInfo)
             .social(social)

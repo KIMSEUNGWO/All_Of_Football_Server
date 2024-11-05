@@ -19,13 +19,8 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public void receipt(Long userId, String message, CashType cashType, int amount) {
-        receipt(userRepository.findById(userId), message, cashType, amount);
-    }
-
-    @Override
-    public void receipt(User user, String message, CashType cashType, int amount) {
+        User user = userRepository.findById(userId);
         paymentRepository.receipt(user, message, cashType, amount);
     }
-
 
 }
