@@ -15,17 +15,14 @@ import com.flutter.alloffootball.common.enums.SexType;
 import com.flutter.alloffootball.common.enums.region.Region;
 import com.flutter.alloffootball.common.jparepository.JpaOrderRepository;
 import com.flutter.alloffootball.common.jparepository.JpaUserRepository;
-import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.core.types.dsl.EntityPathBase;
-import com.querydsl.core.types.dsl.Expressions;
-import com.querydsl.core.types.dsl.StringExpression;
+import com.flutter.alloffootball.querydsl.suport.QueryDSLRepositorySupport;
+import com.querydsl.core.types.dsl.*;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
-import org.thymeleaf.standard.expression.SimpleExpression;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -35,34 +32,33 @@ import static com.flutter.alloffootball.common.domain.field.QField.field;
 import static com.flutter.alloffootball.common.domain.match.QMatch.match;
 
 @Repository
-@RequiredArgsConstructor
-public class AdminPageRepository {
+public class AdminPageRepository extends QueryDSLRepositorySupport {
 
     private final JPAQueryFactory query;
     private final JpaOrderRepository jpaOrderRepository;
     private final JpaUserRepository jpaUserRepository;
 
+    @Autowired
+    public AdminPageRepository(JPAQueryFactory query, JpaOrderRepository jpaOrderRepository, JpaUserRepository jpaUserRepository) {
+        super(Field.class);
+        this.query = query;
+        this.jpaOrderRepository = jpaOrderRepository;
+        this.jpaUserRepository = jpaUserRepository;
+    }
+
     public Page<ResponseSearchField> findAllBySearchField(RequestSearchField data, Pageable pageable) {
         BooleanExpression compareRegion = conditionRegion(data.getRegion());
+        BooleanExpression keywordExpression = getKeywordExpression(data.getWord(), field.title);
 
-        BooleanExpression keywordExpression = getKeywordExpression(data.getWord(), getLowerAndReplace(field.title));
+        Page<Field> fields = applyPagination(pageable, field,
+            query -> query.selectFrom(field)
+                .where(keywordExpression, compareRegion)
+                .orderBy(field.id.desc())
+        );
 
-        BooleanExpression[] totalExpressions = new BooleanExpression[] {keywordExpression, compareRegion};
-
-        List<Field> fieldList = query.select(field)
-            .from(field)
-            .where(totalExpressions)
-            .orderBy(field.id.desc())
-            .offset(pageable.getOffset())
-            .limit(pageable.getPageSize())
-            .fetch();
-
-
-        Long totalCount = getTotalCount(field, totalExpressions);
-
-        List<ResponseSearchField> list = fieldList.stream().map(ResponseSearchField::new).toList();
-        System.out.println("list = " + list);
-        return new PageImpl<>(list, pageable, totalCount);
+        Page<ResponseSearchField> map = fields.map(ResponseSearchField::new);
+        System.out.println("list = " + map);
+        return map;
     }
 
     public Page<ResponseSearchMatch> findAllBySearchMatch(RequestSearchMatch data, Pageable pageable) {
@@ -70,7 +66,7 @@ public class AdminPageRepository {
         BooleanExpression compareSex = conditionSex(data.getSex());
         BooleanExpression compareStatus = conditionMatchStatus(data.getState());
 
-        BooleanExpression keywordExpression = getKeywordExpression(data.getWord(), getLowerAndReplace(field.title));
+        BooleanExpression keywordExpression = getKeywordExpression(data.getWord(), field.title);
 
         BooleanExpression[] totalExpressions = new BooleanExpression[]{keywordExpression, compareRegion, compareSex, compareStatus,
             match.matchDate.between(LocalDateTime.of(data.getStartDate(), LocalTime.MIN), LocalDateTime.of(data.getEndDate(), LocalTime.MAX))};
@@ -115,12 +111,11 @@ public class AdminPageRepository {
 
     private BooleanExpression getKeywordExpression(String word, StringExpression compareWord) {
         if (word == null || word.isEmpty()) return null;
-        StringExpression wordExpression = Expressions.asString("%" + word.toLowerCase().replace(" ", "") + "%");
-        return compareWord.like(wordExpression);
+        return getReplaceExpression(compareWord).containsIgnoreCase(word.replace(" ", ""));
     }
 
-    private StringExpression getLowerAndReplace(StringExpression tuple) {
-        return Expressions.stringTemplate("replace(lower({0}), ' ', '')", tuple);
+    private StringExpression getReplaceExpression(StringExpression tuple) {
+        return Expressions.stringTemplate("replace({0}, ' ', '')", tuple);
     }
 
     private BooleanExpression conditionRegion(Region region) {

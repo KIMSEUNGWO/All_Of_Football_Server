@@ -3,9 +3,9 @@ package com.flutter.alloffootball.querydsl;
 import com.flutter.alloffootball.common.domain.board.Board;
 import com.flutter.alloffootball.common.enums.region.Region;
 import com.flutter.alloffootball.dto.board.RequestSearchBoard;
+import com.flutter.alloffootball.querydsl.suport.QueryDSLRepositorySupport;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
@@ -14,14 +14,17 @@ import java.util.List;
 import static com.flutter.alloffootball.common.domain.board.QBoard.*;
 
 @Repository
-@RequiredArgsConstructor
-public class QueryDslBoardRepository {
+public class QueryDslBoardRepository extends QueryDSLRepositorySupport {
 
     private final JPAQueryFactory query;
 
+    public QueryDslBoardRepository(JPAQueryFactory query) {
+        super(Board.class);
+        this.query = query;
+    }
+
     public List<Board> search(RequestSearchBoard searchBoard, Pageable pageable) {
-        return query.select(board)
-            .from(board)
+        return selectFrom(board)
             .where(conditionRegion(searchBoard.getRegion()))
             .orderBy(board.createDate.desc())
             .offset(pageable.getOffset())
