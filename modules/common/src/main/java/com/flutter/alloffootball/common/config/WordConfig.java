@@ -12,7 +12,15 @@ public class WordConfig implements InspectConfig {
     @Override
     public void addBanWords(WordFactory factory) {
         factory.add(List.of(
+            "졸라", "시바", "시발",
             "감자", "고구마", "바나나"
+        ));
+    }
+
+    @Override
+    public void addExceptWords(WordFactory factory) {
+        factory.add(List.of(
+            "고르곤졸라", "시바견", "시발점"
         ));
     }
 }

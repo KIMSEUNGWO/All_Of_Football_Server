@@ -1,4 +1,4 @@
-package com.flutter.alloffootball.common.domain;
+package com.flutter.alloffootball.common.domain.admin;
 
 import com.flutter.alloffootball.common.domain.user.User;
 import com.flutter.alloffootball.common.enums.Authority;
@@ -16,7 +16,6 @@ import lombok.NoArgsConstructor;
 @Getter
 public class Admin {
 
-    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ADMIN_ID")

@@ -25,11 +25,8 @@ import java.time.LocalDateTime;
 @Transactional
 public class TestService {
 
-    private final UserRepository userRepository;
     private final FieldRepository fieldRepository;
     private final MatchRepository matchRepository;
-    private final TestRepository testRepository;
-    private final OrderService orderService;
 
     public void createMockData(Long userId) {
         Field saveField1 = Field.builder()

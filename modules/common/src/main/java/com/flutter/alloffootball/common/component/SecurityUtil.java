@@ -2,7 +2,7 @@ package com.flutter.alloffootball.common.component;
 
 import com.flutter.alloffootball.common.config.security.AdminUserDetails;
 import com.flutter.alloffootball.common.config.security.CustomUserDetails;
-import com.flutter.alloffootball.common.domain.Admin;
+import com.flutter.alloffootball.common.domain.admin.Admin;
 import com.flutter.alloffootball.common.domain.user.User;
 import com.flutter.alloffootball.common.enums.Provider;
 import com.flutter.alloffootball.common.exception.TokenError;

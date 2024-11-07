@@ -1,9 +1,8 @@
 package com.flutter.alloffootball.common.config.security;
 
-import com.flutter.alloffootball.common.domain.Admin;
+import com.flutter.alloffootball.common.domain.admin.Admin;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.ArrayList;

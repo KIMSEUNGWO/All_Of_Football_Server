@@ -1,6 +1,6 @@
 package com.flutter.alloffootball.common.jparepository;
 
-import com.flutter.alloffootball.common.domain.Admin;
+import com.flutter.alloffootball.common.domain.admin.Admin;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

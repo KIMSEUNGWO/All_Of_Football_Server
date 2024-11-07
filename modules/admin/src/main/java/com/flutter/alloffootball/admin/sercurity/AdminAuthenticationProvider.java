@@ -2,7 +2,7 @@ package com.flutter.alloffootball.admin.sercurity;
 
 import com.flutter.alloffootball.admin.repository.AdminRepository;
 import com.flutter.alloffootball.common.component.SecurityUtil;
-import com.flutter.alloffootball.common.domain.Admin;
+import com.flutter.alloffootball.common.domain.admin.Admin;
 import com.flutter.alloffootball.common.domain.user.Social;
 import com.flutter.alloffootball.common.domain.user.User;
 import lombok.RequiredArgsConstructor;
