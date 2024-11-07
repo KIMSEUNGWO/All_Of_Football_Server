@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "ADMIN")
+@Table(name = "NOTICE")
 @Builder
 @Getter
 public class Notice extends BaseEntityTime {
@@ -23,4 +23,8 @@ public class Notice extends BaseEntityTime {
     private String title;
     private String content;
 
+    public void update(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 }

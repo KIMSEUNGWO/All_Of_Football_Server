@@ -53,7 +53,7 @@ public class AdminFieldController {
     /**
      * GET 구장 등록 데이터
      */
-    @GetMapping("/add")
+    @GetMapping("/post")
     public String getFieldAdd(Model model) {
         model.addAttribute("options", new FieldOption());
         model.addAttribute("saveFieldForm", new RequestSaveFieldForm());
@@ -84,7 +84,7 @@ public class AdminFieldController {
     /**
      * POST 구장 등록
      */
-    @PostMapping("/add")
+    @PostMapping("/post")
     public String postFieldAdd(@Validated @ModelAttribute("saveFieldForm") RequestSaveFieldForm saveFieldForm,
                                BindingResult bindingResult) {
         if (bindingResult.hasErrors()) return "admin_field_add";

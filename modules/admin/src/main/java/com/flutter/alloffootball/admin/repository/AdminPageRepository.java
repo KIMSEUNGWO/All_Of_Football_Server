@@ -4,9 +4,11 @@ import com.flutter.alloffootball.admin.dto.field.RequestSearchField;
 import com.flutter.alloffootball.admin.dto.field.ResponseSearchField;
 import com.flutter.alloffootball.admin.dto.match.RequestSearchMatch;
 import com.flutter.alloffootball.admin.dto.match.ResponseSearchMatch;
+import com.flutter.alloffootball.admin.dto.notice.ResponseNoticeListView;
 import com.flutter.alloffootball.admin.dto.user.RequestSearchUser;
 import com.flutter.alloffootball.admin.dto.user.ResponseSearchUser;
 import com.flutter.alloffootball.admin.dto.user.ResponseUserOrder;
+import com.flutter.alloffootball.common.domain.admin.QNotice;
 import com.flutter.alloffootball.common.domain.field.Field;
 import com.flutter.alloffootball.common.domain.match.Match;
 import com.flutter.alloffootball.common.enums.MatchStatus;
@@ -17,6 +19,7 @@ import com.flutter.alloffootball.common.jparepository.JpaOrderRepository;
 import com.flutter.alloffootball.common.jparepository.JpaUserRepository;
 import com.flutter.alloffootball.common.querydsl.QueryFieldSupport;
 import com.flutter.alloffootball.common.querydsl.QueryMatchSupport;
+import com.flutter.alloffootball.common.querydsl.QueryNoticeSupport;
 import com.flutter.alloffootball.common.querydsl.suport.QueryDSLRepositorySupport;
 import com.querydsl.core.types.dsl.*;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -31,6 +34,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
+import static com.flutter.alloffootball.common.domain.admin.QNotice.*;
 import static com.flutter.alloffootball.common.domain.field.QField.field;
 import static com.flutter.alloffootball.common.domain.match.QMatch.match;
 
@@ -44,6 +48,7 @@ public class AdminPageRepository {
 
     private final QueryFieldSupport fieldSupport;
     private final QueryMatchSupport matchSupport;
+    private final QueryNoticeSupport noticeSupport;
 
 
     public Page<Field> findAllBySearchField(RequestSearchField data, Pageable pageable) {
@@ -122,5 +127,12 @@ public class AdminPageRepository {
         // 상태를 선택하지 않았을 경우 모두 조회
         if (matchStatus == null) return null;
         return match.matchStatus.eq(matchStatus);
+    }
+
+    public Page<ResponseNoticeListView> findAllBySearchNotice(Pageable pageable) {
+        return noticeSupport.applyPagination(notice, pageable,
+            query -> query.selectFrom(notice)
+                .orderBy(notice.id.desc()))
+            .map(ResponseNoticeListView::new);
     }
 }

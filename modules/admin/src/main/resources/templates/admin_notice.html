@@ -7,55 +7,28 @@
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/admin_menu.css">
     <link rel="stylesheet" href="/css/admin_main.css">
-    <link rel="stylesheet" href="/css/admin_field.css">
+    <link rel="stylesheet" href="/css/admin_notice.css">
     <link rel="stylesheet" href="/css/pagination.css">
-    <script type="module" src="/js/option_select.js"></script>
     <script type="module" src="/js/pagination.js"></script>
     <script type="module" src="/js/fetch.js"></script>
-    <script type="module" src="/js/admin_search_field.js"></script>
-    <title>구장관리 :: 관리자</title>
+    <script type="module" src="/js/admin_search_notice.js"></script>
+    <title>공지사항 관리 :: 관리자</title>
 </head>
 <body>
      <header th:replace="~{/common/header :: header}"></header>
     <div class="container">
-         <aside class="side box" th:replace="~{/common/admin_menu :: adminMenu}"></aside>
+        <aside class="side box" th:replace="~{/common/admin_menu :: adminMenu}"></aside>
         <div id="main">
-            <h3>구장관리</h3>
-            <div id="searchControll">
-                <div id="searchL">
-                    <button class="inputBox option" id="region" style="justify-content: space-between">
-                        <span aria-label="region">전체</span>
-                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M9.1706 14.7687C9.56697 15.3571 10.433 15.3571 10.8294 14.7687L15.0123 8.55866C15.4597 7.89443 14.9838 7 14.1829 7H5.81709C5.01624 7 4.54029 7.89443 4.9877 8.55866L9.1706 14.7687Z" fill="black"/>
-                        </svg>
-                    </button>
-                    <ul class="subOption inputBox disabled regionOption">
-                        <li>
-                            <input type="radio" name="region" id="all" value="" checked>
-                            <label for="all">전국</label>
-                        </li>
-                        <li th:each="loc : ${region}">
-                            <input type="radio" name="region" th:id="${loc.name()}" th:value="${loc}">
-                            <label th:for="${loc.name()}" th:text="${loc.getKo()}"></label>
-                        </li>
-                    </ul>
-                    <input type="text" class="inputBox" name="searchWord" id="searchWord" placeholder="구장 이름을 입력해주세요.">
-                </div>
-                <div id="searchR">
-                    <button type="button" class="mainBtn" id="search">검색</button>
-                </div>
-            </div>
+            <h3>공지사항</h3>
             <div id="result">
                 <div class="group">
                     <h4 class="total">총 0건</h4>
-                    <a href="/admin/field/post" class="mainBtn" id="add">등록</a>
+                    <a href="/admin/notice/post" class="mainBtn" id="add">등록</a>
                 </div>
                 <ul class="searchResult" id="searchTitle">
                     <a disabled>
-                        <li>번호</li>
-                        <li>지역</li>
-                        <li>구장이름</li>
-                        <li>구장주소</li>
+                        <li>제목</li>
+                        <li>작성일</li>
                     </a>
                 </ul>
                 <ul class="searchResult" id="searchResult">

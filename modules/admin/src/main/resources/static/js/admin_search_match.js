@@ -1,4 +1,7 @@
+import { DateFormatter } from "./component/date_format.js";
 import { PageData, Pagination } from "./pagination.js";
+
+const dateFormatter = new DateFormatter();
 
 const pagination = new Pagination('/admin/match', resultForm, [
     new PageData('word', () => document.querySelector('input[name="searchWord"]')?.value, (result) => {
@@ -31,14 +34,15 @@ const pagination = new Pagination('/admin/match', resultForm, [
         text.innerHTML = label.textContent;
     }),
     new PageData('startDate', () => document.querySelector('input[name="startDate"]')?.value, (result) => {
-        let date = (typeof result === 'object' && result != null) ? dateFormat(result.data.startDate) : result;
+        let date = (typeof result === 'object' && result != null) ? dateFormatter.formatDate(result.data.startDate, '/') : result;
         document.querySelector('input[name="startDate"]').value = date;
     }),
     new PageData('endDate', () => document.querySelector('input[name="endDate"]')?.value, (result) => {
-        let date = (typeof result === 'object' && result != null) ? dateFormat(result.data.endDate) : result;
+        let date = (typeof result === 'object' && result != null) ? dateFormatter.formatDate(result.data.endDate, '/') : result;
         document.querySelector('input[name="endDate"]').value = date;
     }),
 ]);
+
 
 window.addEventListener('popstate', (e) => {
     if (e.state && e.state.data) {
@@ -62,12 +66,7 @@ function resultForm(searchForm) {
                 '<span>' + searchForm.matchStatus + '</span>' + 
             '</a>';
 }
-function dateFormat(dateStringType) {
-    let date = new Date(dateStringType);
-    return date.getFullYear() + '/' +
-        String(date.getMonth() + 1).padStart(2, '0') + '/' +
-        String(date.getDate()).padStart(2, '0');
-}
+
 function jsonDateFormat(json) {
     let date = new Date(json);
     return String(date.getMonth() + 1).padStart(2, '0') + '/' +

@@ -19,6 +19,8 @@ public class ResponseEditField extends FieldForm{
 
     public ResponseEditField(Field field) {
         super(field);
+        // 강제 초기화
+        int size = field.getFieldImages().size();
         savedImages = field.getFieldImages();
     }
 }

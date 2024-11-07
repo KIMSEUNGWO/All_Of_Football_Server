@@ -4,6 +4,7 @@ import com.flutter.alloffootball.admin.dto.field.RequestSearchField;
 import com.flutter.alloffootball.admin.dto.field.ResponseSearchField;
 import com.flutter.alloffootball.admin.dto.match.RequestSearchMatch;
 import com.flutter.alloffootball.admin.dto.match.ResponseSearchMatch;
+import com.flutter.alloffootball.admin.dto.notice.ResponseNoticeListView;
 import com.flutter.alloffootball.admin.dto.user.RequestSearchUser;
 import com.flutter.alloffootball.admin.dto.user.ResponseSearchUser;
 import com.flutter.alloffootball.admin.dto.user.ResponseUserOrder;
@@ -38,4 +39,7 @@ public class AdminPageService {
         return adminPageRepository.findAllByUserOrder(userId, pageable);
     }
 
+    public Page<ResponseNoticeListView> findAllBySearchNotice(Pageable pageable) {
+        return adminPageRepository.findAllBySearchNotice(pageable);
+    }
 }
