@@ -22,7 +22,7 @@ public class TestController {
 
     @GetMapping("/test")
     public ResponseEntity<Response> test(@AuthenticationPrincipal CustomUserDetails userDetails) {
-        testService.createMockData(userDetails.getUser().getId());
+        testService.createMockData(1L);
         return Response.ok();
     }
 

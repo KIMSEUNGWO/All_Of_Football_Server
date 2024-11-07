@@ -1,5 +1,6 @@
 package com.flutter.alloffootball.controller;
 
+import com.flutter.alloffootball.common.component.WordInspector;
 import com.flutter.alloffootball.common.config.security.CustomUserDetails;
 import com.flutter.alloffootball.common.dto.Response;
 import com.flutter.alloffootball.common.exception.BindingException;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 public class BoardController {
 
     private final BoardService boardService;
+    private final WordInspector wordInspector;
 
     @GetMapping("/{boardId}")
     public ResponseEntity<Response> getBoardDetail(@PathVariable("boardId") Long boardId) {
@@ -34,6 +36,7 @@ public class BoardController {
                                              @AuthenticationPrincipal CustomUserDetails userDetails) {
         System.out.println("createBoard = " + createBoard);
         if (bindingResult.hasErrors()) throw new BindingException(bindingResult);
+        wordInspector.inspect(createBoard.getTitle(), createBoard.getContent());
 
         boardService.createBoard(createBoard, userDetails.getUser().getId());
         return Response.ok();
@@ -44,6 +47,7 @@ public class BoardController {
                                              BindingResult bindingResult,
                                              @AuthenticationPrincipal CustomUserDetails userDetails) {
         if (bindingResult.hasErrors()) throw new BindingException(bindingResult);
+        wordInspector.inspect(editBoard.getTitle(), editBoard.getContent());
 
         boardService.editBoard(editBoard, userDetails.getUser().getId());
         return Response.ok();
