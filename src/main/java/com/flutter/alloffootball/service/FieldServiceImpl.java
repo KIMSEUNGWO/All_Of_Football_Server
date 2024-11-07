@@ -10,11 +10,13 @@ import com.flutter.alloffootball.querydsl.QueryDslFieldRepository;
 import com.flutter.alloffootball.repository.FieldRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class FieldServiceImpl implements FieldService {
 
     private final QueryDslFieldRepository queryDslFieldRepository;

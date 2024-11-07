@@ -15,9 +15,12 @@ import com.flutter.alloffootball.common.enums.SexType;
 import com.flutter.alloffootball.common.enums.region.Region;
 import com.flutter.alloffootball.common.jparepository.JpaOrderRepository;
 import com.flutter.alloffootball.common.jparepository.JpaUserRepository;
-import com.flutter.alloffootball.querydsl.suport.QueryDSLRepositorySupport;
+import com.flutter.alloffootball.common.querydsl.QueryFieldSupport;
+import com.flutter.alloffootball.common.querydsl.QueryMatchSupport;
+import com.flutter.alloffootball.common.querydsl.suport.QueryDSLRepositorySupport;
 import com.querydsl.core.types.dsl.*;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -32,33 +35,27 @@ import static com.flutter.alloffootball.common.domain.field.QField.field;
 import static com.flutter.alloffootball.common.domain.match.QMatch.match;
 
 @Repository
-public class AdminPageRepository extends QueryDSLRepositorySupport {
+@RequiredArgsConstructor
+public class AdminPageRepository {
 
     private final JPAQueryFactory query;
     private final JpaOrderRepository jpaOrderRepository;
     private final JpaUserRepository jpaUserRepository;
 
-    @Autowired
-    public AdminPageRepository(JPAQueryFactory query, JpaOrderRepository jpaOrderRepository, JpaUserRepository jpaUserRepository) {
-        super(Field.class);
-        this.query = query;
-        this.jpaOrderRepository = jpaOrderRepository;
-        this.jpaUserRepository = jpaUserRepository;
-    }
+    private final QueryFieldSupport fieldSupport;
+    private final QueryMatchSupport matchSupport;
 
-    public Page<ResponseSearchField> findAllBySearchField(RequestSearchField data, Pageable pageable) {
+
+    public Page<Field> findAllBySearchField(RequestSearchField data, Pageable pageable) {
         BooleanExpression compareRegion = conditionRegion(data.getRegion());
         BooleanExpression keywordExpression = getKeywordExpression(data.getWord(), field.title);
 
-        Page<Field> fields = applyPagination(pageable, field,
+        return fieldSupport.applyPagination(field, pageable,
             query -> query.selectFrom(field)
                 .where(keywordExpression, compareRegion)
                 .orderBy(field.id.desc())
         );
 
-        Page<ResponseSearchField> map = fields.map(ResponseSearchField::new);
-        System.out.println("list = " + map);
-        return map;
     }
 
     public Page<ResponseSearchMatch> findAllBySearchMatch(RequestSearchMatch data, Pageable pageable) {
@@ -68,26 +65,28 @@ public class AdminPageRepository extends QueryDSLRepositorySupport {
 
         BooleanExpression keywordExpression = getKeywordExpression(data.getWord(), field.title);
 
-        BooleanExpression[] totalExpressions = new BooleanExpression[]{keywordExpression, compareRegion, compareSex, compareStatus,
-            match.matchDate.between(LocalDateTime.of(data.getStartDate(), LocalTime.MIN), LocalDateTime.of(data.getEndDate(), LocalTime.MAX))};
+        Page<Match> matches = matchSupport.applyPagination(match, pageable,
+            query -> query.selectFrom(match)
+                .where(
+                    keywordExpression,
+                    compareRegion,
+                    compareSex,
+                    compareStatus,
+                    match.matchDate.between(
+                        LocalDateTime.of(data.getStartDate(), LocalTime.MIN),
+                        LocalDateTime.of(data.getEndDate(), LocalTime.MAX)
+                    )
+                )
+                .orderBy(match.matchDate.asc())
+        );
 
-        List<Match> matchList = query.select(match)
-            .from(match)
-            .where(totalExpressions)
-            .orderBy(match.matchDate.asc())
-            .offset(pageable.getOffset())
-            .limit(pageable.getPageSize())
-            .fetch();
-
-        Long totalCount = getTotalCount(match, totalExpressions);
-
-        List<ResponseSearchMatch> list = matchList.stream().map(match -> {
+        Page<ResponseSearchMatch> result = matches.map(match -> {
             long countPerson = jpaOrderRepository.countByMatchAndOrderStatus(match, OrderStatus.USE);
             return new ResponseSearchMatch(match, countPerson);
-        }).toList();
+        });
 
-        System.out.println("list = " + list);
-        return new PageImpl<>(list, pageable, totalCount);
+        System.out.println("result = " + result);
+        return result;
     }
 
     public Page<ResponseSearchUser> findAllBySearchUser(RequestSearchUser data, Pageable pageable) {
@@ -98,15 +97,6 @@ public class AdminPageRepository extends QueryDSLRepositorySupport {
     public Page<ResponseUserOrder> findAllByUserOrder(Long userId, Pageable pageable) {
         return jpaOrderRepository.findAllByUser_idOrderByCreateDateDesc(userId, pageable)
             .map(ResponseUserOrder::new);
-    }
-
-
-    private Long getTotalCount(EntityPathBase<?> target, BooleanExpression... expressions) {
-        Long count = query.select(target.count())
-            .from(target)
-            .where(expressions)
-            .fetchFirst();
-        return count == null ? 0L : count;
     }
 
     private BooleanExpression getKeywordExpression(String word, StringExpression compareWord) {

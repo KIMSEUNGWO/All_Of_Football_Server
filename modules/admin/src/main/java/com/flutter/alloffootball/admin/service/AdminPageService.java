@@ -22,7 +22,8 @@ public class AdminPageService {
     private final AdminPageRepository adminPageRepository;
 
     public Page<ResponseSearchField> findAllBySearchField(RequestSearchField data, Pageable pageable) {
-        return adminPageRepository.findAllBySearchField(data, pageable);
+        return adminPageRepository.findAllBySearchField(data, pageable)
+            .map(ResponseSearchField::new);
     }
 
     public Page<ResponseSearchMatch> findAllBySearchMatch(RequestSearchMatch data, Pageable pageable) {
