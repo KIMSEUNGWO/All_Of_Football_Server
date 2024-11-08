@@ -1,6 +1,5 @@
 package com.flutter.alloffootball.controller;
 
-import com.flutter.alloffootball.common.dto.Response;
 import com.flutter.alloffootball.common.enums.CashType;
 import com.flutter.alloffootball.dto.payment.ResponseApproveKakao;
 import com.flutter.alloffootball.service.PaymentService;
@@ -9,7 +8,6 @@ import com.flutter.alloffootball.service.payment.SocialPayCookieManager;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 

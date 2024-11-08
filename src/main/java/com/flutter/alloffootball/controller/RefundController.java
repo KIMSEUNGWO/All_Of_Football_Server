@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/cancel")
+@RequestMapping("/api/cancel")
 public class RefundController {
 
     private final RefundService refundService;

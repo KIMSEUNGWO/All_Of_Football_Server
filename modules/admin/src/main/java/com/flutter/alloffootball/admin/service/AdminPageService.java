@@ -40,6 +40,6 @@ public class AdminPageService {
     }
 
     public Page<ResponseNoticeListView> findAllBySearchNotice(Pageable pageable) {
-        return adminPageRepository.findAllBySearchNotice(pageable);
+        return adminPageRepository.findAllBySearchNotice(pageable).map(ResponseNoticeListView::new);
     }
 }

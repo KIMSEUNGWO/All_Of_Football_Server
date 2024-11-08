@@ -23,7 +23,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/field")
+@RequestMapping("/api/field")
 public class FieldController {
 
     private final MatchService matchService;

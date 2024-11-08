@@ -31,18 +31,13 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     private final List<String> excludePath = List.of(
         "/favicon.ico",
-        "/social/login",
-        "/register",
-        "/css",
-        "/js",
-        "/font",
-        "/social/token",
-        "/images/",
+        "/api/social", // 로그인, 회원가입, 토큰발급
+        "/css", "/js", "/font", "/images/",
         "/admin",
-        "/search",
-        "/match",
-        "/field",
-        "/api",
+        "/api/search", // 로그인없이 검색 가능
+        "/api/match", // 로그인 없이 경기 조회 가능
+        "/api/field", // 로그인 없이 구장 조회 가능
+        "/api/charge", // 소셜페이 접근 허용
         "/test"
     );
 
@@ -91,7 +86,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         String path = request.getRequestURI();
         if (path.equals("/")) return true;
         // Define paths to exclude
-        if (path.equals("/board") || path.matches("^/board/\\d+$")) {
+        if (path.equals("/api/board") || path.matches("^/api/board/\\d+$")) {
             return true;
         }
         return excludePath.stream().anyMatch(path::startsWith);

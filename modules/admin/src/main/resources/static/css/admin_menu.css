@@ -41,8 +41,11 @@
         color: white;
     }
 
-    svg path {
+    svg:not(.stroke) path {
         fill: white;
+    }
+    svg.stroke path {
+        stroke: white;
     }
 }
 #menus .menu {

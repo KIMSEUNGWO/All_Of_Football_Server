@@ -8,6 +8,7 @@ import com.flutter.alloffootball.admin.dto.notice.ResponseNoticeListView;
 import com.flutter.alloffootball.admin.dto.user.RequestSearchUser;
 import com.flutter.alloffootball.admin.dto.user.ResponseSearchUser;
 import com.flutter.alloffootball.admin.dto.user.ResponseUserOrder;
+import com.flutter.alloffootball.common.domain.admin.Notice;
 import com.flutter.alloffootball.common.domain.admin.QNotice;
 import com.flutter.alloffootball.common.domain.field.Field;
 import com.flutter.alloffootball.common.domain.match.Match;
@@ -129,10 +130,7 @@ public class AdminPageRepository {
         return match.matchStatus.eq(matchStatus);
     }
 
-    public Page<ResponseNoticeListView> findAllBySearchNotice(Pageable pageable) {
-        return noticeSupport.applyPagination(notice, pageable,
-            query -> query.selectFrom(notice)
-                .orderBy(notice.id.desc()))
-            .map(ResponseNoticeListView::new);
+    public Page<Notice> findAllBySearchNotice(Pageable pageable) {
+        return noticeSupport.findAllBySearchNotice(pageable);
     }
 }
