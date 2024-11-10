@@ -22,6 +22,25 @@ window.addEventListener('load', () => {
     statCards.forEach(statCard => {
         let color = statCard.getAttribute('aria-border-color');
         statCard.style.borderLeft = `${color} solid 10px`;
+
+        let trend = statCard.getAttribute('aria-trend');
+
+        if (trend !== null) {
+            trend = Number(trend);
+            let trendElement = statCard.querySelector('.trend');
+            if (trend > 0) {
+                trendElement.style.color = 'var(--font-color-1)';
+                trendElement.innerHTML = '- 0';
+            } else if (trend < 0) {
+                trendElement.style.color = '#2F69DD';
+                trendElement.innerHTML = `▼ ${trend}`;
+            } else {
+                trendElement.style.color = '#ff4444';
+                trendElement.innerHTML = `▲ ${trend}`;
+
+            }
+        }
+
     })
 
     const chartCards = document.querySelectorAll('.chart-card');

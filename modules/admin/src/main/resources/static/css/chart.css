@@ -21,13 +21,12 @@
 }
 
 .stat-card .value {
-    font-size: 23px;
+    font-size: 21px;
     font-weight: bold;
-    color: #333;
+    color: var(--font-color-1);
 }
 
 .stat-card .trend {
-    color: #ff4444;
     font-size: 12px;
     margin-left: 10px;
 }
