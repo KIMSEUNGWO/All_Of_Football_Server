@@ -24,6 +24,10 @@ window.addEventListener('load', () => {
     let confirmBtn = document.querySelector('#calendar_confirm');
     confirmBtn.addEventListener('click', () => {
         calendar.classList.add('disabled');
+
+        if (calButtonClick != null) {
+            calButtonClick(startDate.value, endDate.value);
+        }
     })
 
     startDate.addEventListener('click', () => {
@@ -121,6 +125,10 @@ function initial() {
     let newDay = newDate.getDate();
 
     endDate.value = dateForm(newYear, newMonth, newDay);
+
+    if (calButtonClick !== null) {
+        calButtonClick(startDate.value, endDate.value);
+    }
 }
 
 function focusInputDate(start, end) {
