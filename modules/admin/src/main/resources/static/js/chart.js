@@ -1,3 +1,5 @@
+import { CalendarRange } from "./calendar_range.js";
+
 let regionData = null;
 let regionChart = null;
 let regionSort = 'COMPLETE_ASC';
@@ -8,6 +10,27 @@ const regionSortEnum = {
     'CANCEL_ASC': (o1, o2) => o1.cancelCnt - o2.cancelCnt,
     'CANCEL_DESC': (o1, o2) => o2.cancelCnt - o1.cancelCnt
 };
+
+const calendar = new CalendarRange(
+    new Date(2024, 10, 2),  // 시작 날짜
+    new Date(2024, 12, 31),  // 종료 날짜,
+    new Date(2024, 9, 20),
+    new Date() // 마지막날로 제한
+);
+
+// 확인 버튼 클릭 시 콜백 설정 (선택적)
+calendar.setOnConfirm((startDate, endDate) => {
+    console.log('선택된 날짜 범위:', startDate, endDate);
+    fetch(`/admin/statistics/region?startDate=${startDate}&endDate=${endDate}`)
+        .then(res => res.json())
+        .then(json => {
+            if (json.result !== 'OK') return;
+
+            regionData = new ChartBarData(json.data);
+            barChartDraw();
+
+        });
+});
 
 window.addEventListener('load', () => {
 
@@ -79,8 +102,6 @@ window.addEventListener('load', () => {
         datas.forEach(data => data.remove());
     })
 
-
-
 })
 
 function createLabelElement(label) {
@@ -88,18 +109,6 @@ function createLabelElement(label) {
     div.classList.add('chart-title');
     div.innerHTML = label;
     return div;
-}
-
-function calButtonClick(startDate, endDate) {
-    fetch(`/admin/statistics/region?startDate=${startDate}&endDate=${endDate}`)
-    .then(res => res.json())
-    .then(json => {
-        if (json.result !== 'OK') return;
-
-        regionData = new ChartBarData(json.data);
-        barChartDraw();
-
-    });
 }
 
 function barChartDraw() {
@@ -125,7 +134,7 @@ function barChartDraw() {
                     },
                     borderSkipped: false,
                     barPercentage: 0.8,
-                    maxBarThickness: 100  // 최대 막대 너비를 100px로 제한
+                    maxBarThickness: 60  // 최대 막대 너비를 100px로 제한
                 },
                 {
                     label: '취소',
@@ -137,7 +146,7 @@ function barChartDraw() {
                     },
                     borderSkipped: false,
                     barPercentage: 0.8,
-                    maxBarThickness: 100  // 최대 막대 너비를 100px로 제한
+                    maxBarThickness: 60  // 최대 막대 너비를 100px로 제한
                 }
             ].sort((o1, o2) => {
                 if (regionSort === 'CANCEL_ASC' || regionSort === 'CANCEL_DESC') {
