@@ -20,4 +20,6 @@ public interface JpaOrderRepository extends JpaRepository<Order, Long> {
     List<Order> findAllByMatchAndCancelDateIsNull(Match match);
 
     Page<Order> findAllByUser_idOrderByCreateDateDesc(Long userId, Pageable pageable);
+
+    List<Order> findByCreateDateBetween(LocalDateTime from, LocalDateTime to);
 }

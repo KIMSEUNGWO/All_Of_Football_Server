@@ -1,7 +1,9 @@
 package com.flutter.alloffootball.common.batch.service;
 
+import com.flutter.alloffootball.common.batch.dto.ResponseUserStatistics;
+import com.flutter.alloffootball.common.batch.repository.UserStatisticsRepository;
 import com.flutter.alloffootball.common.domain.statistics.UserStatistics;
-import com.flutter.alloffootball.common.domain.statistics.UserStatisticsCategory;
+import com.flutter.alloffootball.common.batch.dto.UserStatisticsCategory;
 import com.flutter.alloffootball.common.domain.user.User;
 import com.flutter.alloffootball.common.jparepository.JPAUserStatisticsRepository;
 import com.flutter.alloffootball.common.jparepository.JpaUserRepository;

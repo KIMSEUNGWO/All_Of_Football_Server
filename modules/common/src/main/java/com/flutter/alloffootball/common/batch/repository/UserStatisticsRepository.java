@@ -1,8 +1,8 @@
-package com.flutter.alloffootball.common.batch.service;
+package com.flutter.alloffootball.common.batch.repository;
 
 import com.flutter.alloffootball.common.domain.statistics.UserStatistics;
-import com.flutter.alloffootball.common.domain.statistics.UserStatisticsCategory;
-import com.flutter.alloffootball.common.domain.statistics.UserStatisticsData;
+import com.flutter.alloffootball.common.batch.dto.UserStatisticsCategory;
+import com.flutter.alloffootball.common.batch.dto.UserStatisticsData;
 import com.flutter.alloffootball.common.domain.statistics.UserStatisticsDetail;
 import com.flutter.alloffootball.common.domain.user.User;
 import lombok.RequiredArgsConstructor;

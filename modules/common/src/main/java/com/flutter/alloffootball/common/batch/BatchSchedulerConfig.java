@@ -1,6 +1,7 @@
 package com.flutter.alloffootball.common.batch;
 
 import com.flutter.alloffootball.common.batch.service.MatchStatisticsService;
+import com.flutter.alloffootball.common.batch.service.RegionStatisticsService;
 import com.flutter.alloffootball.common.batch.service.UserStatisticsService;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -17,24 +18,29 @@ public class BatchSchedulerConfig {
 
     private final MatchStatisticsService matchStatisticsService;
     private final UserStatisticsService userStatisticsService;
+    private final RegionStatisticsService regionStatisticsService;
 
     @PostConstruct
     public void initialMatchStatisticsSchedule() {
         log.info("InitialMatchStatisticsSchedule");
         matchStatisticsService.refresh();
-
-        log.info("UserStatisticsSchedule");
-        userStatisticsService.refresh();
     }
 
-    @Scheduled(cron = "0/5 * * * * *")
-    public void testSchedule() {
-        System.out.println("스케쥴 작동");
+    @Scheduled(cron = "0 30 0/1 ? * ?")
+    public void matchStatisticsSchedule() {
+        log.info("InitialMatchStatisticsSchedule");
+        matchStatisticsService.refresh();
     }
 
-    @Scheduled(cron = "0 0 0 1 * *")
+    @Scheduled(cron = "0 30 0 * * *")
     public void userStatisticsSchedule() {
         log.info("UserStatisticsSchedule");
         userStatisticsService.refresh();
+    }
+
+    @Scheduled(cron = "0 50 0 * * *")
+    public void regionStatisticsSchedule() {
+        log.info("RegionStatisticsSchedule");
+        regionStatisticsService.refresh();
     }
 }

@@ -1,5 +1,6 @@
 package com.flutter.alloffootball.common.domain.statistics;
 
+import com.flutter.alloffootball.common.batch.dto.UserStatisticsCategory;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

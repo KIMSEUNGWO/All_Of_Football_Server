@@ -12,8 +12,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class BatchWarningConfig {
 
-    @Bean
-    public static BeanDefinitionRegistryPostProcessor jobRegistryBeanPostProcessorRemover() {
-        return registry -> registry.removeBeanDefinition("jobRegistryBeanPostProcessor");
-    }
+//    @Bean
+//    public static BeanDefinitionRegistryPostProcessor jobRegistryBeanPostProcessorRemover() {
+//        return registry -> registry.removeBeanDefinition("jobRegistryBeanPostProcessor");
+//    }
 }

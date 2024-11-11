@@ -3,10 +3,10 @@ let regionChart = null;
 let regionSort = 'COMPLETE_ASC';
 
 const regionSortEnum = {
-    'COMPLETE_ASC': (o1, o2) => o1.completedCount - o2.completedCount,
-    'COMPLETE_DESC': (o1, o2) => o2.completedCount - o1.completedCount,
-    'CANCEL_ASC': (o1, o2) => o1.canceledCount - o2.canceledCount,
-    'CANCEL_DESC': (o1, o2) => o2.canceledCount - o1.canceledCount
+    'COMPLETE_ASC': (o1, o2) => o1.completeCnt - o2.completeCnt,
+    'COMPLETE_DESC': (o1, o2) => o2.completeCnt - o1.completeCnt,
+    'CANCEL_ASC': (o1, o2) => o1.cancelCnt - o2.cancelCnt,
+    'CANCEL_DESC': (o1, o2) => o2.cancelCnt - o1.cancelCnt
 };
 
 window.addEventListener('load', () => {
@@ -117,25 +117,27 @@ function barChartDraw() {
             datasets: [
                 {
                     label: '완료',
-                    data: sortedData.map(data => data.completedCount),
+                    data: sortedData.map(data => data.completeCnt),
                     backgroundColor: '#3F9DE0',
                     borderRadius: {
                         topLeft: 0,     topRight: 0,
                         bottomLeft: 3,  bottomRight: 3
                     },
                     borderSkipped: false,
-                    barPercentage: 0.8
+                    barPercentage: 0.8,
+                    maxBarThickness: 100  // 최대 막대 너비를 100px로 제한
                 },
                 {
                     label: '취소',
-                    data: sortedData.map(data => data.canceledCount),
+                    data: sortedData.map(data => data.cancelCnt),
                     backgroundColor: '#e3e6f0',
                     borderRadius: {
                         topLeft: 3,     topRight: 3,
                         bottomLeft: 0,  bottomRight: 0
                     },
                     borderSkipped: false,
-                    barPercentage: 0.8
+                    barPercentage: 0.8,
+                    maxBarThickness: 100  // 최대 막대 너비를 100px로 제한
                 }
             ].sort((o1, o2) => {
                 if (regionSort === 'CANCEL_ASC' || regionSort === 'CANCEL_DESC') {
@@ -209,7 +211,7 @@ class ChartRegionData {
 
     constructor(data) {
         this.region = data.region;
-        this.completedCount = data.completedCount;
-        this.canceledCount = data.canceledCount;
+        this.completeCnt = data.completeCnt;
+        this.cancelCnt = data.cancelCnt;
     }
 }

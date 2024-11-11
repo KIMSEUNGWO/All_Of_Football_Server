@@ -1,9 +1,7 @@
-package com.flutter.alloffootball.common.domain.statistics;
+package com.flutter.alloffootball.common.batch.dto;
 
 import com.flutter.alloffootball.common.domain.user.User;
-import com.flutter.alloffootball.common.enums.SexType;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 
 import java.time.LocalDate;
 import java.time.Period;

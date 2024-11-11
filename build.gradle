@@ -55,8 +55,8 @@ allprojects {
 		implementation 'io.github.kimseungwo:wordinspector:0.0.10'
 
 		// spring batch
-		implementation 'org.springframework.boot:spring-boot-starter-batch'
-		testImplementation 'org.springframework.batch:spring-batch-test'
+//		implementation 'org.springframework.boot:spring-boot-starter-batch'
+//		testImplementation 'org.springframework.batch:spring-batch-test'
 	}
 
 	repositories {

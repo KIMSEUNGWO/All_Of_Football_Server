@@ -1,6 +1,5 @@
-package com.flutter.alloffootball.common.batch.service;
+package com.flutter.alloffootball.common.batch.dto;
 
-import com.flutter.alloffootball.common.domain.statistics.UserStatisticsData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

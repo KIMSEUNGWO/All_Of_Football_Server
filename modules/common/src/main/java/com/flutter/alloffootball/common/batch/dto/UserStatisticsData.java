@@ -1,4 +1,4 @@
-package com.flutter.alloffootball.common.domain.statistics;
+package com.flutter.alloffootball.common.batch.dto;
 
 import lombok.Getter;
 
