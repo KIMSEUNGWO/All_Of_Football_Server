@@ -1,5 +1,5 @@
-import { DateFormatter } from "./component/date_format.js";
-import { PageData, Pagination } from "./pagination.js";
+import {DateFormatter} from "./component/date_format.js";
+import {PageData, Pagination} from "./pagination.js";
 import {CalendarRange} from "./calendar_range.js";
 
 const dateFormatter = new DateFormatter();
@@ -10,8 +10,8 @@ endDate.setDate(endDate.getDate() + 30);
 let lastDate = new Date();
 lastDate.setMonth(lastDate.getMonth() + 3);
 
-const calendar = new CalendarRange(
-    new Date(),  // 시작 날짜
+new CalendarRange(
+    startDate,  // 시작 날짜
     endDate,  // 종료 날짜,
     null,
     lastDate // 마지막날로 제한
@@ -48,12 +48,10 @@ const pagination = new Pagination('/admin/match', resultForm, [
         text.innerHTML = label.textContent;
     }),
     new PageData('startDate', () => document.querySelector('input[name="startDate"]')?.value, (result) => {
-        let date = (typeof result === 'object' && result != null) ? dateFormatter.formatDate(result.data.startDate, '/') : result;
-        document.querySelector('input[name="startDate"]').value = date;
+        document.querySelector('input[name="startDate"]').value = (typeof result === 'object' && result != null) ? dateFormatter.formatDate(result.data.startDate, '/') : result;
     }),
     new PageData('endDate', () => document.querySelector('input[name="endDate"]')?.value, (result) => {
-        let date = (typeof result === 'object' && result != null) ? dateFormatter.formatDate(result.data.endDate, '/') : result;
-        document.querySelector('input[name="endDate"]').value = date;
+        document.querySelector('input[name="endDate"]').value = (typeof result === 'object' && result != null) ? dateFormatter.formatDate(result.data.endDate, '/') : result;
     }),
 ]);
 
